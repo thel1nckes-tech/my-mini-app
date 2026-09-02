@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>VapeApp</title>
+    <title>MOGVAPE</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -52,7 +52,7 @@
             top: 0;
             z-index: 10;
         }
-        .brand-name { font-size: 18px; font-weight: 800; }
+        .brand-name { font-size: 18px; font-weight: 800; letter-spacing: 0.5px; }
         .location-select {
             background: var(--card-bg);
             color: var(--text-color);
@@ -74,18 +74,606 @@
         .profile-card {
             background: var(--card-bg);
             border-radius: 20px;
-            padding: 20px 16px;
+            padding: 16px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
         }
-        .user-info { display: flex; align-items: center; gap: 14px; }
+        .user-info { display: flex; align-items: center; gap: 12px; }
         .avatar {
-            width: 56px; height: 56px;
+            width: 54px; height: 54px;
             border-radius: 50%;
             background: #2a2b32;
             display: flex; align-items: center; justify-content: center;
             font-size: 22px; overflow: hidden;
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .user-details .name { font-size: 18px; font-weight: 70
+        .user-details .name { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+        .user-details .id { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .user-details .phone { font-size: 12px; color: var(--text-muted); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+
+        /* Карточка уровня справа */
+        .level-card {
+            background: var(--card-sub-bg);
+            border-radius: 16px;
+            padding: 10px 12px;
+            text-align: center;
+            min-width: 110px;
+        }
+        .level-icon { font-size: 18px; margin-bottom: 2px; }
+        .level-name { font-size: 11px; color: var(--text-muted); }
+        .level-percent { font-size: 18px; font-weight: 800; margin: 2px 0; }
+        .level-sub { font-size: 10px; color: var(--text-muted); }
+        .vape-coins { font-size: 11px; font-weight: 700; margin-top: 6px; display: flex; align-items: center; justify-content: center; gap: 4px; }
+
+        /* Кнопка Заказы */
+        .full-btn {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 16px;
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        .icon-box {
+            width: 42px; height: 42px;
+            border-radius: 14px;
+            background: var(--card-sub-bg);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+        .btn-text .title { font-size: 15px; font-weight: 700; }
+        .btn-text .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+        /* Сетка кнопок 2x2 */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .action-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 22px 16px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .action-card .icon { font-size: 28px; }
+        .action-card span { font-size: 14px; font-weight: 600; }
+
+        /* Раздел "Недавно просмотренные" */
+        .section-title { font-size: 14px; color: var(--text-muted); margin-bottom: 12px; font-weight: 500; }
+        .recent-slider { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; }
+        .recent-card {
+            min-width: 120px; background: var(--card-bg);
+            border-radius: 16px; padding: 10px; display: flex; flex-direction: column;
+        }
+        .recent-card img { width: 100%; height: 90px; object-fit: cover; border-radius: 10px; margin-bottom: 6px; }
+
+        /* Нижнее меню */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--nav-bg);
+            display: flex; justify-space-around;
+            padding: 10px 0 16px;
+            border-top: 1px solid var(--border-color);
+            z-index: 20;
+        }
+        .nav-item {
+            color: var(--text-muted);
+            display: flex; flex-direction: column; align-items: center;
+            font-size: 10px; font-weight: 500; cursor: pointer; position: relative;
+        }
+        .nav-item .icon { font-size: 20px; margin-bottom: 2px; }
+        .nav-item.active { color: var(--accent-blue); }
+        .badge {
+            position: absolute; top: -2px; right: 6px;
+            background: var(--accent-blue); color: #fff;
+            font-size: 10px; font-weight: 700;
+            width: 16px; height: 16px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* МОДАЛЬНЫЕ ОКНА (ШТОРКИ СНИЗУ) */
+        .modal-overlay {
+            display: none; position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100; align-items: flex-end; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-sheet {
+            background: var(--modal-bg);
+            width: 100%; max-height: 85vh;
+            border-top-left-radius: 24px; border-top-right-radius: 24px;
+            padding: 24px 20px; overflow-y: auto;
+            position: relative; animation: slideUp 0.25s ease-out;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .modal-title { font-size: 20px; font-weight: 800; }
+        .modal-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+        .modal-close {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--card-sub-bg); color: var(--text-color);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; cursor: pointer; border: none;
+        }
+
+        /* Выбор точки */
+        .pickup-options { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+        .pickup-btn {
+            background: var(--card-sub-bg); color: var(--text-color);
+            border: 2px solid transparent; padding: 14px; border-radius: 14px;
+            font-size: 15px; font-weight: 600; cursor: pointer; text-align: left;
+        }
+        .pickup-btn.selected { border-color: var(--accent-green); background: rgba(46, 189, 89, 0.1); }
+
+        /* Настройки темы */
+        .theme-section-title { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 12px; }
+        .theme-switcher { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .theme-btn {
+            background: var(--card-bg); border: 2px solid var(--border-color);
+            border-radius: 18px; padding: 20px 12px; text-align: center; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .theme-btn.active { border-color: var(--accent-blue); }
+        .theme-btn .icon { font-size: 22px; }
+        .theme-btn .label { font-size: 14px; font-weight: 600; }
+        .theme-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-blue); margin-top: 4px; opacity: 0; }
+        .theme-btn.active .dot { opacity: 1; }
+
+        /* Кнопки и телефон */
+        .phone-link-btn {
+            width: 100%; background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 12px;
+            color: var(--text-color); font-size: 14px; font-weight: 600; cursor: pointer;
+        }
+
+        .btn-green-save {
+            width: 100%; background: var(--accent-green); color: #ffffff;
+            border: none; padding: 16px; border-radius: 16px;
+            font-size: 15px; font-weight: 700; cursor: pointer;
+        }
+
+        /* Помощь / Аккордеон */
+        .faq-group { margin-bottom: 20px; }
+        .faq-group-title { font-size: 11px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.5px; margin-bottom: 10px; text-transform: uppercase; }
+        .faq-item { background: var(--card-bg); border-radius: 14px; margin-bottom: 8px; overflow: hidden; }
+        .faq-question {
+            padding: 14px 16px; font-size: 14px; font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+        }
+        .faq-answer {
+            padding: 0 16px 14px 16px; font-size: 13px; color: var(--text-muted);
+            line-height: 1.5; display: none; white-space: pre-line;
+        }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .arrow { transform: rotate(180deg); }
+
+        .btn-support {
+            width: 100%; background: var(--accent-blue); color: #fff;
+            border: none; padding: 16px; border-radius: 16px;
+            font-size: 15px; font-weight: 700; margin-top: 10px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand-name">MOGVAPE</div>
+        <div class="location-select" onclick="openPickupModal()">
+            📍 <span id="current-location-text">Точка самовывоза</span> <span>∨</span>
+        </div>
+    </div>
+
+    <div id="page-profile" class="page active">
+        <div class="profile-card">
+            <div class="user-info">
+                <div class="avatar" id="user-avatar">👤</div>
+                <div class="user-details">
+                    <div class="name" id="user-name">Менеджер</div>
+                    <div class="id" onclick="copyId()">ID: <span id="user-id">5995285721</span> 📋</div>
+                    <div class="phone" id="user-phone-display" style="display:none;">📞 <span id="user-phone-val"></span></div>
+                </div>
+            </div>
+            <div class="level-card">
+                <div class="level-icon">🌱</div>
+                <div class="level-name">Новичок</div>
+                <div class="level-percent">0%</div>
+                <div class="level-sub">Ещё 5 товаров до 1%</div>
+                <div class="vape-coins">🪙 0 VapeCoins</div>
+            </div>
+        </div>
+
+        <div class="full-btn" onclick="switchPage('orders')">
+            <div class="icon-box">🛍️</div>
+            <div class="btn-text">
+                <div class="title">Заказы</div>
+                <div class="subtitle">История покупок</div>
+            </div>
+        </div>
+
+        <div class="actions-grid">
+            <div class="action-card" onclick="openSupport()">
+                <div class="icon" style="color:var(--accent-green);">💬</div>
+                <span>Менеджер</span>
+            </div>
+            <div class="action-card" onclick="openHelpModal()">
+                <div class="icon" style="color:var(--accent-blue);">❓</div>
+                <span>Помощь</span>
+            </div>
+            <div class="action-card" onclick="openSettingsModal()">
+                <div class="icon" style="color:var(--text-muted);">⚙️</div>
+                <span>Настройки</span>
+            </div>
+            <div class="action-card" onclick="alert('Добавление на экран')">
+                <div class="icon" style="color:var(--accent-blue);">📱</div>
+                <span>На экран</span>
+            </div>
+        </div>
+
+        <div class="section-title">Недавно просмотренные</div>
+        <div class="recent-slider">
+            <div class="recent-card">
+                <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=200" alt="prod">
+                <div style="font-size:12px; font-weight:600;">Husky Salt</div>
+                <div style="font-size:12px; font-weight:700; color:var(--accent-blue);">25 BYN</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-catalog" class="page">
+        <h2 style="margin:20px 0;">Ассортимент</h2>
+    </div>
+    <div id="page-bonuses" class="page">
+        <h2 style="margin:20px 0;">Бонусы</h2>
+    </div>
+    <div id="page-cart" class="page">
+        <h2 style="margin:20px 0;">Корзина</h2>
+    </div>
+    <div id="page-favorites" class="page">
+        <h2 style="margin:20px 0;">Избранное</h2>
+    </div>
+    <div id="page-orders" class="page">
+        <h2 style="margin:20px 0;">История заказов</h2>
+    </div>
+
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Настройки</div>
+                    <div class="modal-subtitle">Управление настройками приложения</div>
+                </div>
+                <button class="modal-close" onclick="closeModal('settings-modal')">✕</button>
+            </div>
+
+            <div class="theme-section-title">ТЕМA ОФОРМЛЕНИЯ</div>
+            <div class="theme-switcher">
+                <div class="theme-btn" id="theme-light-btn" onclick="setTheme('light')">
+                    <div class="icon">☀️</div>
+                    <div class="label">Светлая</div>
+                    <div class="dot"></div>
+                </div>
+                <div class="theme-btn active" id="theme-dark-btn" onclick="setTheme('dark')">
+                    <div class="icon">🌙</div>
+                    <div class="label">Тёмная</div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="theme-section-title">КОНТАКТНЫЕ ДАННЫЕ</div>
+            <button class="phone-link-btn" onclick="requestPhoneNumber()">
+                📞 <span id="phone-btn-label">Привязать номер телефона</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="help-modal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Помощь</div>
+                    <div class="modal-subtitle">Ответы на частые вопросы</div>
+                </div>
+                <button class="modal-close" onclick="closeModal('help-modal')">✕</button>
+            </div>
+
+            <div class="faq-group">
+                <div class="faq-group-title">ПРИЛОЖЕНИЕ</div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>❌ Как отменить заказ?</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">В профиле через раздел "Заказы". Можно отменить минимум за 1 час до получения. Монеты вернутся, но репутация снизится на 1 балл.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>🪙 Что такое Vape Coins?</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">Это бонусы (10 монет = 0.10 Б). Даем 300 монет за первый заказ друга и 2-5% кешбэка с его покупок.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>👥 Реферальная система</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">Приглашайте друзей и получайте процент с их заказов в виде монет. Чем больше активных друзей, тем выше ваш процент (от 2% до 5%).</div>
+                </div>
+            </div>
+
+            <div class="faq-group">
+                <div class="faq-group-title">ГАРАНТИЯ И БРАК</div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>🔮 Жидкость потемнела?</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">Это нормальный процесс из-за нагрева. На качество вкуса это не влияет.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>📅 Срок годности</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">Обычно 1-2 года. Жидкости с датой 2016 — это особенность маркировки для соблюдения норм, они свежие.</div>
+                </div>
+            </div>
+
+            <div class="faq-group">
+                <div class="faq-group-title">УХОД И СОВЕТЫ</div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>⚡ Как сберечь картридж?</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">• Делайте паузы между затяжками.
+• Не парьте на пустом баке.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>⚠️ Картридж течет?</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">Протрите контакты и сам картридж салфеткой. Это случается из-за износа фитиля.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>📄 Короткая памятка</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">• Новый картридж: ждите 10 мин после заправки.
+• Зима: на холоде парить меньше, протирать чаще.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>❄️ Парение зимой</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">На морозе жидкость густеет. Делайте длинные паузы и чаще протирайте устройство от конденсата.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>ℹ️ Что такое PG/VG?</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">PG — вкус, VG — пар. Для POD-систем идеален 50/50.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>⚡ Сопротивление (Ом)</span>
+                        <span class="arrow">∨</span>
+                    </div>
+                    <div class="faq-answer">Чем меньше Ом, тем больше пара и насыщеннее вкус, но быстрее садится заряд.</div>
+                </div>
+            </div>
+
+            <button class="btn-support" onclick="openSupport()">Написать в поддержку</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="pickup-modal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Точка самовывоза</div>
+                    <div class="modal-subtitle">Выберите удобную точку для получения заказа</div>
+                </div>
+                <button class="modal-close" onclick="closeModal('pickup-modal')">✕</button>
+            </div>
+            
+            <div class="pickup-options">
+                <button class="pickup-btn" id="opt-atrium" onclick="selectPickupOption('Атриум')">
+                    🏢 Атриум
+                </button>
+                <button class="pickup-btn" id="opt-greenwich" onclick="selectPickupOption('Гринвич')">
+                    🏬 Гринвич
+                </button>
+                <button class="pickup-btn" id="opt-eighth" onclick="selectPickupOption('Восьмой')">
+                    🏬 Восьмой
+                </button>
+            </div>
+
+            <button class="btn-green-save" onclick="savePickupLocation()">Сохранить</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="switchPage('catalog')" id="nav-catalog">
+            <div class="icon">📦</div>
+            <span>Ассортимент</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('bonuses')" id="nav-bonuses">
+            <div class="icon">🎁</div>
+            <span>Бонусы</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('cart')" id="nav-cart">
+            <div class="icon">🛒</div>
+            <div class="badge">1</div>
+            <span>Корзина</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('favorites')" id="nav-favorites">
+            <div class="icon">🤍</div>
+            <span>Избранное</span>
+        </div>
+        <div class="nav-item active" onclick="switchPage('profile')" id="nav-profile">
+            <div class="icon">👤</div>
+            <span>Профиль</span>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        // Данные юзера
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const u = tg.initDataUnsafe.user;
+            document.getElementById('user-name').innerText = u.first_name + (u.last_name ? ' ' + u.last_name : '');
+            document.getElementById('user-id').innerText = u.id;
+            if (u.photo_url) {
+                document.getElementById('user-avatar').innerHTML = `<img src="${u.photo_url}">`;
+            }
+        }
+
+        // Телефон
+        const savedPhone = localStorage.getItem('user_phone');
+        if (savedPhone) {
+            showPhone(savedPhone);
+        }
+
+        function requestPhoneNumber() {
+            if (tg.requestContact) {
+                tg.requestContact((sent, response) => {
+                    if (sent && response && response.responseUnsafe && response.responseUnsafe.contact) {
+                        const phone = response.responseUnsafe.contact.phone_number;
+                        const formatted = phone.startsWith('+') ? phone : '+' + phone;
+                        localStorage.setItem('user_phone', formatted);
+                        showPhone(formatted);
+                    }
+                });
+            } else {
+                const manual = prompt("Введите ваш номер телефона:", "+375");
+                if (manual) {
+                    localStorage.setItem('user_phone', manual);
+                    showPhone(manual);
+                }
+            }
+        }
+
+        function showPhone(phone) {
+            document.getElementById('phone-btn-label').innerText = phone;
+            document.getElementById('user-phone-val').innerText = phone;
+            document.getElementById('user-phone-display').style.display = 'flex';
+        }
+
+        // Выбор точки
+        let selectedTempPickup = "Атриум";
+        function openPickupModal() {
+            document.getElementById('pickup-modal').classList.add('active');
+            const saved = localStorage.getItem('mogvape_pickup_location') || "Атриум";
+            selectPickupOption(saved);
+        }
+
+        function selectPickupOption(name) {
+            selectedTempPickup = name;
+            document.getElementById('opt-atrium').classList.remove('selected');
+            document.getElementById('opt-greenwich').classList.remove('selected');
+            document.getElementById('opt-eighth').classList.remove('selected');
+
+            if (name === 'Атриум') {
+                document.getElementById('opt-atrium').classList.add('selected');
+            } else if (name === 'Гринвич') {
+                document.getElementById('opt-greenwich').classList.add('selected');
+            } else {
+                document.getElementById('opt-eighth').classList.add('selected');
+            }
+        }
+
+        function savePickupLocation() {
+            localStorage.setItem('mogvape_pickup_location', selectedTempPickup);
+            document.getElementById('current-location-text').innerText = selectedTempPickup;
+            closeModal('pickup-modal');
+        }
+
+        function loadPickupLocation() {
+            const saved = localStorage.getItem('mogvape_pickup_location');
+            if (saved) {
+                document.getElementById('current-location-text').innerText = saved;
+            }
+        }
+
+        // Тема
+        function setTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+                document.getElementById('theme-light-btn').classList.add('active');
+                document.getElementById('theme-dark-btn').classList.remove('active');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.getElementById('theme-dark-btn').classList.add('active');
+                document.getElementById('theme-light-btn').classList.remove('active');
+            }
+            localStorage.setItem('app_theme', theme);
+        }
+
+        if (localStorage.getItem('app_theme') === 'light') {
+            setTheme('light');
+        }
+
+        // Модальные окна
+        function openSettingsModal() { document.getElementById('settings-modal').classList.add('active'); }
+        function openHelpModal() { document.getElementById('help-modal').classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Аккордеон
+        function toggleFaq(element) {
+            element.parentElement.classList.toggle('open');
+        }
+
+        // Навигация
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            const page = document.getElementById(`page-${pageName}`);
+            if (page) page.classList.add('active');
+            
+            const nav = document.getElementById(`nav-${pageName}`);
+            if (nav) nav.classList.add('active');
+        }
+
+        // Менеджер
+        function openSupport() {
+            tg.openTelegramLink("https://t.me/MOGBARAHA");
+        }
+
+        function copyId() {
+            const id = document.getElementById('user-id').innerText;
+            navigator.clipboard.writeText(id);
+            alert('ID скопирован!');
+        }
+
+        loadPickupLocation();
+    </script>
+</body>
+</html>
