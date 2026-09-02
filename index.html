@@ -3,105 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOGVAPE Shop</title>
+    <title>MOGVAPE</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background-color: var(--tg-theme-bg-color, #121212);
-            color: var(--tg-theme-text-color, #ffffff);
-            margin: 0;
-            padding: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0d0e12;
+            color: #ffffff;
             padding-bottom: 80px;
         }
-        h2 { text-align: center; margin-bottom: 20px; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+
+        /* Шапка */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: #0d0e12;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .brand-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .location-select {
+            background: #1c1d22;
+            color: #d1d5db;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        /* Страницы */
+        .page { display: none; padding: 0 16px; }
+        .page.active { display: block; }
+
+        /* --- ВКЛАДКА ПРОФИЛЬ --- */
+        .profile-card {
+            background: #18191e;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
             gap: 12px;
         }
-        .card {
-            background-color: var(--tg-theme-secondary-bg-color, #1e1e1e);
-            border-radius: 10px;
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #2a2b32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            overflow: hidden;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .user-details .name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .user-details .id { font-size: 12px; color: #8e8e93; display: flex; align-items: center; gap: 4px; }
+
+        /* Лояльность */
+        .loyalty-widget {
+            background: #1e1f26;
+            border-radius: 16px;
+            padding: 12px;
+            width: 130px;
+            text-align: center;
+            border: 1px solid #282932;
+        }
+        .loyalty-badge {
+            width: 32px;
+            height: 32px;
+            background: #2ebd59;
+            border-radius: 50%;
+            margin: 0 auto 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .status-title { font-size: 11px; color: #8e8e93; }
+        .status-percent { font-size: 20px; font-weight: 800; color: #fff; margin: 2px 0; }
+        .status-next { font-size: 9px; color: #8e8e93; margin-bottom: 8px; }
+        .coins-balance {
+            border-top: 1px solid #282932;
+            padding-top: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #f5a623;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        /* Кнопки действий */
+        .full-btn {
+            background: #18191e;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #1e2538;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #2f80ed;
+        }
+        .btn-text .title { font-size: 15px; font-weight: 600; }
+        .btn-text .subtitle { font-size: 12px; color: #8e8e93; }
+
+        /* Сетка 2x2 */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .action-card {
+            background: #18191e;
+            border-radius: 16px;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .action-card .icon-box { background: transparent; width: auto; height: auto; font-size: 26px; }
+        .action-card span { font-size: 13px; font-weight: 500; }
+
+        /* --- АССОРТИМЕНТ (КАТАЛОГ) --- */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .product-card {
+            background: #18191e;
+            border-radius: 16px;
             padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
-        .title { font-weight: bold; font-size: 14px; margin-bottom: 6px; }
-        .price { color: #0088cc; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
+        .product-card img {
+            width: 100%;
+            height: 110px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background: #23242a;
+        }
+        .prod-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+        .prod-price { font-size: 14px; font-weight: 700; color: #2f80ed; margin-bottom: 8px; }
         .btn-add {
-            background-color: var(--tg-theme-button-color, #0088cc);
-            color: var(--tg-theme-button-text-color, #ffffff);
+            background: #2f80ed;
+            color: #fff;
             border: none;
             padding: 8px;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
         }
-        .cart-bar {
+
+        /* --- КОРЗИНА --- */
+        .cart-item {
+            background: #18191e;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .checkout-btn {
+            width: 100%;
+            background: #2ebd59;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+
+        /* Нижняя навигация */
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: var(--tg-theme-secondary-bg-color, #1e1e1e);
-            padding: 12px 20px;
+            background: #121318;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #333;
+            justify-content: space-around;
+            padding: 10px 0 16px;
+            border-top: 1px solid #1c1d22;
         }
-        .cart-btn {
-            background-color: #2ed573;
-            color: #fff;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-weight: bold;
+        .nav-item {
+            color: #636575;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            font-weight: 500;
             cursor: pointer;
         }
+        .nav-item .icon { font-size: 20px; margin-bottom: 3px; }
+        .nav-item.active { color: #2f80ed; }
     </style>
 </head>
 <body>
-    <h2>💨 MOGVAPE Shop</h2>
 
-    <div class="grid" id="catalog"></div>
+    <!-- Шапка -->
+    <div class="top-bar">
+        <div class="brand-name">MOGVAPE</div>
+        <div class="location-select" onclick="alert('Выбор точки самовывоза')">
+            📍 Выбери точку <span>∨</span>
+        </div>
+    </div>
 
-    <div class="cart-bar">
-        <div>Итого: <b id="total-price">0 BYN</b></div>
-        <button class="cart-btn" id="order-btn" onclick="sendOrder()">Оформить</button>
+    <!-- 1. Страница Профиль -->
+    <div id="page-profile" class="page active">
+        <div class="profile-card">
+            <div class="user-info">
+                <div class="avatar" id="user-avatar">👤</div>
+                <div class="user-details">
+                    <div class="name" id="user-name">Пользователь</div>
+                    <div class="id" onclick="copyId()">ID: <span id="user-id">00000000</span> 📋</div>
+                </div>
+            </div>
+            <div class="loyalty-widget">
+                <div class="loyalty-badge">🌱</div>
+                <div class="status-title">Новичок</div>
+                <div class="status-percent">0%</div>
+                <div class="status-next">Ещё 5 товаров до 1%</div>
+                <div class="coins-balance">🪙 0 VapeCoins</div>
+            </div>
+        </div>
+
+        <div class="full-btn" onclick="switchPage('cart')">
+            <div class="icon-box">🛍️</div>
+            <div class="btn-text">
+                <div class="title">Заказы</div>
+                <div class="subtitle">История покупок</div>
+            </div>
+        </div>
+
+        <div class="actions-grid">
+            <div class="action-card" onclick="openManager()">
+                <div class="icon-box" style="color:#2ebd59;">💬</div>
+                <span>Менеджер</span>
+            </div>
+            <div class="action-card" onclick="alert('Раздел помощи')">
+                <div class="icon-box" style="color:#2f80ed;">❓</div>
+                <span>Помощь</span>
+            </div>
+            <div class="action-card" onclick="alert('Настройки')">
+                <div class="icon-box" style="color:#8e8e93;">⚙️</div>
+                <span>Настройки</span>
+            </div>
+            <div class="action-card" onclick="alert('Для добавления на экран нажмите три точки в углу и выберите Добавить на главный экран')">
+                <div class="icon-box" style="color:#2f80ed;">📱</div>
+                <span>На экран</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Страница Ассортимент (Каталог) -->
+    <div id="page-catalog" class="page">
+        <h3 style="margin-bottom:12px;">Ассортимент</h3>
+        <div class="catalog-grid" id="catalog-list"></div>
+    </div>
+
+    <!-- 3. Страница Бонусы -->
+    <div id="page-bonuses" class="page">
+        <h3 style="margin-bottom:12px;">Бонусная система</h3>
+        <div class="profile-card" style="flex-direction:column; align-items:flex-start; gap:10px;">
+            <h4>Ваш кэшбэк: 0%</h4>
+            <p style="font-size:13px; color:#8e8e93;">Делайте покупки, копите VapeCoins и оплачивайте ими до 50% стоимости заказа!</p>
+        </div>
+    </div>
+
+    <!-- 4. Страница Избранное -->
+    <div id="page-favorites" class="page">
+        <h3 style="margin-bottom:12px;">Избранное</h3>
+        <p style="color:#8e8e93; font-size:14px;">У вас пока нет избранных товаров.</p>
+    </div>
+
+    <!-- 5. Страница Корзина -->
+    <div id="page-cart" class="page">
+        <h3 style="margin-bottom:12px;">Корзина</h3>
+        <div id="cart-list"></div>
+        <div style="margin-top:16px; font-size:16px; font-weight:700;">
+            Итого к оплате: <span id="cart-total" style="color:#2f80ed;">0 BYN</span>
+        </div>
+        <button class="checkout-btn" onclick="sendOrder()">Оформить заказ</button>
+    </div>
+
+    <!-- Нижнее меню -->
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="switchPage('catalog')" id="nav-catalog">
+            <div class="icon">📦</div>
+            <span>Ассортимент</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('bonuses')" id="nav-bonuses">
+            <div class="icon">🎁</div>
+            <span>Бонусы</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('cart')" id="nav-cart">
+            <div class="icon">🛒</div>
+            <span>Корзина</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('favorites')" id="nav-favorites">
+            <div class="icon">🤍</div>
+            <span>Избранное</span>
+        </div>
+        <div class="nav-item active" onclick="switchPage('profile')" id="nav-profile">
+            <div class="icon">👤</div>
+            <span>Профиль</span>
+        </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
+        // Заполнение профиля данными Telegram
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const u = tg.initDataUnsafe.user;
+            document.getElementById('user-name').innerText = u.first_name + (u.last_name ? ' ' + u.last_name : '');
+            document.getElementById('user-id').innerText = u.id;
+            if (u.photo_url) {
+                document.getElementById('user-avatar').innerHTML = `<img src="${u.photo_url}">`;
+            }
+        }
+
+        function copyId() {
+            const id = document.getElementById('user-id').innerText;
+            navigator.clipboard.writeText(id);
+            alert('ID скопирован: ' + id);
+        }
+
+        function openManager() {
+            tg.openTelegramLink("https://t.me/telegram"); // Поменяйте на логин вашего менеджера
+        }
+
+        // Каталог товаров
         const products = [
-            { id: 1, title: "Жидкость Husky 30ml", price: 25 },
-            { id: 2, title: "Жидкость Xylinet 30ml", price: 22 },
-            { id: 3, title: "POD-система XROS 3", price: 95 },
-            { id: 4, title: "Испаритель Vaporesso 0.6", price: 12 }
+            { id: 1, title: "Husky Salt 30ml", price: 25, img: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=200" },
+            { id: 2, title: "Xylinet 30ml", price: 22, img: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=200" },
+            { id: 3, title: "Vaporesso XROS 3", price: 95, img: "https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=200" },
+            { id: 4, title: "Картридж XROS 0.6", price: 12, img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=200" }
         ];
 
         let cart = {};
 
         function renderCatalog() {
-            const container = document.getElementById('catalog');
+            const container = document.getElementById('catalog-list');
             container.innerHTML = '';
             products.forEach(p => {
                 const count = cart[p.id] ? cart[p.id].count : 0;
                 container.innerHTML += `
-                    <div class="card">
-                        <div class="title">${p.title}</div>
-                        <div class="price">${p.price} BYN</div>
+                    <div class="product-card">
+                        <img src="${p.img}" alt="${p.title}">
+                        <div class="prod-title">${p.title}</div>
+                        <div class="prod-price">${p.price} BYN</div>
                         <button class="btn-add" onclick="addToCart(${p.id})">
-                            ${count > 0 ? 'Добавлено (' + count + ')' : 'В корзину'}
+                            ${count > 0 ? 'В корзине (' + count + ')' : 'В корзину'}
                         </button>
                     </div>
                 `;
             });
-            updateTotal();
         }
 
         function addToCart(id) {
@@ -114,10 +416,42 @@
             renderCatalog();
         }
 
-        function updateTotal() {
+        function renderCart() {
+            const container = document.getElementById('cart-list');
+            container.innerHTML = '';
             let total = 0;
-            Object.values(cart).forEach(item => total += item.price * item.count);
-            document.getElementById('total-price').innerText = total + ' BYN';
+            const items = Object.values(cart);
+
+            if (items.length === 0) {
+                container.innerHTML = '<p style="color:#8e8e93; font-size:14px;">Ваша корзина пуста</p>';
+                document.getElementById('cart-total').innerText = '0 BYN';
+                return;
+            }
+
+            items.forEach(item => {
+                total += item.price * item.count;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <div style="font-weight:600; font-size:14px;">${item.title}</div>
+                            <div style="font-size:12px; color:#8e8e93;">${item.price} BYN x ${item.count}</div>
+                        </div>
+                        <div style="font-weight:700; color:#2f80ed;">${item.price * item.count} BYN</div>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-total').innerText = total + ' BYN';
+        }
+
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            document.getElementById(`page-${pageName}`).classList.add('active');
+            document.getElementById(`nav-${pageName}`).classList.add('active');
+
+            if (pageName === 'catalog') renderCatalog();
+            if (pageName === 'cart') renderCart();
         }
 
         function sendOrder() {
@@ -125,14 +459,13 @@
                 alert('Корзина пуста!');
                 return;
             }
-            let orderText = "Ваш заказ MOGVAPE:\n";
+            let orderText = "Новый заказ MOGVAPE:\n";
             let total = 0;
             Object.values(cart).forEach(item => {
                 orderText += `- ${item.title} x${item.count} (${item.price * item.count} BYN)\n`;
                 total += item.price * item.count;
             });
-            orderText += `\nИтого к оплате: ${total} BYN`;
-            
+            orderText += `\nИтого: ${total} BYN`;
             tg.sendData(orderText);
         }
 
