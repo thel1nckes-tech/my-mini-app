@@ -2,16 +2,43 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOGVAPE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>VapeApp</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-color: #0b0b0e;
+            --card-bg: #16171d;
+            --card-sub-bg: #1f2029;
+            --text-color: #ffffff;
+            --text-muted: #8c8e9b;
+            --accent-blue: #2f80ed;
+            --accent-green: #2ebd59;
+            --border-color: #252732;
+            --nav-bg: #121319;
+            --modal-bg: #14151b;
+        }
+
+        /* Светлая тема */
+        body.light-theme {
+            --bg-color: #f2f3f7;
+            --card-bg: #ffffff;
+            --card-sub-bg: #eef0f5;
+            --text-color: #111111;
+            --text-muted: #6e717d;
+            --border-color: #e2e4ec;
+            --nav-bg: #ffffff;
+            --modal-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #0d0e12;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             padding-bottom: 90px;
+            transition: background-color 0.2s, color 0.2s;
+            user-select: none;
         }
 
         /* Шапка */
@@ -20,16 +47,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 14px 16px;
-            background: #0d0e12;
+            background: var(--bg-color);
             position: sticky;
             top: 0;
             z-index: 10;
         }
-        .brand-name { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+        .brand-name { font-size: 18px; font-weight: 800; }
         .location-select {
-            background: #1c1d22;
-            color: #d1d5db;
-            border: none;
+            background: var(--card-bg);
+            color: var(--text-color);
             padding: 8px 14px;
             border-radius: 20px;
             font-size: 13px;
@@ -37,6 +63,7 @@
             align-items: center;
             gap: 6px;
             cursor: pointer;
+            border: 1px solid var(--border-color);
         }
 
         /* Страницы */
@@ -45,12 +72,12 @@
 
         /* Профиль */
         .profile-card {
-            background: #18191e;
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 20px 16px;
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         .user-info { display: flex; align-items: center; gap: 14px; }
         .avatar {
@@ -61,619 +88,4 @@
             font-size: 22px; overflow: hidden;
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .user-details .name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-        .user-details .id { font-size: 13px; color: #8e8e93; display: flex; align-items: center; gap: 4px; cursor: pointer; }
-
-        /* Красная надпись */
-        .promo-text {
-            color: #ff3b30;
-            font-size: 15px;
-            font-weight: 800;
-            text-align: center;
-            padding: 8px 0 14px 0;
-        }
-
-        /* Кнопка заказов */
-        .full-btn {
-            background: #18191e;
-            border-radius: 16px;
-            padding: 16px;
-            display: flex; align-items: center; gap: 14px;
-            margin-bottom: 12px;
-            cursor: pointer;
-        }
-        .icon-box {
-            width: 40px; height: 40px;
-            border-radius: 12px;
-            background: #1e2538;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; color: #2f80ed;
-        }
-        .btn-text .title { font-size: 15px; font-weight: 600; }
-        .btn-text .subtitle { font-size: 12px; color: #8e8e93; }
-
-        /* Сетка действий */
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .action-card {
-            background: #18191e;
-            border-radius: 16px;
-            padding: 20px 16px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        .action-card .icon-box { background: transparent; width: auto; height: auto; font-size: 26px; }
-        .action-card span { font-size: 13px; font-weight: 500; }
-
-        /* Блок Недавно просмотренные */
-        .recent-section {
-            margin-top: 10px;
-        }
-        .section-title {
-            font-size: 14px;
-            color: #8e8e93;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-        .recent-slider {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
-        }
-        .recent-slider::-webkit-scrollbar { display: none; }
-        .recent-card {
-            min-width: 130px;
-            max-width: 130px;
-            background: #18191e;
-            border-radius: 16px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
-        .recent-card img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 12px;
-            background: #23242a;
-            margin-bottom: 8px;
-        }
-        .recent-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .recent-price { font-size: 13px; font-weight: 700; color: #2f80ed; }
-
-        /* Настройки */
-        .back-btn-top {
-            display: inline-block;
-            background: #1c1d22;
-            color: #ffffff;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            cursor: pointer;
-        }
-        .settings-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .settings-card {
-            background: #18191e;
-            border-radius: 18px;
-            padding: 6px 16px;
-            margin-bottom: 20px;
-        }
-        .settings-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid #23242a;
-        }
-        .settings-row:last-child { border-bottom: none; }
-        .settings-row label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #ffffff;
-        }
-        .settings-row input {
-            background: #22232a;
-            border: none;
-            color: #ffffff;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            text-align: right;
-            outline: none;
-            width: 160px;
-        }
-        .settings-row input::placeholder {
-            color: #555761;
-        }
-        .btn-green-save {
-            width: 100%;
-            background: #2ebd59;
-            color: #ffffff;
-            border: none;
-            padding: 16px;
-            border-radius: 16px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(46, 189, 89, 0.2);
-        }
-
-        /* Ассортимент */
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .product-card {
-            background: #18191e;
-            border-radius: 16px;
-            padding: 12px;
-            display: flex; flex-direction: column;
-            justify-content: space-between;
-        }
-        .product-card img {
-            width: 100%; height: 110px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            background: #23242a;
-        }
-        .prod-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-        .prod-price { font-size: 14px; font-weight: 700; color: #2f80ed; margin-bottom: 8px; }
-        .btn-add {
-            background: #2f80ed; color: #fff;
-            border: none; padding: 8px;
-            border-radius: 10px;
-            font-size: 12px; font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* Корзина */
-        .cart-item {
-            background: #18191e;
-            padding: 14px;
-            border-radius: 14px;
-            margin-bottom: 8px;
-        }
-
-        /* Нижнее меню */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: #121318;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0 16px;
-            border-top: 1px solid #1c1d22;
-        }
-        .nav-item {
-            color: #636575;
-            display: flex; flex-direction: column;
-            align-items: center;
-            font-size: 10px; font-weight: 500;
-            cursor: pointer;
-        }
-        .nav-item .icon { font-size: 20px; margin-bottom: 3px; }
-        .nav-item.active { color: #2f80ed; }
-
-        /* Модальные окна */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 100;
-            align-items: flex-end;
-            justify-content: center;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-box {
-            background: #18191e;
-            color: #fff;
-            width: 100%;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            padding: 24px 20px;
-        }
-
-        /* Стили кнопок выбора точки */
-        .pickup-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 16px 0;
-        }
-        .pickup-btn {
-            background: #22232a;
-            color: #fff;
-            border: 2px solid transparent;
-            padding: 14px;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .pickup-btn.selected {
-            border-color: #2ebd59;
-            background: #1c2a22;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Шапка -->
-    <div class="top-bar">
-        <div class="brand-name">MOGVAPE</div>
-        <div class="location-select" onclick="openPickupModal()">
-            📍 <span id="current-location-text">Точка самовывоза</span> <span>∨</span>
-        </div>
-    </div>
-
-    <!-- 1. Страница Профиль -->
-    <div id="page-profile" class="page active">
-        <div class="profile-card">
-            <div class="user-info">
-                <div class="avatar" id="user-avatar">👤</div>
-                <div class="user-details">
-                    <div class="name" id="user-name">Менеджер</div>
-                    <div class="id" onclick="copyId()">ID: <span id="user-id">5995285721</span> 📋</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="promo-text">
-            8 Наклеек = карик, жижа, снюс
-        </div>
-
-        <div class="full-btn" onclick="switchPage('orders')">
-            <div class="icon-box">🛍️</div>
-            <div class="btn-text">
-                <div class="title">Заказы</div>
-                <div class="subtitle">История покупок</div>
-            </div>
-        </div>
-
-        <div class="actions-grid">
-            <div class="action-card" onclick="openManager()">
-                <div class="icon-box" style="color:#2ebd59;">💬</div>
-                <span>Менеджер</span>
-            </div>
-            <div class="action-card" onclick="alert('Раздел помощи')">
-                <div class="icon-box" style="color:#2f80ed;">❓</div>
-                <span>Помощь</span>
-            </div>
-            <div class="action-card" onclick="switchPage('settings')">
-                <div class="icon-box" style="color:#8e8e93;">⚙️</div>
-                <span>Настройки</span>
-            </div>
-            <div class="action-card" onclick="addToHomeScreen()">
-                <div class="icon-box" style="color:#2f80ed;">📱</div>
-                <span>На экран</span>
-            </div>
-        </div>
-
-        <!-- Недавно просмотренные -->
-        <div class="recent-section">
-            <div class="section-title">Недавно просмотренные</div>
-            <div class="recent-slider" id="recent-list"></div>
-        </div>
-    </div>
-
-    <!-- 2. Страница Настройки -->
-    <div id="page-settings" class="page">
-        <button class="back-btn-top" onclick="switchPage('profile')">← Назад в профиль</button>
-        <div class="settings-title">Настройки</div>
-
-        <div class="settings-card">
-            <div class="settings-row">
-                <label for="setting-name">Имя для заказа</label>
-                <input type="text" id="setting-name" placeholder="Введите имя">
-            </div>
-            <div class="settings-row">
-                <label for="setting-phone">Телефон</label>
-                <input type="tel" id="setting-phone" placeholder="+375 (29) ...">
-            </div>
-        </div>
-
-        <button class="btn-green-save" onclick="saveSettings()">Сохранить настройки</button>
-    </div>
-
-    <!-- 3. Страница История заказов -->
-    <div id="page-orders" class="page">
-        <button class="back-btn-top" onclick="switchPage('profile')">← Назад в профиль</button>
-        <div class="settings-title">История покупок</div>
-        <p style="color:#8e8e93; font-size:14px;">У вас пока нет оформленных заказов.</p>
-    </div>
-
-    <!-- 4. Страница Ассортимент -->
-    <div id="page-catalog" class="page">
-        <div class="settings-title" style="margin-top:10px;">Ассортимент</div>
-        <div class="catalog-grid" id="catalog-list"></div>
-    </div>
-
-    <!-- 5. Страница Бонусы -->
-    <div id="page-bonuses" class="page">
-        <div class="settings-title" style="margin-top:10px;">Бонусы</div>
-        <p style="color:#8e8e93; font-size:14px;">У вас 0 бонусов.</p>
-    </div>
-
-    <!-- 6. Страница Избранное -->
-    <div id="page-favorites" class="page">
-        <div class="settings-title" style="margin-top:10px;">Избранное</div>
-        <p style="color:#8e8e93; font-size:14px;">Список пуст.</p>
-    </div>
-
-    <!-- 7. Страница Корзина -->
-    <div id="page-cart" class="page">
-        <div class="settings-title" style="margin-top:10px;">Корзина</div>
-        <div id="cart-list"></div>
-        <div style="margin-top:16px; font-size:16px; font-weight:700;">
-            Итого: <span id="cart-total" style="color:#2f80ed;">0 BYN</span>
-        </div>
-        <button class="btn-green-save" style="margin-top:16px;" onclick="sendOrder()">Оформить заказ</button>
-    </div>
-
-    <!-- Модальное окно выбора точки самовывоза -->
-    <div class="modal-overlay" id="pickup-modal">
-        <div class="modal-box">
-            <h3 style="font-size:18px; font-weight:700;">Точка самовывоза</h3>
-            <p style="font-size:13px; color:#8e8e93; margin-top:4px;">Выберите удобную точку для получения заказа</p>
-            
-            <div class="pickup-options">
-                <button class="pickup-btn" id="opt-atrium" onclick="selectPickupOption('Атриум')">
-                    🏢 Атриум
-                </button>
-                <button class="pickup-btn" id="opt-eighth" onclick="selectPickupOption('Восьмой')">
-                    🏬 Восьмой
-                </button>
-            </div>
-
-            <button class="btn-green-save" onclick="savePickupLocation()">Сохранить</button>
-        </div>
-    </div>
-
-    <!-- Модальное окно "На экран" -->
-    <div class="modal-overlay" id="home-screen-modal">
-        <div class="modal-box">
-            <h3 style="margin-bottom:10px;">Добавить на рабочий стол</h3>
-            <p style="font-size:13px; color:#8e8e93; margin-bottom:20px;">Нажмите меню в правом верхнем углу Telegram (3 точки) и выберите "Добавить на экран".</p>
-            <button class="btn-green-save" onclick="closeModal()">Понятно</button>
-        </div>
-    </div>
-
-    <!-- Нижнее меню -->
-    <div class="bottom-nav">
-        <div class="nav-item" onclick="switchPage('catalog')" id="nav-catalog">
-            <div class="icon">📦</div>
-            <span>Ассортимент</span>
-        </div>
-        <div class="nav-item" onclick="switchPage('bonuses')" id="nav-bonuses">
-            <div class="icon">🎁</div>
-            <span>Бонусы</span>
-        </div>
-        <div class="nav-item" onclick="switchPage('cart')" id="nav-cart">
-            <div class="icon">🛒</div>
-            <span>Корзина</span>
-        </div>
-        <div class="nav-item" onclick="switchPage('favorites')" id="nav-favorites">
-            <div class="icon">🤍</div>
-            <span>Избранное</span>
-        </div>
-        <div class="nav-item active" onclick="switchPage('profile')" id="nav-profile">
-            <div class="icon">👤</div>
-            <span>Профиль</span>
-        </div>
-    </div>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const u = tg.initDataUnsafe.user;
-            document.getElementById('user-name').innerText = u.first_name + (u.last_name ? ' ' + u.last_name : '');
-            document.getElementById('user-id').innerText = u.id;
-            if (u.photo_url) {
-                document.getElementById('user-avatar').innerHTML = `<img src="${u.photo_url}">`;
-            }
-        }
-
-        const products = [
-            { id: 1, title: "Husky Salt 30ml", price: 25, img: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=200" },
-            { id: 2, title: "Xylinet 30ml", price: 22, img: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=200" },
-            { id: 3, title: "Vaporesso XROS 3", price: 95, img: "https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=200" },
-            { id: 4, title: "Картридж XROS 0.6", price: 12, img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=200" }
-        ];
-
-        let cart = {};
-        let recentProducts = [products[0], products[1], products[2]];
-        let selectedTempPickup = "Атриум";
-
-        // Логика выбора точки самовывоза
-        function openPickupModal() {
-            document.getElementById('pickup-modal').classList.add('active');
-            const saved = localStorage.getItem('mogvape_pickup_location') || "Атриум";
-            selectPickupOption(saved);
-        }
-
-        function selectPickupOption(name) {
-            selectedTempPickup = name;
-            document.getElementById('opt-atrium').classList.remove('selected');
-            document.getElementById('opt-eighth').classList.remove('selected');
-
-            if (name === 'Атриум') {
-                document.getElementById('opt-atrium').classList.add('selected');
-            } else {
-                document.getElementById('opt-eighth').classList.add('selected');
-            }
-        }
-
-        function savePickupLocation() {
-            localStorage.setItem('mogvape_pickup_location', selectedTempPickup);
-            document.getElementById('current-location-text').innerText = selectedTempPickup;
-            document.getElementById('pickup-modal').classList.remove('active');
-        }
-
-        function loadPickupLocation() {
-            const saved = localStorage.getItem('mogvape_pickup_location');
-            if (saved) {
-                document.getElementById('current-location-text').innerText = saved;
-            } else {
-                document.getElementById('current-location-text').innerText = "Точка самовывоза";
-            }
-        }
-
-        function renderRecent() {
-            const container = document.getElementById('recent-list');
-            container.innerHTML = '';
-            recentProducts.forEach(p => {
-                container.innerHTML += `
-                    <div class="recent-card" onclick="switchPage('catalog')">
-                        <img src="${p.img}" alt="${p.title}">
-                        <div class="recent-title">${p.title}</div>
-                        <div class="recent-price">${p.price} BYN</div>
-                    </div>
-                `;
-            });
-        }
-
-        function renderCatalog() {
-            const container = document.getElementById('catalog-list');
-            container.innerHTML = '';
-            products.forEach(p => {
-                const count = cart[p.id] ? cart[p.id].count : 0;
-                container.innerHTML += `
-                    <div class="product-card">
-                        <img src="${p.img}" alt="${p.title}">
-                        <div class="prod-title">${p.title}</div>
-                        <div class="prod-price">${p.price} BYN</div>
-                        <button class="btn-add" onclick="addToCart(${p.id})">
-                            ${count > 0 ? 'В корзине (' + count + ')' : 'В корзину'}
-                        </button>
-                    </div>
-                `;
-            });
-        }
-
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            if (!cart[id]) {
-                cart[id] = { title: product.title, price: product.price, count: 1 };
-            } else {
-                cart[id].count++;
-            }
-            renderCatalog();
-        }
-
-        function renderCart() {
-            const container = document.getElementById('cart-list');
-            container.innerHTML = '';
-            let total = 0;
-            const items = Object.values(cart);
-
-            if (items.length === 0) {
-                container.innerHTML = '<p style="color:#8e8e93; font-size:14px;">Ваша корзина пуста</p>';
-                document.getElementById('cart-total').innerText = '0 BYN';
-                return;
-            }
-
-            items.forEach(item => {
-                total += item.price * item.count;
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <div style="font-weight:600; font-size:14px;">${item.title}</div>
-                        <div style="font-size:12px; color:#8e8e93;">${item.price} BYN x ${item.count}</div>
-                    </div>
-                `;
-            });
-            document.getElementById('cart-total').innerText = total + ' BYN';
-        }
-
-        function switchPage(pageName) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-            document.getElementById(`page-${pageName}`).classList.add('active');
-            const nav = document.getElementById(`nav-${pageName}`);
-            if (nav) nav.classList.add('active');
-
-            if (pageName === 'catalog') renderCatalog();
-            if (pageName === 'cart') renderCart();
-            if (pageName === 'settings') loadSettings();
-        }
-
-        function addToHomeScreen() {
-            if (tg.addToHomeScreen) {
-                tg.addToHomeScreen();
-            } else {
-                document.getElementById('home-screen-modal').classList.add('active');
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('home-screen-modal').classList.remove('active');
-        }
-
-        function saveSettings() {
-            const name = document.getElementById('setting-name').value;
-            const phone = document.getElementById('setting-phone').value;
-            localStorage.setItem('mogvape_user_name', name);
-            localStorage.setItem('mogvape_user_phone', phone);
-            alert('Настройки сохранены!');
-            switchPage('profile');
-        }
-
-        function loadSettings() {
-            if (localStorage.getItem('mogvape_user_name')) {
-                document.getElementById('setting-name').value = localStorage.getItem('mogvape_user_name');
-            }
-            if (localStorage.getItem('mogvape_user_phone')) {
-                document.getElementById('setting-phone').value = localStorage.getItem('mogvape_user_phone');
-            }
-        }
-
-        function openManager() {
-            tg.openTelegramLink("https://t.me/telegram");
-        }
-
-        function copyId() {
-            const id = document.getElementById('user-id').innerText;
-            navigator.clipboard.writeText(id);
-            alert('ID скопирован: ' + id);
-        }
-
-        function sendOrder() {
-            if (Object.keys(cart).length === 0) return;
-            alert('Заказ отправлен!');
-            cart = {};
-            switchPage('profile');
-        }
-
-        renderRecent();
-        renderCatalog();
-        loadSettings();
-        loadPickupLocation();
-    </script>
-</body>
-</html>
+        .user-details .name { font-size: 18px; font-weight: 70
