@@ -11,7 +11,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #0d0e12;
             color: #ffffff;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
         }
 
         /* Шапка */
@@ -25,11 +25,7 @@
             top: 0;
             z-index: 10;
         }
-        .brand-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-        }
+        .brand-name { font-size: 18px; font-weight: 700; color: #fff; }
         .location-select {
             background: #1c1d22;
             color: #d1d5db;
@@ -47,118 +43,152 @@
         .page { display: none; padding: 0 16px; }
         .page.active { display: block; }
 
-        /* --- ВКЛАДКА ПРОФИЛЬ --- */
+        /* Профиль */
         .profile-card {
             background: #18191e;
             border-radius: 20px;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .user-info {
+            padding: 20px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            margin-bottom: 8px;
         }
+        .user-info { display: flex; align-items: center; gap: 14px; }
         .avatar {
-            width: 50px;
-            height: 50px;
+            width: 56px; height: 56px;
             border-radius: 50%;
             background: #2a2b32;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; overflow: hidden;
         }
         .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .user-details .name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-        .user-details .id { font-size: 12px; color: #8e8e93; display: flex; align-items: center; gap: 4px; }
+        .user-details .name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .user-details .id { font-size: 13px; color: #8e8e93; display: flex; align-items: center; gap: 4px; cursor: pointer; }
 
-        /* Лояльность */
-        .loyalty-widget {
-            background: #1e1f26;
-            border-radius: 16px;
-            padding: 12px;
-            width: 130px;
+        /* Красная надпись */
+        .promo-text {
+            color: #ff3b30;
+            font-size: 15px;
+            font-weight: 800;
             text-align: center;
-            border: 1px solid #282932;
-        }
-        .loyalty-badge {
-            width: 32px;
-            height: 32px;
-            background: #2ebd59;
-            border-radius: 50%;
-            margin: 0 auto 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        .status-title { font-size: 11px; color: #8e8e93; }
-        .status-percent { font-size: 20px; font-weight: 800; color: #fff; margin: 2px 0; }
-        .status-next { font-size: 9px; color: #8e8e93; margin-bottom: 8px; }
-        .coins-balance {
-            border-top: 1px solid #282932;
-            padding-top: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #f5a623;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
+            padding: 8px 0 14px 0;
         }
 
-        /* Кнопки действий */
+        /* Кнопка заказов */
         .full-btn {
             background: #18191e;
             border-radius: 16px;
             padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
+            display: flex; align-items: center; gap: 14px;
             margin-bottom: 12px;
             cursor: pointer;
         }
         .icon-box {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border-radius: 12px;
             background: #1e2538;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #2f80ed;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: #2f80ed;
         }
         .btn-text .title { font-size: 15px; font-weight: 600; }
         .btn-text .subtitle { font-size: 12px; color: #8e8e93; }
 
-        /* Сетка 2x2 */
+        /* Сетка действий */
         .actions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         .action-card {
             background: #18191e;
             border-radius: 16px;
             padding: 20px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
             gap: 10px;
             cursor: pointer;
         }
         .action-card .icon-box { background: transparent; width: auto; height: auto; font-size: 26px; }
         .action-card span { font-size: 13px; font-weight: 500; }
 
-        /* --- АССОРТИМЕНТ (КАТАЛОГ) --- */
+        /* Блок Недавно просмотренные */
+        .recent-section {
+            margin-top: 10px;
+        }
+        .section-title {
+            font-size: 14px;
+            color: #8e8e93;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .recent-slider {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+        .recent-slider::-webkit-scrollbar { display: none; }
+        .recent-card {
+            min-width: 130px;
+            max-width: 130px;
+            background: #18191e;
+            border-radius: 16px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .recent-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #23242a;
+            margin-bottom: 8px;
+        }
+        .recent-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .recent-price { font-size: 13px; font-weight: 700; color: #2f80ed; }
+
+        /* Настройки и остальное */
+        .back-btn {
+            background: #18191e;
+            border: 1px solid #282932;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .settings-group {
+            background: #18191e;
+            border-radius: 16px;
+            padding: 8px 16px;
+            margin-bottom: 16px;
+        }
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #282932;
+        }
+        .settings-item:last-child { border-bottom: none; }
+        .settings-label { font-size: 14px; font-weight: 500; }
+        .settings-input {
+            background: #23242a;
+            border: 1px solid #282932;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: right;
+            outline: none;
+            width: 140px;
+        }
+
+        /* Ассортимент */
         .catalog-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -169,14 +199,12 @@
             background: #18191e;
             border-radius: 16px;
             padding: 12px;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             justify-content: space-between;
         }
         .product-card img {
-            width: 100%;
-            height: 110px;
-            object-fit: contain;
+            width: 100%; height: 110px;
+            object-fit: cover;
             border-radius: 10px;
             margin-bottom: 8px;
             background: #23242a;
@@ -184,25 +212,19 @@
         .prod-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
         .prod-price { font-size: 14px; font-weight: 700; color: #2f80ed; margin-bottom: 8px; }
         .btn-add {
-            background: #2f80ed;
-            color: #fff;
-            border: none;
-            padding: 8px;
+            background: #2f80ed; color: #fff;
+            border: none; padding: 8px;
             border-radius: 10px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 12px; font-weight: 600;
             cursor: pointer;
         }
 
-        /* --- КОРЗИНА --- */
-        .cart-item {
+        /* Корзина и история заказов */
+        .cart-item, .order-card {
             background: #18191e;
             padding: 14px;
             border-radius: 14px;
             margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
         .checkout-btn {
             width: 100%;
@@ -211,18 +233,15 @@
             border: none;
             padding: 14px;
             border-radius: 14px;
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 15px; font-weight: 700;
             margin-top: 16px;
             cursor: pointer;
         }
 
-        /* Нижняя навигация */
+        /* Нижнее меню */
         .bottom-nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             background: #121318;
             display: flex;
             justify-content: space-around;
@@ -231,15 +250,33 @@
         }
         .nav-item {
             color: #636575;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             align-items: center;
-            font-size: 10px;
-            font-weight: 500;
+            font-size: 10px; font-weight: 500;
             cursor: pointer;
         }
         .nav-item .icon { font-size: 20px; margin-bottom: 3px; }
         .nav-item.active { color: #2f80ed; }
+
+        /* Всплывающее окно */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #f7f7f8;
+            color: #000;
+            width: 100%;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            padding: 24px 20px;
+        }
     </style>
 </head>
 <body>
@@ -258,20 +295,17 @@
             <div class="user-info">
                 <div class="avatar" id="user-avatar">👤</div>
                 <div class="user-details">
-                    <div class="name" id="user-name">Пользователь</div>
-                    <div class="id" onclick="copyId()">ID: <span id="user-id">00000000</span> 📋</div>
+                    <div class="name" id="user-name">Менеджер</div>
+                    <div class="id" onclick="copyId()">ID: <span id="user-id">5995285721</span> 📋</div>
                 </div>
-            </div>
-            <div class="loyalty-widget">
-                <div class="loyalty-badge">🌱</div>
-                <div class="status-title">Новичок</div>
-                <div class="status-percent">0%</div>
-                <div class="status-next">Ещё 5 товаров до 1%</div>
-                <div class="coins-balance">🪙 0 VapeCoins</div>
             </div>
         </div>
 
-        <div class="full-btn" onclick="switchPage('cart')">
+        <div class="promo-text">
+            8 Наклеек = карик, жижа, снюс
+        </div>
+
+        <div class="full-btn" onclick="switchPage('orders')">
             <div class="icon-box">🛍️</div>
             <div class="btn-text">
                 <div class="title">Заказы</div>
@@ -288,44 +322,75 @@
                 <div class="icon-box" style="color:#2f80ed;">❓</div>
                 <span>Помощь</span>
             </div>
-            <div class="action-card" onclick="alert('Настройки')">
+            <div class="action-card" onclick="switchPage('settings')">
                 <div class="icon-box" style="color:#8e8e93;">⚙️</div>
                 <span>Настройки</span>
             </div>
-            <div class="action-card" onclick="alert('Для добавления на экран нажмите три точки в углу и выберите Добавить на главный экран')">
+            <div class="action-card" onclick="addToHomeScreen()">
                 <div class="icon-box" style="color:#2f80ed;">📱</div>
                 <span>На экран</span>
             </div>
         </div>
+
+        <!-- Недавно просмотренные -->
+        <div class="recent-section">
+            <div class="section-title">Недавно просмотренные</div>
+            <div class="recent-slider" id="recent-list">
+                <!-- Карточки формируются динамически -->
+            </div>
+        </div>
     </div>
 
-    <!-- 2. Страница Ассортимент (Каталог) -->
+    <!-- 2. Страница История заказов -->
+    <div id="page-orders" class="page">
+        <button class="back-btn" onclick="switchPage('profile')">← Назад в профиль</button>
+        <h3 style="margin-bottom:12px;">История покупок</h3>
+        <div id="orders-list">
+            <p style="color:#8e8e93; font-size:14px;">У вас пока нет оформленных заказов.</p>
+        </div>
+    </div>
+
+    <!-- 3. Страница Настройки -->
+    <div id="page-settings" class="page">
+        <button class="back-btn" onclick="switchPage('profile')">← Назад в профиль</button>
+        <h3 style="margin-bottom:12px;">Настройки</h3>
+        <div class="settings-group">
+            <div class="settings-item">
+                <span class="settings-label">Имя для заказа</span>
+                <input type="text" id="setting-name" class="settings-input" placeholder="Введите имя">
+            </div>
+            <div class="settings-item">
+                <span class="settings-label">Телефон</span>
+                <input type="tel" id="setting-phone" class="settings-input" placeholder="+375 (29) ...">
+            </div>
+        </div>
+        <button class="checkout-btn" onclick="saveSettings()">Сохранить настройки</button>
+    </div>
+
+    <!-- 4. Страница Ассортимент -->
     <div id="page-catalog" class="page">
         <h3 style="margin-bottom:12px;">Ассортимент</h3>
         <div class="catalog-grid" id="catalog-list"></div>
     </div>
 
-    <!-- 3. Страница Бонусы -->
+    <!-- 5. Страница Бонусы -->
     <div id="page-bonuses" class="page">
-        <h3 style="margin-bottom:12px;">Бонусная система</h3>
-        <div class="profile-card" style="flex-direction:column; align-items:flex-start; gap:10px;">
-            <h4>Ваш кэшбэк: 0%</h4>
-            <p style="font-size:13px; color:#8e8e93;">Делайте покупки, копите VapeCoins и оплачивайте ими до 50% стоимости заказа!</p>
-        </div>
+        <h3 style="margin-bottom:12px;">Бонусы</h3>
+        <p style="color:#8e8e93; font-size:14px;">У вас 0 бонусов.</p>
     </div>
 
-    <!-- 4. Страница Избранное -->
+    <!-- 6. Страница Избранное -->
     <div id="page-favorites" class="page">
         <h3 style="margin-bottom:12px;">Избранное</h3>
-        <p style="color:#8e8e93; font-size:14px;">У вас пока нет избранных товаров.</p>
+        <p style="color:#8e8e93; font-size:14px;">Список пуст.</p>
     </div>
 
-    <!-- 5. Страница Корзина -->
+    <!-- 7. Страница Корзина -->
     <div id="page-cart" class="page">
         <h3 style="margin-bottom:12px;">Корзина</h3>
         <div id="cart-list"></div>
         <div style="margin-top:16px; font-size:16px; font-weight:700;">
-            Итого к оплате: <span id="cart-total" style="color:#2f80ed;">0 BYN</span>
+            Итого: <span id="cart-total" style="color:#2f80ed;">0 BYN</span>
         </div>
         <button class="checkout-btn" onclick="sendOrder()">Оформить заказ</button>
     </div>
@@ -358,7 +423,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Заполнение профиля данными Telegram
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             const u = tg.initDataUnsafe.user;
             document.getElementById('user-name').innerText = u.first_name + (u.last_name ? ' ' + u.last_name : '');
@@ -368,17 +432,6 @@
             }
         }
 
-        function copyId() {
-            const id = document.getElementById('user-id').innerText;
-            navigator.clipboard.writeText(id);
-            alert('ID скопирован: ' + id);
-        }
-
-        function openManager() {
-            tg.openTelegramLink("https://t.me/telegram"); // Поменяйте на логин вашего менеджера
-        }
-
-        // Каталог товаров
         const products = [
             { id: 1, title: "Husky Salt 30ml", price: 25, img: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=200" },
             { id: 2, title: "Xylinet 30ml", price: 22, img: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=200" },
@@ -387,6 +440,21 @@
         ];
 
         let cart = {};
+        let recentProducts = [products[0], products[1], products[2]];
+
+        function renderRecent() {
+            const container = document.getElementById('recent-list');
+            container.innerHTML = '';
+            recentProducts.forEach(p => {
+                container.innerHTML += `
+                    <div class="recent-card" onclick="switchPage('catalog')">
+                        <img src="${p.img}" alt="${p.title}">
+                        <div class="recent-title">${p.title}</div>
+                        <div class="recent-price">${p.price} BYN</div>
+                    </div>
+                `;
+            });
+        }
 
         function renderCatalog() {
             const container = document.getElementById('catalog-list');
@@ -432,11 +500,8 @@
                 total += item.price * item.count;
                 container.innerHTML += `
                     <div class="cart-item">
-                        <div>
-                            <div style="font-weight:600; font-size:14px;">${item.title}</div>
-                            <div style="font-size:12px; color:#8e8e93;">${item.price} BYN x ${item.count}</div>
-                        </div>
-                        <div style="font-weight:700; color:#2f80ed;">${item.price * item.count} BYN</div>
+                        <div style="font-weight:600; font-size:14px;">${item.title}</div>
+                        <div style="font-size:12px; color:#8e8e93;">${item.price} BYN x ${item.count}</div>
                     </div>
                 `;
             });
@@ -448,27 +513,21 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
             document.getElementById(`page-${pageName}`).classList.add('active');
-            document.getElementById(`nav-${pageName}`).classList.add('active');
+            const nav = document.getElementById(`nav-${pageName}`);
+            if (nav) nav.classList.add('active');
 
             if (pageName === 'catalog') renderCatalog();
             if (pageName === 'cart') renderCart();
         }
 
         function sendOrder() {
-            if (Object.keys(cart).length === 0) {
-                alert('Корзина пуста!');
-                return;
-            }
-            let orderText = "Новый заказ MOGVAPE:\n";
-            let total = 0;
-            Object.values(cart).forEach(item => {
-                orderText += `- ${item.title} x${item.count} (${item.price * item.count} BYN)\n`;
-                total += item.price * item.count;
-            });
-            orderText += `\nИтого: ${total} BYN`;
-            tg.sendData(orderText);
+            if (Object.keys(cart).length === 0) return;
+            alert('Заказ отправлен!');
+            cart = {};
+            switchPage('profile');
         }
 
+        renderRecent();
         renderCatalog();
     </script>
 </body>
