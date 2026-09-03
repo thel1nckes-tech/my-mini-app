@@ -615,6 +615,35 @@ background:var(--bg)
 color:var(--red)
 }
 
+
+/* CONFIRM MODAL */
+.confirm-sheet{text-align:center;padding:20px 16px 16px}
+.confirm-icon{width:58px;height:58px;border-radius:50%;background:rgba(255,59,48,.1);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px}
+.confirm-title{font-size:18px;font-weight:900;margin-bottom:8px}
+.confirm-text{color:var(--muted);font-size:12px;line-height:1.45;margin-bottom:18px}
+.confirm-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.confirm-buttons button{height:46px;border-radius:12px;font-weight:800}
+.confirm-cancel{background:var(--bg);color:var(--text)}
+.confirm-delete{background:var(--red);color:#fff}
+
+/* PROMOCODES */
+.promo-box{margin-top:12px;padding:11px;border:1px solid var(--line);border-radius:13px;background:var(--bg)}
+.promo-row{display:flex;gap:7px}
+.promo-row input{flex:1;min-width:0}
+.promo-apply{width:105px;border-radius:11px;background:var(--blue);color:#fff;font-weight:800}
+.promo-applied{margin-top:8px;font-size:11px;color:var(--green);font-weight:700}
+.promo-admin-item{display:flex;align-items:center;gap:9px;padding:11px 0;border-bottom:1px solid var(--line)}
+.promo-admin-item:last-child{border-bottom:0}
+.promo-admin-icon{width:44px;height:44px;border-radius:11px;background:rgba(21,151,255,.1);display:flex;align-items:center;justify-content:center;font-size:21px}
+.promo-admin-mid{flex:1;min-width:0}
+.promo-admin-code{font-size:13px;font-weight:900;letter-spacing:.5px}
+.promo-admin-meta{color:var(--muted);font-size:10px;margin-top:3px}
+.promo-admin-status{font-size:10px;margin-top:4px;font-weight:800}
+.promo-admin-actions{display:flex;flex-direction:column;gap:5px}
+.mini-btn{min-width:34px;height:32px;padding:0 8px;border-radius:9px;background:var(--bg);color:var(--text);font-size:11px;font-weight:700}
+.mini-btn.danger{color:var(--red)}
+.mini-btn.blue{color:var(--blue)}
+
 /* MODAL */
 
 .modal{
@@ -935,6 +964,36 @@ grid-template-columns:repeat(3,1fr)
 
 </div>
 
+<div class="box">
+
+<div style="font-weight:800">
+🎟 Управление промокодами
+</div>
+
+<div class="sub" style="margin-top:4px">
+Создай код из букв и цифр, задай скидку и лимит использований.
+</div>
+
+<div class="form">
+
+<label>Промокод</label>
+<input id="promoAdminCode" maxlength="20" placeholder="MOG2026"
+oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
+
+<label>Скидка, %</label>
+<input id="promoAdminDiscount" type="number" min="1" max="100" inputmode="numeric" placeholder="10">
+
+<label>Количество использований</label>
+<input id="promoAdminLimit" type="number" min="1" inputmode="numeric" placeholder="50">
+
+<button class="primary" onclick="createPromo()">➕ Создать промокод</button>
+
+</div>
+
+<div id="adminPromos" style="margin-top:12px"></div>
+
+</div>
+
 </section>
 
 <!-- НИЖНЕЕ МЕНЮ -->
@@ -1093,6 +1152,18 @@ oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)"
 
 </div>
 
+<div id="confirmModal" class="modal">
+<div class="sheet confirm-sheet">
+<div class="confirm-icon">⚠️</div>
+<div class="confirm-title" id="confirmTitle">Удалить?</div>
+<div class="confirm-text" id="confirmText">Вы действительно хотите удалить этот объект?</div>
+<div class="confirm-buttons">
+<button class="confirm-cancel" onclick="closeConfirm()">Отмена</button>
+<button class="confirm-delete" onclick="confirmDeleteAction()">Удалить</button>
+</div>
+</div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
@@ -1143,6 +1214,9 @@ let cart=JSON.parse(localStorage.getItem("mogvape_cart")||"[]");
 let favorites=JSON.parse(localStorage.getItem("mogvape_favorites")||"[]");
 let orders=JSON.parse(localStorage.getItem("mogvape_orders")||"[]");
 
+let promoCodes=JSON.parse(localStorage.getItem("mogvape_promocodes")||"[]");
+let activePromo=null;
+
 let category="Все";
 let sort="default";
 let minPrice="";
@@ -1172,6 +1246,11 @@ JSON.stringify(favorites)
 localStorage.setItem(
 "mogvape_orders",
 JSON.stringify(orders)
+);
+
+localStorage.setItem(
+"mogvape_promocodes",
+JSON.stringify(promoCodes)
 );
 
 }
@@ -1679,15 +1758,28 @@ ${(x.price*x.qty).toLocaleString("ru-RU")} ₽
 
 `
 
+<div class="promo-box">
+  <div style="font-size:12px;font-weight:800;margin-bottom:7px">🎟 Промокод</div>
+  <div class="promo-row">
+    <input id="promoCodeInput" placeholder="Введите промокод" maxlength="20"
+      value="${activePromo||""}"
+      oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
+    <button class="promo-apply" onclick="applyPromo()">Применить</button>
+  </div>
+  ${activePromo?`<div class="promo-applied">✓ Применён: ${escapeHTML(activePromo)}</div>`:""}
+</div>
+
 <div class="total">
 
 <span>Итого</span>
 
 <span>
-${cartTotal().toLocaleString("ru-RU")} ₽
+${getFinalCartTotal().toLocaleString("ru-RU")} ₽
 </span>
 
 </div>
+
+${getPromoDiscountAmount()>0?`<div class="sub" style="text-align:right;margin-top:4px;color:var(--green)">Скидка: −${getPromoDiscountAmount().toLocaleString("ru-RU")} ₽</div>`:""}
 
 <button
 class="primary"
@@ -1735,6 +1827,7 @@ renderCart();
 function clearCart(){
 
 cart=[];
+activePromo=null;
 
 saveData();
 updateCartCount();
@@ -1748,6 +1841,81 @@ return cart.reduce(
 (s,x)=>s+x.price*x.qty,
 0
 );
+
+}
+
+function getActivePromo(){
+
+if(!activePromo)return null;
+
+const promo=promoCodes.find(p=>p.code===activePromo);
+
+if(!promo || promo.active===false)return null;
+
+if(Number(promo.used||0)>=Number(promo.limit||0))return null;
+
+return promo;
+
+}
+
+function getPromoDiscountAmount(){
+
+const promo=getActivePromo();
+
+if(!promo)return 0;
+
+return Math.round(cartTotal()*Number(promo.discount||0)/100);
+
+}
+
+function getFinalCartTotal(){
+
+return Math.max(0,cartTotal()-getPromoDiscountAmount());
+
+}
+
+function applyPromo(){
+
+const input=document.getElementById("promoCodeInput");
+
+if(!input){
+showToast("Введите промокод");
+return;
+}
+
+const code=input.value.trim().toUpperCase();
+
+if(!code){
+showToast("Введите промокод");
+return;
+}
+
+const promo=promoCodes.find(p=>p.code===code);
+
+if(!promo){
+activePromo=null;
+renderCart();
+showToast("Промокод не найден");
+return;
+}
+
+if(promo.active===false){
+activePromo=null;
+renderCart();
+showToast("Промокод отключён");
+return;
+}
+
+if(Number(promo.used||0)>=Number(promo.limit||0)){
+activePromo=null;
+renderCart();
+showToast("Лимит использований исчерпан");
+return;
+}
+
+activePromo=promo.code;
+renderCart();
+showToast(`Промокод применён: −${promo.discount}%`);
 
 }
 
@@ -1803,7 +1971,13 @@ userId:u.id||"",
 
 phone:phone,
 
-total:cartTotal(),
+total:getFinalCartTotal(),
+
+subtotal:cartTotal(),
+
+discount:getPromoDiscountAmount(),
+
+promo:activePromo||"",
 
 items:cart.map(x=>({
 
@@ -1825,6 +1999,15 @@ comment:""
 
 };
 
+const usedPromo=getActivePromo();
+
+if(usedPromo){
+usedPromo.used=Number(usedPromo.used||0)+1;
+if(usedPromo.used>=Number(usedPromo.limit||0)){
+usedPromo.active=false;
+}
+}
+
 orders.unshift({
 
 id:order.id,
@@ -1834,6 +2017,12 @@ date:new Date().toLocaleString("ru-RU"),
 items:order.items,
 
 total:order.total,
+
+subtotal:order.subtotal||order.total,
+
+discount:order.discount||0,
+
+promo:order.promo||"",
 
 status:"Новый"
 
@@ -1857,6 +2046,7 @@ openManager();
 }
 
 cart=[];
+activePromo=null;
 
 saveData();
 
@@ -2304,6 +2494,8 @@ onclick="deleteProduct('${p.id}')">
 
 `).join("");
 
+renderAdminPromos();
+
 }
 
 function saveProduct(){
@@ -2495,23 +2687,18 @@ function deleteProduct(id){
 
 if(!isAdmin())return;
 
-const p=
-products.find(x=>x.id===id);
+const p=products.find(x=>x.id===id);
 
 if(!p)return;
 
-if(!confirm(
-`Удалить товар «${p.name}»?`
-))return;
+openConfirm(
+"⚠️ Удалить товар?",
+`Вы действительно хотите удалить ${escapeHTML(p.name)}?`,
+()=>{
 
-products=
-products.filter(x=>x.id!==id);
-
-favorites=
-favorites.filter(x=>x!==id);
-
-cart=
-cart.filter(x=>x.id!==id);
+products=products.filter(x=>x.id!==id);
+favorites=favorites.filter(x=>x!==id);
+cart=cart.filter(x=>x.id!==id);
 
 saveData();
 
@@ -2521,6 +2708,207 @@ renderFavorites();
 renderCart();
 
 showToast("Товар удалён");
+
+}
+);
+
+}
+
+/* PROMOCODES ADMIN */
+
+function createPromo(){
+
+if(!isAdmin())return;
+
+const code=document.getElementById("promoAdminCode").value.trim().toUpperCase();
+const discount=Number(document.getElementById("promoAdminDiscount").value);
+const limit=Number(document.getElementById("promoAdminLimit").value);
+
+if(!code){
+showToast("Введите промокод");
+return;
+}
+
+if(!/^[A-Z0-9]+$/.test(code)){
+showToast("Только буквы и цифры");
+return;
+}
+
+if(discount<1||discount>100){
+showToast("Скидка должна быть от 1 до 100%");
+return;
+}
+
+if(limit<1){
+showToast("Лимит должен быть минимум 1");
+return;
+}
+
+if(promoCodes.some(p=>p.code===code)){
+showToast("Такой промокод уже существует");
+return;
+}
+
+promoCodes.unshift({
+id:Date.now().toString(),
+code,
+discount,
+limit,
+used:0,
+active:true,
+created:Date.now()
+});
+
+saveData();
+
+document.getElementById("promoAdminCode").value="";
+document.getElementById("promoAdminDiscount").value="";
+document.getElementById("promoAdminLimit").value="";
+
+renderAdminPromos();
+showToast("Промокод создан");
+
+}
+
+function renderAdminPromos(){
+
+const box=document.getElementById("adminPromos");
+
+if(!box)return;
+
+if(!promoCodes.length){
+box.innerHTML=`<div class="empty" style="padding:30px 10px">🎟<br>Промокодов пока нет</div>`;
+return;
+}
+
+box.innerHTML=promoCodes.map(p=>{
+
+const used=Number(p.used||0);
+const limit=Number(p.limit||0);
+const exhausted=used>=limit;
+const status=exhausted?"Лимит исчерпан":p.active===false?"Отключён":"Активен";
+
+return`
+<div class="promo-admin-item">
+
+<div class="promo-admin-icon">🎟</div>
+
+<div class="promo-admin-mid">
+
+<div class="promo-admin-code">${escapeHTML(p.code)}</div>
+
+<div class="promo-admin-meta">
+Скидка: <b>${Number(p.discount)}%</b>
+ · Использований: <b>${used} / ${limit}</b>
+</div>
+
+<div class="promo-admin-status" style="color:${exhausted||p.active===false?"var(--red)":"var(--green)"}">
+${status}
+</div>
+
+</div>
+
+<div class="promo-admin-actions">
+
+<button class="mini-btn blue" onclick="togglePromo('${p.id}')">
+${p.active===false?"Вкл":"Выкл"}
+</button>
+
+<button class="mini-btn danger" onclick="deletePromo('${p.id}')">🗑</button>
+
+</div>
+
+</div>
+`;
+
+}).join("");
+
+}
+
+function togglePromo(id){
+
+if(!isAdmin())return;
+
+const p=promoCodes.find(x=>x.id===id);
+
+if(!p)return;
+
+if(Number(p.used||0)>=Number(p.limit||0)){
+showToast("Лимит промокода уже исчерпан");
+return;
+}
+
+p.active=p.active===false;
+
+if(activePromo===p.code&&!p.active){
+activePromo=null;
+}
+
+saveData();
+renderAdminPromos();
+renderCart();
+
+showToast(p.active?"Промокод включён":"Промокод отключён");
+
+}
+
+function deletePromo(id){
+
+if(!isAdmin())return;
+
+const p=promoCodes.find(x=>x.id===id);
+
+if(!p)return;
+
+openConfirm(
+"⚠️ Удалить промокод?",
+`Вы действительно хотите удалить ${escapeHTML(p.code)}?`,
+()=>{
+
+promoCodes=promoCodes.filter(x=>x.id!==id);
+
+if(activePromo===p.code){
+activePromo=null;
+}
+
+saveData();
+renderAdminPromos();
+renderCart();
+
+showToast("Промокод удалён");
+
+}
+);
+
+}
+
+function openConfirm(title,text,action){
+
+window.confirmAction=action;
+
+document.getElementById("confirmTitle").textContent=title;
+document.getElementById("confirmText").innerHTML=text;
+
+document.getElementById("confirmModal").classList.add("show");
+
+}
+
+function closeConfirm(){
+
+window.confirmAction=null;
+document.getElementById("confirmModal").classList.remove("show");
+
+}
+
+function confirmDeleteAction(){
+
+const action=window.confirmAction;
+
+closeConfirm();
+
+if(typeof action==="function"){
+action();
+}
 
 }
 
