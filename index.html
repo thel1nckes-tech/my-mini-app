@@ -2,890 +2,724 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#f5f5f7">
 <title>MOGVAPE</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
 *{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent
 }
 
 :root{
-    --bg:#f4f4f6;
-    --card:#ffffff;
-    --text:#111111;
-    --muted:#8b8b93;
-    --line:#e7e7eb;
-    --accent:#111111;
-    --nav:#ffffff;
-    --danger:#ff3b30;
+--bg:#f5f5f7;
+--card:#fff;
+--text:#111;
+--muted:#8b8d94;
+--line:#e5e5e9;
+--blue:#1597ff;
+--red:#ff3b30;
+--green:#20c77a;
+--nav:#fff;
+--shadow:0 4px 18px rgba(0,0,0,.07)
 }
 
 body.dark{
-    --bg:#0e0e10;
-    --card:#18181b;
-    --text:#ffffff;
-    --muted:#909096;
-    --line:#29292e;
-    --accent:#ffffff;
-    --nav:#171719;
+--bg:#0d0e10;
+--card:#18191d;
+--text:#fff;
+--muted:#9699a2;
+--line:#292b31;
+--nav:#15161a;
+--shadow:0 4px 18px rgba(0,0,0,.25)
 }
 
-body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    transition:.2s;
-    padding-bottom:90px;
+html,body{
+margin:0;
+padding:0;
+background:var(--bg);
+color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
 }
 
-button,
-input{
-    font-family:inherit;
+button,input,select,textarea{
+font:inherit
 }
 
 button{
-    border:0;
-    cursor:pointer;
+border:0;
+cursor:pointer
 }
 
 .app{
-    width:100%;
-    max-width:650px;
-    margin:auto;
+max-width:650px;
+margin:auto;
+min-height:100vh;
+padding-bottom:82px
 }
 
-/* HEADER */
-
 .top{
-    padding:18px 16px 10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+position:sticky;
+top:0;
+z-index:50;
+height:60px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 14px;
+background:var(--bg)
 }
 
 .logo{
-    font-size:23px;
-    font-weight:900;
-    letter-spacing:-1px;
+font-size:23px;
+font-weight:900;
+letter-spacing:1px
 }
 
-.logo span{
-    opacity:.35;
+.top button{
+width:38px;
+height:38px;
+border-radius:50%;
+background:var(--card);
+color:var(--text)
 }
 
-.top-btn{
-    width:42px;
-    height:42px;
-    border-radius:14px;
-    background:var(--card);
-    color:var(--text);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:19px;
+.page{
+display:none;
+padding:0 12px 20px
+}
+
+.page.active{
+display:block
+}
+
+h2{
+font-size:21px;
+margin:10px 2px 15px
 }
 
 /* SEARCH */
 
+.searchrow{
+display:flex;
+gap:8px;
+margin-bottom:10px
+}
+
 .search{
-    margin:4px 16px 12px;
-    position:relative;
+position:relative;
+flex:1
 }
 
 .search input{
-    width:100%;
-    height:50px;
-    border:0;
-    outline:none;
-    border-radius:17px;
-    background:var(--card);
-    color:var(--text);
-    padding:0 18px 0 46px;
-    font-size:15px;
+width:100%;
+height:44px;
+border:1px solid var(--line);
+border-radius:23px;
+background:var(--card);
+color:var(--text);
+outline:none;
+padding:0 14px 0 40px
 }
 
-.search-icon{
-    position:absolute;
-    left:17px;
-    top:14px;
-    color:var(--muted);
-    font-size:19px;
+.search span{
+position:absolute;
+left:15px;
+top:10px;
+font-size:18px;
+color:var(--muted)
+}
+
+.filter{
+width:44px;
+height:44px;
+border-radius:50%;
+background:var(--blue);
+color:#fff;
+font-size:18px
 }
 
 /* CATEGORIES */
 
 .categories{
-    display:flex;
-    gap:9px;
-    padding:3px 16px 15px;
-    overflow-x:auto;
-    scrollbar-width:none;
+display:flex;
+gap:7px;
+overflow:auto;
+padding-bottom:12px;
+scrollbar-width:none
 }
 
 .categories::-webkit-scrollbar{
-    display:none;
+display:none
 }
 
 .category{
-    white-space:nowrap;
-    padding:11px 16px;
-    border-radius:14px;
-    background:var(--card);
-    color:var(--muted);
-    font-size:13px;
-    font-weight:700;
+white-space:nowrap;
+padding:8px 13px;
+border-radius:18px;
+background:var(--card);
+color:var(--text);
+border:1px solid var(--line);
+font-size:12px
 }
 
 .category.active{
-    background:var(--accent);
-    color:var(--bg);
+background:var(--blue);
+color:white;
+border-color:var(--blue)
 }
 
-/* TITLE */
+/* SORT */
 
-.section-title{
-    padding:5px 16px 12px;
-    font-size:21px;
-    font-weight:900;
-    letter-spacing:-.5px;
+.sorts{
+display:flex;
+gap:7px;
+overflow:auto;
+margin-bottom:10px
+}
+
+.sort{
+white-space:nowrap;
+padding:7px 10px;
+border-radius:10px;
+background:var(--card);
+border:1px solid var(--line);
+color:var(--text);
+font-size:10px
+}
+
+.sort.active{
+background:var(--blue);
+color:#fff;
+border-color:var(--blue)
 }
 
 /* PRODUCTS */
 
 .products{
-    padding:0 12px;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:9px
 }
 
 .product{
-    background:var(--card);
-    border-radius:21px;
-    overflow:hidden;
-    position:relative;
-    min-width:0;
+background:var(--card);
+border-radius:15px;
+overflow:hidden;
+box-shadow:var(--shadow)
 }
 
-.product-image{
-    height:180px;
-    background:linear-gradient(145deg,#252529,#101012);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    overflow:hidden;
+.productimg{
+height:160px;
+background:var(--bg);
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative
 }
 
-.product-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.productimg img{
+width:100%;
+height:100%;
+object-fit:contain
 }
 
-.product-placeholder{
-    font-size:42px;
-    opacity:.25;
-}
-
-.favorite{
-    position:absolute;
-    top:9px;
-    right:9px;
-    width:34px;
-    height:34px;
-    border-radius:12px;
-    background:rgba(0,0,0,.48);
-    color:#fff;
-    font-size:17px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:2;
-}
-
-.favorite.active{
-    color:#ff375f;
+.productimg .heart{
+position:absolute;
+right:7px;
+top:7px;
+width:31px;
+height:31px;
+border-radius:50%;
+background:rgba(255,255,255,.9)
 }
 
 .badge{
-    position:absolute;
-    left:9px;
-    top:9px;
-    padding:6px 8px;
-    border-radius:9px;
-    background:rgba(0,0,0,.58);
-    color:#fff;
-    font-size:10px;
-    font-weight:800;
+position:absolute;
+left:7px;
+top:7px;
+padding:4px 7px;
+border-radius:9px;
+background:var(--blue);
+color:#fff;
+font-size:9px;
+font-weight:bold
 }
 
-.product-info{
-    padding:12px;
+.productinfo{
+padding:9px 10px 11px
 }
 
-.product-name{
-    font-size:15px;
-    font-weight:800;
-    line-height:1.15;
-    min-height:35px;
+.productname{
+font-size:12px;
+min-height:32px
 }
 
-.product-sub{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:5px;
-}
-
-.product-bottom{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-top:13px;
+.productbottom{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:8px
 }
 
 .price{
-    font-size:16px;
-    font-weight:900;
+font-size:17px;
+font-weight:900;
+color:var(--blue)
 }
 
 .add{
-    width:36px;
-    height:36px;
-    border-radius:12px;
-    background:var(--accent);
-    color:var(--bg);
-    font-size:21px;
+width:35px;
+height:35px;
+border-radius:11px;
+background:var(--blue);
+color:#fff;
+font-size:22px
 }
 
-/* EMPTY */
+/* NAV */
+
+.nav{
+position:fixed;
+z-index:100;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:100%;
+max-width:650px;
+height:70px;
+background:var(--nav);
+border-top:1px solid var(--line);
+display:grid;
+grid-template-columns:repeat(5,1fr)
+}
+
+.nav button{
+background:none;
+color:var(--muted);
+font-size:9px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:4px
+}
+
+.nav button.active{
+color:var(--blue)
+}
+
+.nav .ico{
+font-size:20px
+}
+
+.count{
+position:absolute;
+margin-left:24px;
+margin-top:-22px;
+background:var(--red);
+color:#fff;
+font-size:9px;
+min-width:17px;
+height:17px;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center
+}
+
+/* BOXES */
+
+.box,.profile{
+background:var(--card);
+border-radius:16px;
+padding:14px;
+box-shadow:var(--shadow);
+margin-bottom:11px
+}
 
 .empty{
-    text-align:center;
-    padding:50px 20px;
-    color:var(--muted);
-}
-
-.empty-icon{
-    font-size:42px;
-    margin-bottom:10px;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-    position:fixed;
-    bottom:10px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 20px);
-    max-width:630px;
-    height:68px;
-    background:var(--nav);
-    border:1px solid var(--line);
-    border-radius:23px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    padding:5px;
-    z-index:50;
-    box-shadow:0 10px 35px rgba(0,0,0,.12);
-}
-
-.nav-item{
-    border-radius:18px;
-    color:var(--muted);
-    background:transparent;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-    font-size:11px;
-    font-weight:700;
-}
-
-.nav-item .icon{
-    font-size:20px;
-}
-
-.nav-item.active{
-    background:var(--accent);
-    color:var(--bg);
-}
-
-/* PAGES */
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
+text-align:center;
+padding:45px 15px;
+color:var(--muted)
 }
 
 /* PROFILE */
 
-.profile{
-    padding:5px 16px;
-}
-
-.profile-head{
-    min-height:180px;
-    border-radius:30px;
-    background:#161618;
-    color:white;
-    padding:22px;
-    display:flex;
-    align-items:flex-end;
-    position:relative;
-    overflow:hidden;
-}
-
-body.dark .profile-head{
-    background:#19191c;
-}
-
-.profile-head:before{
-    content:"";
-    position:absolute;
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    background:rgba(255,255,255,.035);
-    right:-70px;
-    top:-80px;
+.profiletop{
+display:flex;
+align-items:center;
+gap:12px
 }
 
 .avatar{
-    width:76px;
-    height:76px;
-    border-radius:25px;
-    background:#2b2b2f;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:31px;
-    font-weight:900;
-    overflow:hidden;
-    flex-shrink:0;
+width:55px;
+height:55px;
+border-radius:50%;
+background:#777;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:21px;
+font-weight:900;
+overflow:hidden
 }
 
 .avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+width:100%;
+height:100%;
+object-fit:cover
 }
 
-.profile-info{
-    margin-left:14px;
-    position:relative;
-    z-index:1;
+.username{
+font-weight:800;
+font-size:16px
 }
 
-.profile-name{
-    font-size:21px;
-    font-weight:900;
+.phone{
+color:var(--muted);
+font-size:11px;
+margin-top:4px
 }
 
-.profile-id{
-    color:#96969d;
-    font-size:12px;
-    margin-top:4px;
+.profilebuttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px
 }
 
-.profile-actions{
-    position:absolute;
-    right:18px;
-    top:18px;
-    display:flex;
-    gap:7px;
+.profilebutton{
+min-height:68px;
+background:var(--card);
+box-shadow:var(--shadow);
+border-radius:15px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:5px;
+color:var(--text)
 }
 
-.profile-small-btn{
-    width:38px;
-    height:38px;
-    border-radius:13px;
-    background:#29292d;
-    color:white;
+.profilebutton b{
+font-size:21px
 }
 
-.profile-section{
-    margin-top:12px;
+.profilebutton span{
+font-size:11px
 }
 
-.profile-card{
-    background:var(--card);
-    border-radius:23px;
-    padding:18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:10px;
+/* LIST */
+
+.list{
+background:var(--card);
+border-radius:15px;
+overflow:hidden;
+box-shadow:var(--shadow)
 }
 
-.profile-card-left{
-    display:flex;
-    align-items:center;
-    gap:13px;
+.row{
+min-height:54px;
+padding:9px 13px;
+display:flex;
+align-items:center;
+gap:10px;
+border-bottom:1px solid var(--line);
+background:none;
+color:var(--text);
+width:100%;
+text-align:left
 }
 
-.profile-icon{
-    width:45px;
-    height:45px;
-    border-radius:15px;
-    background:var(--bg);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
+.row:last-child{
+border-bottom:0
 }
 
-.profile-card-title{
-    font-weight:850;
-    font-size:15px;
+.rowicon{
+width:34px;
+height:34px;
+border-radius:10px;
+background:rgba(21,151,255,.1);
+display:flex;
+align-items:center;
+justify-content:center
 }
 
-.profile-card-sub{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:3px;
+.rowtext{
+flex:1;
+font-size:13px
 }
 
-.arrow{
-    color:var(--muted);
-    font-size:20px;
-}
-
-.profile-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-.profile-tile{
-    min-height:125px;
-    background:var(--card);
-    border-radius:23px;
-    padding:17px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-}
-
-.tile-icon{
-    font-size:26px;
-}
-
-.tile-title{
-    font-size:14px;
-    font-weight:850;
-}
-
-.tile-sub{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:3px;
-}
-
-/* FAQ */
-
-.faq{
-    padding:8px 16px;
-}
-
-.faq-title{
-    font-size:27px;
-    font-weight:900;
-    margin:8px 0 20px;
-}
-
-.faq-item{
-    border-bottom:1px solid var(--line);
-}
-
-.faq-question{
-    width:100%;
-    background:none;
-    color:var(--text);
-    padding:19px 0;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    text-align:left;
-    font-size:15px;
-    font-weight:800;
-}
-
-.faq-answer{
-    display:none;
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.55;
-    padding:0 0 18px;
-}
-
-.faq-item.open .faq-answer{
-    display:block;
-}
-
-.faq-item.open .faq-arrow{
-    transform:rotate(180deg);
-}
-
-.faq-arrow{
-    transition:.2s;
+.sub{
+font-size:10px;
+color:var(--muted);
+margin-top:2px
 }
 
 /* CART */
 
-.cart{
-    padding:5px 16px;
+.cartitem{
+display:flex;
+gap:9px;
+align-items:center;
+padding:10px 0;
+border-bottom:1px solid var(--line)
 }
 
-.cart-item{
-    background:var(--card);
-    border-radius:21px;
-    padding:13px;
-    display:flex;
-    align-items:center;
-    margin-bottom:9px;
+.cartimg{
+width:58px;
+height:58px;
+object-fit:contain;
+border-radius:10px;
+background:var(--bg)
 }
 
-.cart-image{
-    width:62px;
-    height:62px;
-    border-radius:16px;
-    background:#202024;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    flex-shrink:0;
+.cartmid{
+flex:1
 }
 
-.cart-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.cartname{
+font-size:12px;
+font-weight:700
 }
 
-.cart-data{
-    margin-left:12px;
-    flex:1;
+.cartprice{
+font-size:12px;
+font-weight:800;
+color:var(--blue);
+margin-top:3px
 }
 
-.cart-name{
-    font-size:14px;
-    font-weight:800;
+.qty{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:6px
 }
 
-.cart-price{
-    font-size:13px;
-    margin-top:5px;
-    color:var(--muted);
+.qty button{
+width:26px;
+height:26px;
+border-radius:8px;
+background:var(--bg)
 }
 
-.cart-remove{
-    width:35px;
-    height:35px;
-    border-radius:11px;
-    background:var(--bg);
-    color:var(--danger);
+.total{
+display:flex;
+justify-content:space-between;
+font-size:17px;
+font-weight:900;
+padding-top:13px
 }
 
-.cart-total{
-    background:var(--card);
-    border-radius:22px;
-    padding:18px;
-    margin-top:12px;
-    display:flex;
-    justify-content:space-between;
-    font-weight:900;
+.primary{
+width:100%;
+height:48px;
+border-radius:13px;
+background:var(--blue);
+color:#fff;
+font-weight:800;
+margin-top:12px
 }
 
-/* FAVORITES */
-
-.favorites{
-    padding:5px 16px;
+.secondary{
+width:100%;
+height:45px;
+border-radius:13px;
+background:var(--bg);
+color:var(--text);
+font-weight:700;
+margin-top:8px
 }
 
-/* MODAL */
+/* FORM */
 
-.modal-bg{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.58);
-    z-index:100;
-    display:none;
-    align-items:flex-end;
+.form label{
+display:block;
+font-size:11px;
+color:var(--muted);
+margin:11px 0 5px
 }
 
-.modal-bg.show{
-    display:flex;
+.form input,
+.form select,
+.form textarea{
+width:100%;
+border:1px solid var(--line);
+background:var(--bg);
+color:var(--text);
+border-radius:11px;
+padding:11px;
+outline:none
 }
 
-.modal{
-    width:100%;
-    max-width:650px;
-    margin:auto;
-    background:var(--card);
-    border-radius:30px 30px 0 0;
-    max-height:88vh;
-    overflow:auto;
-    padding:18px;
-    animation:up .2s ease;
-}
-
-@keyframes up{
-    from{
-        transform:translateY(100%);
-    }
-    to{
-        transform:translateY(0);
-    }
-}
-
-.modal-close{
-    width:38px;
-    height:38px;
-    border-radius:13px;
-    background:var(--bg);
-    color:var(--text);
-    float:right;
-    font-size:18px;
-}
-
-.modal-image{
-    height:250px;
-    border-radius:23px;
-    background:#202024;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    clear:both;
-    margin-top:7px;
-}
-
-.modal-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.modal-name{
-    font-size:23px;
-    font-weight:900;
-    margin-top:18px;
-}
-
-.modal-description{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.5;
-    margin-top:8px;
-}
-
-.modal-price{
-    font-size:20px;
-    font-weight:900;
-    margin-top:16px;
-}
-
-.modal-btn{
-    width:100%;
-    height:53px;
-    border-radius:17px;
-    background:var(--accent);
-    color:var(--bg);
-    font-weight:850;
-    font-size:15px;
-    margin-top:15px;
-}
-
-/* SETTINGS */
-
-.settings{
-    padding:5px 16px;
-}
-
-.settings-title{
-    font-size:27px;
-    font-weight:900;
-    margin:8px 0 18px;
-}
-
-.setting{
-    background:var(--card);
-    border-radius:21px;
-    padding:17px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:9px;
-}
-
-.setting-left{
-    display:flex;
-    gap:12px;
-    align-items:center;
-}
-
-.setting-icon{
-    width:43px;
-    height:43px;
-    border-radius:14px;
-    background:var(--bg);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.setting-title{
-    font-size:14px;
-    font-weight:800;
-}
-
-.setting-sub{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:3px;
-}
-
-/* SWITCH */
-
-.switch{
-    width:50px;
-    height:29px;
-    background:#777;
-    border-radius:20px;
-    padding:3px;
-}
-
-.switch-dot{
-    width:23px;
-    height:23px;
-    background:white;
-    border-radius:50%;
-    transition:.2s;
-}
-
-.switch.active{
-    background:#32d74b;
-}
-
-.switch.active .switch-dot{
-    transform:translateX(21px);
+.form textarea{
+min-height:75px;
+resize:vertical
 }
 
 /* ADMIN */
 
-.admin{
-    padding:5px 16px;
+.adminproduct{
+display:flex;
+align-items:center;
+gap:8px;
+padding:9px 0;
+border-bottom:1px solid var(--line)
 }
 
-.admin-title{
-    font-size:27px;
-    font-weight:900;
-    margin:8px 0 18px;
+.adminproduct:last-child{
+border:0
 }
 
-.admin-box{
-    background:var(--card);
-    border-radius:23px;
-    padding:17px;
-    margin-bottom:10px;
+.adminimg{
+width:50px;
+height:50px;
+object-fit:contain;
+background:var(--bg);
+border-radius:10px
 }
 
-.admin-box h3{
-    margin:0 0 14px;
+.adminmid{
+flex:1
 }
 
-.admin-input{
-    width:100%;
-    height:45px;
-    background:var(--bg);
-    border:0;
-    outline:0;
-    border-radius:13px;
-    color:var(--text);
-    padding:0 13px;
-    margin-bottom:8px;
+.adminname{
+font-size:12px;
+font-weight:800
 }
 
-.admin-btn{
-    height:45px;
-    border-radius:13px;
-    padding:0 17px;
-    background:var(--accent);
-    color:var(--bg);
-    font-weight:800;
+.adminmeta{
+font-size:10px;
+color:var(--muted);
+margin-top:3px
 }
 
-.admin-list-item{
-    padding:12px 0;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
+.adminbuttons{
+display:flex;
+gap:4px
 }
 
-.admin-list-item:last-child{
-    border-bottom:0;
+.adminbuttons button{
+width:32px;
+height:32px;
+border-radius:9px;
+background:var(--bg)
 }
 
-.admin-delete{
-    background:#ff3b30;
-    color:white;
-    padding:8px 11px;
-    border-radius:10px;
+.danger{
+color:var(--red)
 }
 
-/* TOAST */
+/* MODAL */
+
+.modal{
+position:fixed;
+z-index:150;
+inset:0;
+background:rgba(0,0,0,.5);
+display:none;
+align-items:flex-end
+}
+
+.modal.show{
+display:flex
+}
+
+.sheet{
+width:100%;
+max-width:650px;
+max-height:90vh;
+overflow:auto;
+background:var(--card);
+border-radius:20px 20px 0 0;
+padding:16px
+}
+
+.sheethead{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:10px
+}
+
+.close{
+width:34px;
+height:34px;
+border-radius:50%;
+background:var(--bg);
+color:var(--text);
+font-size:20px
+}
+
+.notice{
+font-size:11px;
+padding:10px;
+border-radius:10px;
+background:rgba(21,151,255,.1);
+color:var(--blue)
+}
+
+.hidden{
+display:none!important
+}
 
 .toast{
-    position:fixed;
-    left:50%;
-    bottom:91px;
-    transform:translate(-50%,20px);
-    background:#111;
-    color:white;
-    padding:12px 17px;
-    border-radius:14px;
-    font-size:13px;
-    opacity:0;
-    pointer-events:none;
-    transition:.25s;
-    z-index:200;
-    white-space:nowrap;
+position:fixed;
+z-index:300;
+bottom:82px;
+left:50%;
+transform:translateX(-50%);
+background:#222;
+color:#fff;
+padding:10px 15px;
+border-radius:12px;
+font-size:12px;
+opacity:0;
+pointer-events:none;
+transition:.2s
 }
 
 .toast.show{
-    opacity:1;
-    transform:translate(-50%,0);
+opacity:1
 }
 
-/* DESKTOP */
+.order{
+padding:11px 0;
+border-bottom:1px solid var(--line)
+}
 
-@media(min-width:700px){
-    body{
-        padding-bottom:100px;
-    }
+.order:last-child{
+border:0
+}
 
-    .products{
-        grid-template-columns:repeat(3,1fr);
-    }
+.ordertop{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+font-weight:800
+}
 
-    .product-image{
-        height:205px;
-    }
+.orderitems{
+font-size:10px;
+color:var(--muted);
+margin-top:4px
+}
+
+.status{
+font-size:10px;
+color:var(--green);
+margin-top:5px
+}
+
+@media(min-width:600px){
+.products{
+grid-template-columns:repeat(3,1fr)
+}
 }
 </style>
 </head>
@@ -894,1948 +728,1852 @@ body.dark .profile-head{
 
 <div class="app">
 
-    <!-- ================= CATALOG ================= -->
+<header class="top">
+<div class="logo">MOGVAPE</div>
+<button onclick="openSettings()">⚙️</button>
+</header>
 
-    <main id="catalogPage" class="page active">
+<!-- КАТАЛОГ -->
 
-        <div class="top">
-            <div class="logo">MOG<span>VAPE</span></div>
+<section id="home" class="page active">
 
-            <button class="top-btn" onclick="openFavorites()">
-                ♡
-            </button>
-        </div>
+<div class="searchrow">
+<div class="search">
+<span>⌕</span>
+<input id="search" placeholder="Поиск товара..." oninput="renderProducts()">
+</div>
+<button class="filter" onclick="openFilter()">☷</button>
+</div>
 
-        <div class="search">
-            <div class="search-icon">⌕</div>
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Поиск товара..."
-                oninput="renderProducts()"
-            >
-        </div>
+<div id="categories" class="categories"></div>
 
-        <div class="categories" id="categories"></div>
+<div id="sorts" class="sorts"></div>
 
-        <div class="section-title">
-            Каталог
-        </div>
+<div id="products" class="products"></div>
 
-        <div id="products" class="products"></div>
+</section>
 
-    </main>
+<!-- БОНУСЫ УБРАНЫ -->
 
+<!-- ИЗБРАННОЕ -->
 
-    <!-- ================= FAVORITES ================= -->
+<section id="favorites" class="page">
 
-    <main id="favoritesPage" class="page">
+<h2>Избранное</h2>
 
-        <div class="top">
-            <div class="logo">Избранное</div>
+<div id="favoriteProducts" class="products"></div>
 
-            <button class="top-btn" onclick="goCatalog()">
-                ×
-            </button>
-        </div>
+</section>
 
-        <div id="favorites" class="favorites"></div>
+<!-- КОРЗИНА -->
 
-    </main>
+<section id="cart" class="page">
 
+<h2>Корзина</h2>
 
-    <!-- ================= CART ================= -->
+<div class="box" id="cartBox"></div>
 
-    <main id="cartPage" class="page">
+</section>
 
-        <div class="top">
-            <div class="logo">Список</div>
-        </div>
+<!-- ПРОФИЛЬ -->
 
-        <div class="cart">
+<section id="profile" class="page">
 
-            <div class="section-title" style="padding-left:0">
-                Выбранные товары
-            </div>
+<h2>Профиль</h2>
 
-            <div id="cartItems"></div>
+<div class="profile">
 
-            <div id="cartTotal"></div>
+<div class="profiletop">
 
-        </div>
+<div class="avatar" id="avatar">M</div>
 
-    </main>
-
-
-    <!-- ================= PROFILE ================= -->
-
-    <main id="profilePage" class="page">
-
-        <div class="top">
-            <div class="logo">Профиль</div>
-        </div>
-
-        <div class="profile">
-
-            <div class="profile-head">
-
-                <div id="avatar" class="avatar">
-                    M
-                </div>
-
-                <div class="profile-info">
-                    <div id="profileName" class="profile-name">
-                        Пользователь
-                    </div>
-
-                    <div id="profileId" class="profile-id">
-                        ID: —
-                    </div>
-                </div>
-
-                <div class="profile-actions">
-
-                    <button
-                        class="profile-small-btn"
-                        onclick="toggleTheme()">
-                        ◐
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="profile-section">
-
-                <div class="profile-card"
-                     onclick="openCart()">
-
-                    <div class="profile-card-left">
-
-                        <div class="profile-icon">
-                            📦
-                        </div>
-
-                        <div>
-                            <div class="profile-card-title">
-                                Мой список
-                            </div>
-
-                            <div class="profile-card-sub">
-                                Выбранные товары
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="arrow">
-                        ›
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="adminProfileCard"
-                    class="profile-card"
-                    style="display:none"
-                    onclick="openAdmin()">
-
-                    <div class="profile-card-left">
-
-                        <div class="profile-icon">
-                            ⚙️
-                        </div>
-
-                        <div>
-                            <div class="profile-card-title">
-                                Админ-панель
-                            </div>
-
-                            <div class="profile-card-sub">
-                                Управление каталогом
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="arrow">
-                        ›
-                    </div>
-
-                </div>
-
-
-                <div class="profile-grid">
-
-                    <div class="profile-tile"
-                         onclick="openManager()">
-
-                        <div class="tile-icon">
-                            💬
-                        </div>
-
-                        <div>
-                            <div class="tile-title">
-                                Менеджер
-                            </div>
-
-                            <div class="tile-sub">
-                                Связаться
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="profile-tile"
-                         onclick="openFAQ()">
-
-                        <div class="tile-icon">
-                            ❔
-                        </div>
-
-                        <div>
-                            <div class="tile-title">
-                                Помощь
-                            </div>
-
-                            <div class="tile-sub">
-                                Частые вопросы
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="profile-tile"
-                         onclick="openSettings()">
-
-                        <div class="tile-icon">
-                            ⚙️
-                        </div>
-
-                        <div>
-                            <div class="tile-title">
-                                Настройки
-                            </div>
-
-                            <div class="tile-sub">
-                                Параметры
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="profile-tile"
-                         onclick="goCatalog()">
-
-                        <div class="tile-icon">
-                            ⌂
-                        </div>
-
-                        <div>
-                            <div class="tile-title">
-                                Каталог
-                            </div>
-
-                            <div class="tile-sub">
-                                На главную
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-
-    <!-- ================= FAQ ================= -->
-
-    <main id="faqPage" class="page">
-
-        <div class="top">
-            <div class="logo">Помощь</div>
-
-            <button class="top-btn"
-                    onclick="openProfile()">
-                ×
-            </button>
-        </div>
-
-        <div class="faq">
-
-            <div class="faq-title">
-                Частые вопросы
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question"
-                        onclick="toggleFAQ(this)">
-
-                    Как посмотреть товар?
-
-                    <span class="faq-arrow">
-                        ↓
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-                    Нажми на карточку товара в каталоге,
-                    чтобы открыть подробную информацию.
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question"
-                        onclick="toggleFAQ(this)">
-
-                    Как добавить товар в список?
-
-                    <span class="faq-arrow">
-                        ↓
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-                    Нажми кнопку «+» на карточке товара.
-                    Товар появится в разделе «Список».
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question"
-                        onclick="toggleFAQ(this)">
-
-                    Где находится избранное?
-
-                    <span class="faq-arrow">
-                        ↓
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-                    Избранное открывается через кнопку ♡
-                    в верхней части каталога.
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question"
-                        onclick="toggleFAQ(this)">
-
-                    Как изменить тему?
-
-                    <span class="faq-arrow">
-                        ↓
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-                    Тему можно изменить в настройках профиля
-                    или кнопкой ◐ в шапке профиля.
-                </div>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <button class="faq-question"
-                        onclick="toggleFAQ(this)">
-
-                    Как связаться с менеджером?
-
-                    <span class="faq-arrow">
-                        ↓
-                    </span>
-
-                </button>
-
-                <div class="faq-answer">
-                    Открой профиль и выбери раздел «Менеджер».
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-
-    <!-- ================= SETTINGS ================= -->
-
-    <main id="settingsPage" class="page">
-
-        <div class="top">
-            <div class="logo">Настройки</div>
-
-            <button class="top-btn"
-                    onclick="openProfile()">
-                ×
-            </button>
-        </div>
-
-        <div class="settings">
-
-            <div class="settings-title">
-                Настройки
-            </div>
-
-
-            <div class="setting">
-
-                <div class="setting-left">
-
-                    <div class="setting-icon">
-                        ◐
-                    </div>
-
-                    <div>
-                        <div class="setting-title">
-                            Тёмная тема
-                        </div>
-
-                        <div id="themeText"
-                             class="setting-sub">
-                            Выключена
-                        </div>
-                    </div>
-
-                </div>
-
-                <div
-                    id="themeSwitch"
-                    class="switch"
-                    onclick="toggleTheme()">
-
-                    <div class="switch-dot"></div>
-
-                </div>
-
-            </div>
-
-
-            <div class="setting"
-                 onclick="goCatalog()">
-
-                <div class="setting-left">
-
-                    <div class="setting-icon">
-                        ⌂
-                    </div>
-
-                    <div>
-                        <div class="setting-title">
-                            Вернуться в каталог
-                        </div>
-
-                        <div class="setting-sub">
-                            Главная страница
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-
-    <!-- ================= ADMIN ================= -->
-
-    <main id="adminPage" class="page">
-
-        <div class="top">
-            <div class="logo">Админ-панель</div>
-
-            <button class="top-btn"
-                    onclick="openProfile()">
-                ×
-            </button>
-        </div>
-
-        <div class="admin">
-
-            <div class="admin-title">
-                Каталог
-            </div>
-
-
-            <div class="admin-box">
-
-                <h3>
-                    Добавить товар
-                </h3>
-
-                <input
-                    id="newName"
-                    class="admin-input"
-                    placeholder="Название"
-                >
-
-                <input
-                    id="newCategory"
-                    class="admin-input"
-                    placeholder="Категория"
-                >
-
-                <input
-                    id="newPrice"
-                    class="admin-input"
-                    type="number"
-                    placeholder="Цена"
-                >
-
-                <input
-                    id="newImage"
-                    class="admin-input"
-                    placeholder="Ссылка на изображение"
-                >
-
-                <button
-                    class="admin-btn"
-                    onclick="addProduct()">
-
-                    Добавить
-
-                </button>
-
-            </div>
-
-
-            <div class="admin-box">
-
-                <h3>
-                    Товары
-                </h3>
-
-                <div id="adminProducts"></div>
-
-            </div>
-
-        </div>
-
-    </main>
+<div>
+<div class="username" id="username">Пользователь</div>
+<div class="phone" id="profilePhone">Номер не указан</div>
+</div>
 
 </div>
 
+</div>
 
-<!-- ================= BOTTOM NAV ================= -->
+<div class="profilebuttons">
 
-<nav class="bottom-nav">
+<button class="profilebutton" onclick="openManager()">
+<b>👨‍💼</b>
+<span>Менеджер</span>
+</button>
 
-    <button id="navCatalog"
-            class="nav-item active"
-            onclick="goCatalog()">
+<button class="profilebutton" onclick="showPage('cart')">
+<b>🛒</b>
+<span>Корзина</span>
+</button>
 
-        <span class="icon">⌂</span>
-        Каталог
+<button class="profilebutton" onclick="showOrders()">
+<b>📦</b>
+<span>Мои заказы</span>
+</button>
 
-    </button>
+<button class="profilebutton" onclick="showPage('favorites')">
+<b>❤️</b>
+<span>Избранное</span>
+</button>
 
+</div>
 
-    <button id="navFavorites"
-            class="nav-item"
-            onclick="openFavorites()">
+<div style="font-size:13px;font-weight:800;margin:17px 3px 8px">
+Настройки
+</div>
 
-        <span class="icon">♡</span>
-        Избранное
+<div class="list">
 
-    </button>
+<button class="row" onclick="openSettings()">
+<div class="rowicon">⚙️</div>
+<div class="rowtext">
+Настройки
+<div class="sub">Номер телефона и тема</div>
+</div>
+<div>›</div>
+</button>
 
+<button class="row" onclick="openHelp()">
+<div class="rowicon">❓</div>
+<div class="rowtext">
+Помощь
+<div class="sub">Ответы на вопросы</div>
+</div>
+<div>›</div>
+</button>
 
-    <button id="navCart"
-            class="nav-item"
-            onclick="openCart()">
+</div>
 
-        <span class="icon">＋</span>
-        Список
+<div id="adminButton" class="hidden">
 
-    </button>
+<div style="font-size:13px;font-weight:800;margin:17px 3px 8px">
+Администрирование
+</div>
 
+<button class="primary" onclick="showAdmin()">
+🛠 Панель администратора
+</button>
 
-    <button id="navProfile"
-            class="nav-item"
-            onclick="openProfile()">
+</div>
 
-        <span class="icon">●</span>
-        Профиль
+</section>
 
-    </button>
+<!-- ЗАКАЗЫ -->
+
+<section id="orders" class="page">
+
+<button class="secondary" onclick="showPage('profile')">‹ Назад</button>
+
+<h2>Мои заказы</h2>
+
+<div class="box" id="ordersBox"></div>
+
+</section>
+
+<!-- АДМИНКА -->
+
+<section id="admin" class="page">
+
+<button class="secondary" onclick="showPage('profile')">‹ Назад</button>
+
+<h2>🛠 MOGVAPE ADMIN</h2>
+
+<div class="notice">
+Админка доступна только Telegram ID: 5995285721
+</div>
+
+<div class="box">
+
+<div style="font-weight:800">
+Добавить / изменить товар
+</div>
+
+<div class="form">
+
+<label>Название</label>
+<input id="aName" placeholder="Название товара">
+
+<label>Категория</label>
+<input id="aCategory" placeholder="Жидкости">
+
+<label>Цена</label>
+<input id="aPrice" type="number" inputmode="numeric">
+
+<label>Количество</label>
+<input id="aStock" type="number" min="0" inputmode="numeric">
+
+<label>Описание</label>
+<textarea id="aDescription"></textarea>
+
+<label>Вкусы / варианты через запятую</label>
+<input id="aOptions" placeholder="Вишня, Лайм, Яблоко">
+
+<label>Фото</label>
+<input id="aImage" type="file" accept="image/*">
+
+<button id="saveProductButton" class="primary" onclick="saveProduct()">
+➕ Добавить товар
+</button>
+
+<button id="cancelEditButton" class="secondary hidden" onclick="cancelEdit()">
+Отмена редактирования
+</button>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<div style="font-weight:800;margin-bottom:5px">
+Товары
+</div>
+
+<div id="adminProducts"></div>
+
+</div>
+
+</section>
+
+<!-- НИЖНЕЕ МЕНЮ -->
+
+<nav class="nav">
+
+<button data-page="home" class="active" onclick="showPage('home')">
+<span class="ico">⌂</span>
+Каталог
+</button>
+
+<button data-page="favorites" onclick="showPage('favorites')">
+<span class="ico">♡</span>
+Избранное
+</button>
+
+<button data-page="cart" onclick="showPage('cart')" style="position:relative">
+<span class="ico">🛒</span>
+Корзина
+<span id="cartCount" class="count hidden">0</span>
+</button>
+
+<button data-page="orders" onclick="showOrders()">
+<span class="ico">📦</span>
+Заказы
+</button>
+
+<button data-page="profile" onclick="showPage('profile')">
+<span class="ico">●</span>
+Профиль
+</button>
 
 </nav>
 
+</div>
 
-<!-- ================= PRODUCT MODAL ================= -->
+<!-- ФИЛЬТР -->
 
-<div id="productModal"
-     class="modal-bg"
-     onclick="closeModalOutside(event)">
+<div id="filterModal" class="modal">
 
-    <div class="modal">
+<div class="sheet">
 
-        <button class="modal-close"
-                onclick="closeProduct()">
-            ×
-        </button>
+<div class="sheethead">
+<b>Фильтр</b>
+<button class="close" onclick="closeModal('filterModal')">×</button>
+</div>
 
-        <div id="modalImage"
-             class="modal-image">
-        </div>
+<div class="form">
 
-        <div id="modalName"
-             class="modal-name">
-        </div>
+<label>Цена от</label>
+<input id="minPrice" type="number" inputmode="numeric">
 
-        <div id="modalDescription"
-             class="modal-description">
-        </div>
+<label>Цена до</label>
+<input id="maxPrice" type="number" inputmode="numeric">
 
-        <div id="modalPrice"
-             class="modal-price">
-        </div>
-
-        <button
-            id="modalAdd"
-            class="modal-btn">
-            Добавить в список
-        </button>
-
-    </div>
+<button class="primary" onclick="applyFilter()">
+Показать товары
+</button>
 
 </div>
 
-
-<div id="toast"
-     class="toast">
-    Готово
 </div>
 
+</div>
+
+<!-- ТОВАР -->
+
+<div id="productModal" class="modal">
+
+<div class="sheet" id="productSheet"></div>
+
+</div>
+
+<!-- НАСТРОЙКИ -->
+
+<div id="settingsModal" class="modal">
+
+<div class="sheet">
+
+<div class="sheethead">
+<b>Настройки</b>
+<button class="close" onclick="closeModal('settingsModal')">×</button>
+</div>
+
+<div class="form">
+
+<label>Номер телефона — ровно 11 цифр</label>
+
+<input
+id="phoneInput"
+type="tel"
+inputmode="numeric"
+maxlength="11"
+placeholder="79991234567"
+oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)"
+>
+
+<div class="sub">
+Только цифры. Максимум и минимум — 11 цифр.
+</div>
+
+<button class="primary" onclick="savePhone()">
+Сохранить номер
+</button>
+
+<button class="secondary" onclick="toggleTheme()">
+🌙 Переключить тему
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ПОМОЩЬ -->
+
+<div id="helpModal" class="modal">
+
+<div class="sheet">
+
+<div class="sheethead">
+<b>Помощь</b>
+<button class="close" onclick="closeModal('helpModal')">×</button>
+</div>
+
+<div class="list">
+
+<div class="row">
+<div class="rowicon">🛒</div>
+<div class="rowtext">
+Как заказать?
+<div class="sub">
+Добавьте товар в корзину и нажмите «Оформить заказ».
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="rowicon">👨‍💼</div>
+<div class="rowtext">
+Менеджер
+<div class="sub">
+@MOGBARAHA
+</div>
+</div>
+</div>
+
+</div>
+
+<button class="primary" onclick="openManager()">
+Написать менеджеру
+</button>
+
+</div>
+
+</div>
+
+<div id="toast" class="toast"></div>
 
 <script>
 
-/* =====================================================
-   TELEGRAM
-===================================================== */
+const tg=window.Telegram?.WebApp;
 
-const tg = window.Telegram?.WebApp;
+const ADMIN_ID="5995285721";
 
-if(tg){
-    tg.ready();
-    tg.expand();
+const MANAGER="https://t.me/MOGBARAHA";
 
-    try{
-        tg.setHeaderColor(
-            getComputedStyle(document.body)
-                .getPropertyValue('--bg')
-        );
-    }catch(e){}
+let products=JSON.parse(localStorage.getItem("mogvape_products")||"null")||[
+{
+id:"1",
+name:"BJORN СОН ПРИЗРАКА",
+category:"Жидкости",
+price:900,
+stock:10,
+description:"Жидкость для электронных систем.",
+options:["80 мг"],
+image:"",
+created:Date.now()
+},
+{
+id:"2",
+name:"RICK & MORTY BAD ACID",
+category:"Жидкости",
+price:850,
+stock:10,
+description:"Яркая линейка вкусов.",
+options:["50 мг"],
+image:"",
+created:Date.now()
+},
+{
+id:"3",
+name:"ELFBAR DUKE 30000",
+category:"Одноразки",
+price:1800,
+stock:10,
+description:"Одноразовое устройство.",
+options:["Вишня"],
+image:"",
+created:Date.now()
 }
+];
 
+let cart=JSON.parse(localStorage.getItem("mogvape_cart")||"[]");
+let favorites=JSON.parse(localStorage.getItem("mogvape_favorites")||"[]");
+let orders=JSON.parse(localStorage.getItem("mogvape_orders")||"[]");
 
-/* =====================================================
-   SETTINGS
-===================================================== */
+let category="Все";
+let sort="default";
+let minPrice="";
+let maxPrice="";
+let editId=null;
+let currentProduct=null;
+let currentOption="";
+let currentQty=1;
 
-const ADMIN_ID = "5995285721";
+function saveData(){
 
-let currentUser =
-    tg?.initDataUnsafe?.user || null;
-
-let products = JSON.parse(
-    localStorage.getItem("mogvape_products") || "null"
+localStorage.setItem(
+"mogvape_products",
+JSON.stringify(products)
 );
 
-let favorites = JSON.parse(
-    localStorage.getItem("mogvape_favorites") || "[]"
+localStorage.setItem(
+"mogvape_cart",
+JSON.stringify(cart)
 );
 
-let cart = JSON.parse(
-    localStorage.getItem("mogvape_cart") || "[]"
+localStorage.setItem(
+"mogvape_favorites",
+JSON.stringify(favorites)
 );
 
-let currentCategory = "Все";
-
-let selectedProduct = null;
-
-
-/* =====================================================
-   DEFAULT PRODUCTS
-===================================================== */
-
-if(!products){
-
-    products = [
-
-        {
-            id:1,
-            name:"Товар 01",
-            category:"Жидкость",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:2,
-            name:"Товар 02",
-            category:"Жидкость",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:3,
-            name:"Товар 03",
-            category:"Одноразки",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:4,
-            name:"Товар 04",
-            category:"Одноразки",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:5,
-            name:"Товар 05",
-            category:"POD-системы",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:6,
-            name:"Товар 06",
-            category:"POD-системы",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:7,
-            name:"Товар 07",
-            category:"Картриджи",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:8,
-            name:"Товар 08",
-            category:"Картриджи",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:9,
-            name:"Товар 09",
-            category:"Аксессуары",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        },
-
-        {
-            id:10,
-            name:"Товар 10",
-            category:"Аксессуары",
-            price:0,
-            image:"",
-            description:"Описание товара."
-        }
-
-    ];
-
-    saveProducts();
-}
-
-
-/* =====================================================
-   SAVE
-===================================================== */
-
-function saveProducts(){
-    localStorage.setItem(
-        "mogvape_products",
-        JSON.stringify(products)
-    );
-}
-
-function saveFavorites(){
-    localStorage.setItem(
-        "mogvape_favorites",
-        JSON.stringify(favorites)
-    );
-}
-
-function saveCart(){
-    localStorage.setItem(
-        "mogvape_cart",
-        JSON.stringify(cart)
-    );
-}
-
-
-/* =====================================================
-   USER
-===================================================== */
-
-function setupUser(){
-
-    let name = "Пользователь";
-
-    if(currentUser){
-
-        name =
-            currentUser.first_name ||
-            currentUser.username ||
-            "Пользователь";
-
-        document.getElementById("profileId")
-            .textContent =
-            "ID: " + currentUser.id;
-
-        const avatar =
-            document.getElementById("avatar");
-
-        if(currentUser.photo_url){
-
-            avatar.innerHTML =
-                `<img src="${currentUser.photo_url}">`;
-
-        }else{
-
-            avatar.textContent =
-                name.charAt(0).toUpperCase();
-
-        }
-
-    }else{
-
-        document.getElementById("profileId")
-            .textContent = "ID: —";
-
-        document.getElementById("avatar")
-            .textContent = "M";
-
-    }
-
-    document.getElementById("profileName")
-        .textContent = name;
-
-
-    /*
-       Админская кнопка.
-       Работает только визуально в клиенте.
-       Для настоящей защиты нужен сервер.
-    */
-
-    if(
-        currentUser &&
-        String(currentUser.id) === ADMIN_ID
-    ){
-
-        document.getElementById(
-            "adminProfileCard"
-        ).style.display = "flex";
-
-    }
+localStorage.setItem(
+"mogvape_orders",
+JSON.stringify(orders)
+);
 
 }
 
+function user(){
 
-/* =====================================================
-   CATEGORIES
-===================================================== */
+return tg?.initDataUnsafe?.user||{};
+
+}
+
+function isAdmin(){
+
+return String(user().id||"")===ADMIN_ID;
+
+}
+
+function initTelegram(){
+
+if(!tg)return;
+
+tg.ready();
+tg.expand();
+
+try{
+tg.setHeaderColor(
+getComputedStyle(document.body)
+.getPropertyValue("--bg")
+.trim()
+);
+}catch(e){}
+
+}
+
+function initUser(){
+
+const u=user();
+
+const name=[
+u.first_name,
+u.last_name
+].filter(Boolean).join(" ")||"Пользователь";
+
+document.getElementById("username").textContent=name;
+
+if(u.photo_url){
+
+document.getElementById("avatar").innerHTML=
+`<img src="${u.photo_url}">`;
+
+}else{
+
+document.getElementById("avatar").textContent=
+name[0]||"M";
+
+}
+
+if(isAdmin()){
+
+document
+.getElementById("adminButton")
+.classList.remove("hidden");
+
+}
+
+const phone=
+localStorage.getItem("mogvape_phone");
+
+document.getElementById("profilePhone")
+.textContent=phone||"Номер не указан";
+
+}
+
+function showPage(page){
+
+document
+.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active"));
+
+document
+.getElementById(page)
+.classList.add("active");
+
+document
+.querySelectorAll(".nav button")
+.forEach(x=>{
+x.classList.toggle(
+"active",
+x.dataset.page===page
+);
+});
+
+if(page==="home")renderProducts();
+if(page==="favorites")renderFavorites();
+if(page==="cart")renderCart();
+if(page==="orders")renderOrders();
+if(page==="admin" && isAdmin())renderAdmin();
+
+window.scrollTo(0,0);
+
+}
 
 function renderCategories(){
 
-    const categories =
-        [
-            "Все",
-            "Жидкость",
-            "Одноразки",
-            "POD-системы",
-            "Картриджи",
-            "Аксессуары"
-        ];
+const cats=[
+"Все",
+...new Set(
+products.map(x=>x.category).filter(Boolean)
+)
+];
 
-    const box =
-        document.getElementById("categories");
+document.getElementById("categories")
+.innerHTML=cats.map(c=>`
 
-    box.innerHTML = "";
+<button
+class="category ${category===c?"active":""}"
+onclick="setCategory('${c.replace(/'/g,"")}')">
 
-    categories.forEach(category => {
+${c}
 
-        const button =
-            document.createElement("button");
+</button>
 
-        button.className =
-            "category" +
-            (currentCategory === category
-                ? " active"
-                : "");
-
-        button.textContent = category;
-
-        button.onclick = () => {
-
-            currentCategory = category;
-
-            renderCategories();
-            renderProducts();
-
-        };
-
-        box.appendChild(button);
-
-    });
+`).join("");
 
 }
 
+function setCategory(c){
 
-/* =====================================================
-   PRODUCTS
-===================================================== */
+category=c;
+
+renderProducts();
+
+}
+
+function renderSorts(){
+
+const data={
+default:"По умолчанию",
+priceAsc:"Дешевле",
+priceDesc:"Дороже",
+name:"А–Я",
+new:"Новинки"
+};
+
+document.getElementById("sorts")
+.innerHTML=Object.entries(data).map(
+([key,name])=>`
+
+<button
+class="sort ${sort===key?"active":""}"
+onclick="setSort('${key}')">
+
+${name}
+
+</button>
+
+`
+).join("");
+
+}
+
+function setSort(s){
+
+sort=s;
+
+renderProducts();
+
+}
+
+function getProducts(){
+
+const search=
+document
+.getElementById("search")
+.value
+.trim()
+.toLowerCase();
+
+let arr=products.filter(p=>{
+
+const cat=
+category==="Все"||
+p.category===category;
+
+const text=
+`${p.name} ${p.category} ${p.description}`
+.toLowerCase();
+
+const q=!search||text.includes(search);
+
+const min=
+minPrice===""||
+Number(p.price)>=Number(minPrice);
+
+const max=
+maxPrice===""||
+Number(p.price)<=Number(maxPrice);
+
+return cat&&q&&min&&max;
+
+});
+
+if(sort==="priceAsc")
+arr.sort((a,b)=>a.price-b.price);
+
+if(sort==="priceDesc")
+arr.sort((a,b)=>b.price-a.price);
+
+if(sort==="name")
+arr.sort((a,b)=>a.name.localeCompare(b.name));
+
+if(sort==="new")
+arr.sort((a,b)=>b.created-a.created);
+
+return arr;
+
+}
 
 function renderProducts(){
 
-    const box =
-        document.getElementById("products");
+renderCategories();
+renderSorts();
 
-    const search =
-        document.getElementById("searchInput")
-            .value
-            .trim()
-            .toLowerCase();
+const arr=getProducts();
 
+const box=
+document.getElementById("products");
 
-    let list =
-        products.filter(product => {
+if(!arr.length){
 
-            const categoryOK =
-                currentCategory === "Все" ||
-                product.category === currentCategory;
+box.innerHTML=
+`<div class="empty" style="grid-column:1/-1">
+🔎<br>Ничего не найдено
+</div>`;
 
-            const searchOK =
-                product.name
-                    .toLowerCase()
-                    .includes(search);
-
-            return categoryOK && searchOK;
-
-        });
-
-
-    if(!list.length){
-
-        box.innerHTML = `
-            <div class="empty" style="grid-column:1/-1">
-                <div class="empty-icon">⌕</div>
-                Ничего не найдено
-            </div>
-        `;
-
-        return;
-    }
-
-
-    box.innerHTML = "";
-
-
-    list.forEach(product => {
-
-        const isFavorite =
-            favorites.includes(product.id);
-
-        const card =
-            document.createElement("div");
-
-        card.className = "product";
-
-
-        let imageHTML =
-            product.image
-            ?
-            `<img src="${escapeHTML(product.image)}"
-                  alt="">`
-            :
-            `<div class="product-placeholder">▦</div>`;
-
-
-        card.innerHTML = `
-
-            <div class="product-image">
-
-                ${imageHTML}
-
-                <div class="badge">
-                    ${escapeHTML(product.category)}
-                </div>
-
-                <button
-                    class="favorite ${isFavorite ? "active" : ""}"
-                    onclick="toggleFavorite(event,${product.id})">
-
-                    ${isFavorite ? "♥" : "♡"}
-
-                </button>
-
-            </div>
-
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    ${escapeHTML(product.name)}
-                </div>
-
-                <div class="product-sub">
-                    ${escapeHTML(product.description || "")}
-                </div>
-
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ${
-                            Number(product.price) > 0
-                            ? Number(product.price).toLocaleString("ru-RU") + " ₽"
-                            : "Цена уточняется"
-                        }
-                    </div>
-
-                    <button
-                        class="add"
-                        onclick="addToCart(event,${product.id})">
-
-                        +
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        card.onclick = () =>
-            openProduct(product.id);
-
-
-        box.appendChild(card);
-
-    });
+return;
 
 }
 
-
-/* =====================================================
-   PRODUCT MODAL
-===================================================== */
-
-function openProduct(id){
-
-    const product =
-        products.find(p => p.id === id);
-
-    if(!product) return;
-
-    selectedProduct = product;
-
-
-    const modalImage =
-        document.getElementById("modalImage");
-
-
-    if(product.image){
-
-        modalImage.innerHTML =
-            `<img src="${escapeHTML(product.image)}">`;
-
-    }else{
-
-        modalImage.innerHTML =
-            `<div class="product-placeholder">▦</div>`;
-
-    }
-
-
-    document.getElementById("modalName")
-        .textContent = product.name;
-
-
-    document.getElementById("modalDescription")
-        .textContent =
-        product.description || "Описание товара.";
-
-
-    document.getElementById("modalPrice")
-        .textContent =
-        Number(product.price) > 0
-        ?
-        Number(product.price).toLocaleString("ru-RU") + " ₽"
-        :
-        "Цена уточняется";
-
-
-    document.getElementById("modalAdd")
-        .onclick = () => {
-
-            addToCart(null, product.id);
-            closeProduct();
-
-        };
-
-
-    document.getElementById("productModal")
-        .classList.add("show");
+box.innerHTML=arr.map(card).join("");
 
 }
 
+function card(p){
 
-function closeProduct(){
+const fav=favorites.includes(p.id);
 
-    document.getElementById("productModal")
-        .classList.remove("show");
+return`
+
+<div class="product">
+
+<div
+class="productimg"
+onclick="openProduct('${p.id}')">
+
+${
+p.image
+?`<img src="${p.image}">`
+:`<div style="font-size:50px">📦</div>`
+}
+
+${
+Date.now()-p.created<1209600000
+?`<div class="badge">НОВИНКА</div>`
+:""
+}
+
+<button
+class="heart"
+onclick="event.stopPropagation();toggleFavorite('${p.id}')">
+
+${fav?"❤️":"♡"}
+
+</button>
+
+</div>
+
+<div class="productinfo">
+
+<div class="productname">
+${escapeHTML(p.name)}
+</div>
+
+<div class="productbottom">
+
+<div>
+
+<div class="price">
+${Number(p.price).toLocaleString("ru-RU")} ₽
+</div>
+
+<div class="sub">
+${
+p.stock>0
+?`В наличии: ${p.stock}`
+:`Нет в наличии`
+}
+</div>
+
+</div>
+
+<button
+class="add"
+${p.stock<=0?"disabled":""}
+onclick="event.stopPropagation();quickAdd('${p.id}')">
+
++
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
 
 }
 
+function escapeHTML(s){
 
-function closeModalOutside(event){
-
-    if(event.target.id === "productModal"){
-
-        closeProduct();
-
-    }
-
-}
-
-
-/* =====================================================
-   FAVORITES
-===================================================== */
-
-function toggleFavorite(event,id){
-
-    if(event){
-        event.stopPropagation();
-    }
-
-    if(favorites.includes(id)){
-
-        favorites =
-            favorites.filter(x => x !== id);
-
-        showToast("Удалено из избранного");
-
-    }else{
-
-        favorites.push(id);
-
-        showToast("Добавлено в избранное");
-
-    }
-
-    saveFavorites();
-
-    renderProducts();
+return String(s||"")
+.replace(/[&<>"']/g,m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m]));
 
 }
 
+function toggleFavorite(id){
 
-function openFavorites(){
+favorites=favorites.includes(id)
+?favorites.filter(x=>x!==id)
+:[...favorites,id];
 
-    showPage("favoritesPage");
+saveData();
 
-    setNav("navFavorites");
+renderProducts();
+renderFavorites();
 
-    renderFavorites();
+showToast(
+favorites.includes(id)
+?"Добавлено в избранное"
+:"Удалено из избранного"
+);
 
 }
-
 
 function renderFavorites(){
 
-    const box =
-        document.getElementById("favorites");
+const arr=
+products.filter(x=>favorites.includes(x.id));
 
-    const list =
-        products.filter(p =>
-            favorites.includes(p.id)
-        );
-
-
-    if(!list.length){
-
-        box.innerHTML = `
-            <div class="empty">
-                <div class="empty-icon">♡</div>
-                Избранное пока пустое
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    box.innerHTML =
-        `<div class="products"></div>`;
-
-
-    const productsBox =
-        box.querySelector(".products");
-
-
-    list.forEach(product => {
-
-        const card =
-            document.createElement("div");
-
-        card.className = "product";
-
-        const image =
-            product.image
-            ?
-            `<img src="${escapeHTML(product.image)}">`
-            :
-            `<div class="product-placeholder">▦</div>`;
-
-
-        card.innerHTML = `
-
-            <div class="product-image">
-
-                ${image}
-
-                <button
-                    class="favorite active"
-                    onclick="toggleFavorite(event,${product.id})">
-                    ♥
-                </button>
-
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    ${escapeHTML(product.name)}
-                </div>
-
-                <div class="product-sub">
-                    ${escapeHTML(product.category)}
-                </div>
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ${
-                            Number(product.price) > 0
-                            ? Number(product.price).toLocaleString("ru-RU") + " ₽"
-                            : "Цена уточняется"
-                        }
-                    </div>
-
-                    <button
-                        class="add"
-                        onclick="addToCart(event,${product.id})">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-        `;
-
-        card.onclick =
-            () => openProduct(product.id);
-
-        productsBox.appendChild(card);
-
-    });
+document.getElementById("favoriteProducts")
+.innerHTML=
+arr.length
+?arr.map(card).join("")
+:`<div class="empty" style="grid-column:1/-1">
+❤️<br>Избранное пусто
+</div>`;
 
 }
 
+function quickAdd(id){
 
-/* =====================================================
-   CART / LIST
-===================================================== */
+const p=products.find(x=>x.id===id);
 
-function addToCart(event,id){
+if(!p)return;
 
-    if(event){
-        event.stopPropagation();
-    }
+if(p.stock<=0){
 
-    if(!cart.includes(id)){
+showToast("Товара нет в наличии");
 
-        cart.push(id);
-
-        saveCart();
-
-        showToast("Добавлено в список");
-
-    }else{
-
-        showToast("Уже добавлено");
-
-    }
-
-    updateCartCount();
+return;
 
 }
 
-
-function removeFromCart(id){
-
-    cart =
-        cart.filter(x => x !== id);
-
-    saveCart();
-
-    renderCart();
-
-    updateCartCount();
+addCart(p,1,p.options?.[0]||"");
 
 }
 
+function addCart(p,qty,option){
 
-function openCart(){
+const key=p.id+"|"+option;
 
-    showPage("cartPage");
+const found=
+cart.find(x=>x.key===key);
 
-    setNav("navCart");
+if(found){
 
-    renderCart();
+found.qty=Math.min(
+found.qty+qty,
+p.stock
+);
 
-}
+}else{
 
-
-function renderCart(){
-
-    const box =
-        document.getElementById("cartItems");
-
-    const list =
-        products.filter(p =>
-            cart.includes(p.id)
-        );
-
-
-    if(!list.length){
-
-        box.innerHTML = `
-            <div class="empty">
-                <div class="empty-icon">＋</div>
-                Список пока пуст
-            </div>
-        `;
-
-        document.getElementById("cartTotal")
-            .innerHTML = "";
-
-        return;
-
-    }
-
-
-    box.innerHTML = "";
-
-    let total = 0;
-
-
-    list.forEach(product => {
-
-        total += Number(product.price) || 0;
-
-
-        const item =
-            document.createElement("div");
-
-        item.className = "cart-item";
-
-
-        const image =
-            product.image
-            ?
-            `<img src="${escapeHTML(product.image)}">`
-            :
-            `<span style="font-size:25px;opacity:.3">▦</span>`;
-
-
-        item.innerHTML = `
-
-            <div class="cart-image">
-                ${image}
-            </div>
-
-            <div class="cart-data">
-
-                <div class="cart-name">
-                    ${escapeHTML(product.name)}
-                </div>
-
-                <div class="cart-price">
-                    ${
-                        Number(product.price) > 0
-                        ? Number(product.price).toLocaleString("ru-RU") + " ₽"
-                        : "Цена уточняется"
-                    }
-                </div>
-
-            </div>
-
-            <button
-                class="cart-remove"
-                onclick="removeFromCart(${product.id})">
-
-                ×
-
-            </button>
-
-        `;
-
-        box.appendChild(item);
-
-    });
-
-
-    document.getElementById("cartTotal")
-        .innerHTML = `
-
-            <div class="cart-total">
-
-                <span>
-                    Позиций: ${list.length}
-                </span>
-
-                <span>
-                    ${
-                        total > 0
-                        ? total.toLocaleString("ru-RU") + " ₽"
-                        : "—"
-                    }
-                </span>
-
-            </div>
-
-        `;
+cart.push({
+key,
+id:p.id,
+name:p.name,
+price:Number(p.price),
+image:p.image||"",
+option,
+qty
+});
 
 }
 
+saveData();
+
+updateCartCount();
+
+renderCart();
+
+showToast("Товар добавлен в корзину");
+
+}
 
 function updateCartCount(){
 
-    const button =
-        document.getElementById("navCart");
+const count=
+cart.reduce((s,x)=>s+x.qty,0);
 
-    button.innerHTML = `
-        <span class="icon">＋</span>
-        Список
-        ${
-            cart.length
-            ? `<small style="
-                    position:absolute;
-                    margin-left:32px;
-                    margin-top:-25px;
-                    background:#ff375f;
-                    color:white;
-                    width:17px;
-                    height:17px;
-                    border-radius:50%;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    font-size:9px">
-                    ${cart.length}
-               </small>`
-            : ""
-        }
-    `;
+const el=
+document.getElementById("cartCount");
 
-    button.style.position = "relative";
+el.textContent=count;
+
+el.classList.toggle(
+"hidden",
+count===0
+);
 
 }
 
+function renderCart(){
 
-/* =====================================================
-   PROFILE
-===================================================== */
+const box=
+document.getElementById("cartBox");
 
-function openProfile(){
+if(!cart.length){
 
-    showPage("profilePage");
+box.innerHTML=
+`<div class="empty">
+🛒<br>Корзина пуста
+</div>`;
 
-    setNav("navProfile");
-
-}
-
-
-function openManager(){
-
-    /*
-       Здесь можно заменить ссылку
-       на своего менеджера.
-    */
-
-    const username = "Barahamogbot";
-
-    if(tg){
-
-        tg.openTelegramLink(
-            "https://t.me/" + username
-        );
-
-    }else{
-
-        window.open(
-            "https://t.me/" + username,
-            "_blank"
-        );
-
-    }
+return;
 
 }
 
+box.innerHTML=
+cart.map((x,i)=>`
 
-function openFAQ(){
+<div class="cartitem">
 
-    showPage("faqPage");
+${
+x.image
+?`<img class="cartimg" src="${x.image}">`
+:`<div class="cartimg" style="display:flex;align-items:center;justify-content:center;font-size:27px">📦</div>`
+}
+
+<div class="cartmid">
+
+<div class="cartname">
+${escapeHTML(x.name)}
+</div>
+
+<div class="cartprice">
+${x.price.toLocaleString("ru-RU")} ₽
+${x.option?" · "+escapeHTML(x.option):""}
+</div>
+
+<div class="qty">
+
+<button onclick="cartQty(${i},-1)">−</button>
+
+<b>${x.qty}</b>
+
+<button onclick="cartQty(${i},1)">+</button>
+
+<button
+onclick="removeCart(${i})"
+style="color:var(--red)">
+
+🗑
+
+</button>
+
+</div>
+
+</div>
+
+<b>
+${(x.price*x.qty).toLocaleString("ru-RU")} ₽
+</b>
+
+</div>
+
+`).join("")+
+
+`
+
+<div class="total">
+
+<span>Итого</span>
+
+<span>
+${cartTotal().toLocaleString("ru-RU")} ₽
+</span>
+
+</div>
+
+<button
+class="primary"
+onclick="checkout()">
+
+📦 Оформить заказ
+
+</button>
+
+<button
+class="secondary"
+onclick="clearCart()">
+
+Очистить корзину
+
+</button>
+
+`;
 
 }
 
+function cartQty(i,d){
+
+cart[i].qty+=d;
+
+if(cart[i].qty<=0)
+cart.splice(i,1);
+
+saveData();
+updateCartCount();
+renderCart();
+
+}
+
+function removeCart(i){
+
+cart.splice(i,1);
+
+saveData();
+updateCartCount();
+renderCart();
+
+}
+
+function clearCart(){
+
+cart=[];
+
+saveData();
+updateCartCount();
+renderCart();
+
+}
+
+function cartTotal(){
+
+return cart.reduce(
+(s,x)=>s+x.price*x.qty,
+0
+);
+
+}
+
+/*
+ОФОРМЛЕНИЕ ЗАКАЗА
+
+Здесь Mini App отправляет данные боту.
+Бот затем отправляет заказ тебе
+на Telegram ID 5995285721.
+*/
+
+function checkout(){
+
+if(!cart.length){
+
+showToast("Корзина пуста");
+
+return;
+
+}
+
+const phone=
+localStorage.getItem("mogvape_phone");
+
+if(!phone){
+
+showToast(
+"Укажите номер телефона в настройках"
+);
+
+openSettings();
+
+return;
+
+}
+
+if(tg){
+
+const u=user();
+
+const order={
+
+id:Date.now().toString(),
+
+customer:[
+u.first_name,
+u.last_name
+].filter(Boolean).join(" ")||"Пользователь",
+
+username:u.username||"",
+
+userId:u.id||"",
+
+phone:phone,
+
+total:cartTotal(),
+
+items:cart.map(x=>({
+
+name:x.name,
+
+option:x.option,
+
+qty:x.qty,
+
+price:x.price
+
+})),
+
+delivery:"Уточнить у менеджера",
+
+address:"",
+
+comment:""
+
+};
+
+orders.unshift({
+
+id:order.id,
+
+date:new Date().toLocaleString("ru-RU"),
+
+items:order.items,
+
+total:order.total,
+
+status:"Новый"
+
+});
+
+saveData();
+
+try{
+
+tg.sendData(
+JSON.stringify({
+type:"mogvape_order",
+order:order
+})
+);
+
+}catch(e){
+
+openManager();
+
+}
+
+cart=[];
+
+saveData();
+
+updateCartCount();
+
+renderCart();
+
+showToast("Заказ отправлен!");
+
+}else{
+
+openManager();
+
+}
+
+}
+
+/* ПОВТОРИТЬ ЗАКАЗ */
+
+function repeatOrder(id){
+
+const order=
+orders.find(x=>x.id===id);
+
+if(!order)return;
+
+order.items.forEach(item=>{
+
+const p=
+products.find(
+x=>x.name===item.name
+);
+
+if(!p)return;
+
+const amount=
+Math.min(
+Number(item.qty)||1,
+Number(p.stock)||0
+);
+
+if(amount>0){
+
+addCart(
+p,
+amount,
+item.option||""
+);
+
+}
+
+});
+
+showPage("cart");
+
+showToast("Товары добавлены в корзину");
+
+}
+
+function renderOrders(){
+
+const box=
+document.getElementById("ordersBox");
+
+if(!orders.length){
+
+box.innerHTML=
+`<div class="empty">
+📦<br>Заказов пока нет
+</div>`;
+
+return;
+
+}
+
+box.innerHTML=
+orders.map(o=>`
+
+<div class="order">
+
+<div class="ordertop">
+
+<span>
+Заказ #${o.id.slice(-6)}
+</span>
+
+<span>
+${Number(o.total).toLocaleString("ru-RU")} ₽
+</span>
+
+</div>
+
+<div class="orderitems">
+
+${o.items.map(x=>
+`${escapeHTML(x.name)} × ${x.qty}`
+).join("<br>")}
+
+</div>
+
+<div class="status">
+${o.status} · ${o.date}
+</div>
+
+<button
+class="secondary"
+onclick="repeatOrder('${o.id}')">
+
+🔄 Повторить заказ
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+/* PRODUCT */
+
+function openProduct(id){
+
+currentProduct=
+products.find(x=>x.id===id);
+
+if(!currentProduct)return;
+
+currentOption=
+currentProduct.options?.[0]||"";
+
+currentQty=1;
+
+const p=currentProduct;
+
+document.getElementById("productSheet")
+.innerHTML=`
+
+<div class="sheethead">
+
+<b>${escapeHTML(p.name)}</b>
+
+<button
+class="close"
+onclick="closeModal('productModal')">
+
+×
+</button>
+
+</div>
+
+<div class="productimg" style="height:280px">
+
+${
+p.image
+?`<img src="${p.image}">`
+:`<div style="font-size:70px">📦</div>`
+}
+
+</div>
+
+<h2>
+${escapeHTML(p.name)}
+</h2>
+
+<div class="price">
+${p.price.toLocaleString("ru-RU")} ₽
+</div>
+
+<div class="sub">
+${escapeHTML(p.description)}
+</div>
+
+${
+p.options?.length
+?`
+
+<div style="margin-top:15px;font-size:12px;font-weight:800">
+Вариант
+</div>
+
+<div class="categories">
+
+${p.options.map((x,i)=>`
+
+<button
+class="category ${i===0?"active":""}"
+onclick="selectOption('${escapeHTML(x)}',this)">
+
+${escapeHTML(x)}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`
+:""
+}
+
+<div style="margin-top:10px;font-size:12px;font-weight:800">
+Количество
+</div>
+
+<div class="qty" style="margin-top:7px">
+
+<button onclick="changeDetailQty(-1)">−</button>
+
+<b id="detailQty">1</b>
+
+<button onclick="changeDetailQty(1)">+</button>
+
+</div>
+
+<button
+class="primary"
+onclick="addCurrentProduct()">
+
+🛒 Добавить в корзину
+
+</button>
+
+`;
+
+document
+.getElementById("productModal")
+.classList.add("show");
+
+}
+
+function selectOption(o,el){
+
+currentOption=o;
+
+document
+.querySelectorAll("#productSheet .category")
+.forEach(x=>x.classList.remove("active"));
+
+el.classList.add("active");
+
+}
+
+function changeDetailQty(d){
+
+currentQty=Math.max(
+1,
+Math.min(
+currentProduct.stock,
+currentQty+d
+)
+);
+
+document.getElementById("detailQty")
+.textContent=currentQty;
+
+}
+
+function addCurrentProduct(){
+
+addCart(
+currentProduct,
+currentQty,
+currentOption
+);
+
+closeModal("productModal");
+
+}
+
+/* SETTINGS */
 
 function openSettings(){
 
-    showPage("settingsPage");
+document.getElementById("phoneInput").value=
+localStorage.getItem("mogvape_phone")||"";
+
+document
+.getElementById("settingsModal")
+.classList.add("show");
 
 }
 
+function savePhone(){
 
-function openAdmin(){
+const phone=
+document
+.getElementById("phoneInput")
+.value
+.replace(/\D/g,"");
 
-    showPage("adminPage");
+if(phone.length!==11){
 
-    renderAdmin();
+showToast(
+"Номер должен содержать ровно 11 цифр"
+);
 
-}
-
-
-/* =====================================================
-   PAGE NAVIGATION
-===================================================== */
-
-function showPage(id){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(page => {
-
-            page.classList.remove("active");
-
-        });
-
-
-    document
-        .getElementById(id)
-        .classList.add("active");
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"instant"
-    });
+return;
 
 }
 
+localStorage.setItem(
+"mogvape_phone",
+phone
+);
 
-function setNav(id){
+document.getElementById("profilePhone")
+.textContent=phone;
 
-    document
-        .querySelectorAll(".nav-item")
-        .forEach(item => {
+closeModal("settingsModal");
 
-            item.classList.remove("active");
-
-        });
-
-
-    const el =
-        document.getElementById(id);
-
-    if(el){
-
-        el.classList.add("active");
-
-    }
+showToast("Номер сохранён");
 
 }
-
-
-function goCatalog(){
-
-    showPage("catalogPage");
-
-    setNav("navCatalog");
-
-    renderProducts();
-
-}
-
-
-/* =====================================================
-   THEME
-===================================================== */
 
 function toggleTheme(){
 
-    document.body.classList.toggle("dark");
+document.body.classList.toggle("dark");
 
-    const dark =
-        document.body.classList.contains("dark");
-
-
-    localStorage.setItem(
-        "mogvape_dark",
-        dark ? "1" : "0"
-    );
-
-
-    updateThemeUI();
+localStorage.setItem(
+"mogvape_theme",
+document.body.classList.contains("dark")
+?"dark"
+:"light"
+);
 
 }
 
+function openHelp(){
 
-function updateThemeUI(){
-
-    const dark =
-        document.body.classList.contains("dark");
-
-
-    const sw =
-        document.getElementById("themeSwitch");
-
-    if(sw){
-
-        sw.classList.toggle(
-            "active",
-            dark
-        );
-
-    }
-
-
-    const text =
-        document.getElementById("themeText");
-
-    if(text){
-
-        text.textContent =
-            dark
-            ? "Включена"
-            : "Выключена";
-
-    }
+document
+.getElementById("helpModal")
+.classList.add("show");
 
 }
 
+function openManager(){
 
-/* =====================================================
-   FAQ
-===================================================== */
+if(tg?.openTelegramLink){
 
-function toggleFAQ(button){
+tg.openTelegramLink(MANAGER);
 
-    const item =
-        button.parentElement;
+}else{
 
-    item.classList.toggle("open");
+window.open(
+MANAGER,
+"_blank"
+);
 
 }
 
+}
 
-/* =====================================================
-   ADMIN
-===================================================== */
+/* FILTER */
+
+function openFilter(){
+
+document.getElementById("minPrice").value=minPrice;
+document.getElementById("maxPrice").value=maxPrice;
+
+document
+.getElementById("filterModal")
+.classList.add("show");
+
+}
+
+function applyFilter(){
+
+minPrice=
+document.getElementById("minPrice").value;
+
+maxPrice=
+document.getElementById("maxPrice").value;
+
+closeModal("filterModal");
+
+renderProducts();
+
+}
+
+/* ADMIN */
+
+function showAdmin(){
+
+if(!isAdmin()){
+
+showToast("Доступ запрещён");
+
+return;
+
+}
+
+showPage("admin");
+
+}
 
 function renderAdmin(){
 
-    const box =
-        document.getElementById("adminProducts");
+if(!isAdmin())return;
 
-    box.innerHTML = "";
+const box=
+document.getElementById("adminProducts");
 
+box.innerHTML=
+products.map(p=>`
 
-    products.forEach(product => {
+<div class="adminproduct">
 
-        const item =
-            document.createElement("div");
+${
+p.image
+?`<img class="adminimg" src="${p.image}">`
+:`<div class="adminimg"></div>`
+}
 
-        item.className =
-            "admin-list-item";
+<div class="adminmid">
 
+<div class="adminname">
+${escapeHTML(p.name)}
+</div>
 
-        item.innerHTML = `
+<div class="adminmeta">
+${escapeHTML(p.category)}
+ · ${p.price.toLocaleString("ru-RU")} ₽
+ · Остаток: ${p.stock}
+</div>
 
-            <div>
+</div>
 
-                <strong>
-                    ${escapeHTML(product.name)}
-                </strong>
+<div class="adminbuttons">
 
-                <div style="
-                    color:var(--muted);
-                    font-size:11px;
-                    margin-top:4px">
+<button onclick="editProduct('${p.id}')">
+✏️
+</button>
 
-                    ${escapeHTML(product.category)}
+<button
+class="danger"
+onclick="deleteProduct('${p.id}')">
 
-                </div>
+🗑
 
-            </div>
+</button>
 
+</div>
 
-            <button
-                class="admin-delete"
-                onclick="deleteProduct(${product.id})">
+</div>
 
-                Удалить
-
-            </button>
-
-        `;
-
-
-        box.appendChild(item);
-
-    });
+`).join("");
 
 }
 
+function saveProduct(){
 
-function addProduct(){
+if(!isAdmin())return;
 
-    const name =
-        document.getElementById("newName")
-            .value.trim();
+const name=
+document.getElementById("aName").value.trim();
 
-    const category =
-        document.getElementById("newCategory")
-            .value.trim();
+const category=
+document.getElementById("aCategory").value.trim()
+||"Другое";
 
-    const price =
-        Number(
-            document.getElementById("newPrice")
-                .value
-        ) || 0;
+const price=
+Number(
+document.getElementById("aPrice").value
+);
 
-    const image =
-        document.getElementById("newImage")
-            .value.trim();
+const stock=
+Number(
+document.getElementById("aStock").value
+);
 
+const description=
+document
+.getElementById("aDescription")
+.value.trim();
 
-    if(!name){
+const options=
+document
+.getElementById("aOptions")
+.value
+.split(",")
+.map(x=>x.trim())
+.filter(Boolean);
 
-        showToast("Введите название");
+const file=
+document.getElementById("aImage")
+.files[0];
 
-        return;
+if(!name||!price){
 
-    }
+showToast("Заполните название и цену");
 
-
-    products.push({
-
-        id:Date.now(),
-
-        name:name,
-
-        category:
-            category || "Аксессуары",
-
-        price:price,
-
-        image:image,
-
-        description:"Описание товара."
-
-    });
-
-
-    saveProducts();
-
-    renderAdmin();
-
-    renderCategories();
-
-    renderProducts();
-
-
-    document.getElementById("newName").value = "";
-    document.getElementById("newCategory").value = "";
-    document.getElementById("newPrice").value = "";
-    document.getElementById("newImage").value = "";
-
-
-    showToast("Товар добавлен");
+return;
 
 }
 
+function finish(image){
+
+if(editId){
+
+const p=
+products.find(x=>x.id===editId);
+
+if(p){
+
+p.name=name;
+p.category=category;
+p.price=price;
+p.stock=Math.max(0,stock);
+p.description=description;
+p.options=options;
+
+if(image)
+p.image=image;
+
+}
+
+showToast("Товар изменён");
+
+}else{
+
+products.unshift({
+
+id:Date.now().toString(),
+name,
+category,
+price,
+stock:Math.max(0,stock),
+description,
+options,
+image:image||"",
+created:Date.now()
+
+});
+
+showToast("Товар добавлен");
+
+}
+
+saveData();
+
+clearAdminForm();
+
+renderAdmin();
+
+renderProducts();
+
+}
+
+if(file){
+
+if(file.size>3*1024*1024){
+
+showToast("Фото больше 3 МБ");
+
+return;
+
+}
+
+const reader=
+new FileReader();
+
+reader.onload=()=>{
+finish(reader.result)
+};
+
+reader.readAsDataURL(file);
+
+}else{
+
+finish("");
+
+}
+
+}
+
+function editProduct(id){
+
+if(!isAdmin())return;
+
+const p=
+products.find(x=>x.id===id);
+
+if(!p)return;
+
+editId=id;
+
+document.getElementById("aName").value=p.name;
+document.getElementById("aCategory").value=p.category;
+document.getElementById("aPrice").value=p.price;
+document.getElementById("aStock").value=p.stock;
+document.getElementById("aDescription").value=p.description||"";
+document.getElementById("aOptions").value=(p.options||[]).join(", ");
+
+document.getElementById("saveProductButton")
+.textContent="💾 Сохранить изменения";
+
+document.getElementById("cancelEditButton")
+.classList.remove("hidden");
+
+window.scrollTo(0,0);
+
+}
+
+function cancelEdit(){
+
+clearAdminForm();
+
+}
+
+function clearAdminForm(){
+
+editId=null;
+
+[
+"aName",
+"aCategory",
+"aPrice",
+"aStock",
+"aDescription",
+"aOptions"
+].forEach(id=>{
+document.getElementById(id).value="";
+});
+
+document.getElementById("aImage").value="";
+
+document.getElementById("saveProductButton")
+.textContent="➕ Добавить товар";
+
+document.getElementById("cancelEditButton")
+.classList.add("hidden");
+
+}
 
 function deleteProduct(id){
 
-    products =
-        products.filter(p =>
-            p.id !== id
-        );
+if(!isAdmin())return;
 
+const p=
+products.find(x=>x.id===id);
 
-    favorites =
-        favorites.filter(x =>
-            x !== id
-        );
+if(!p)return;
 
+if(!confirm(
+`Удалить товар «${p.name}»?`
+))return;
 
-    cart =
-        cart.filter(x =>
-            x !== id
-        );
+products=
+products.filter(x=>x.id!==id);
 
+favorites=
+favorites.filter(x=>x!==id);
 
-    saveProducts();
-    saveFavorites();
-    saveCart();
+cart=
+cart.filter(x=>x.id!==id);
 
+saveData();
 
-    renderAdmin();
-    renderProducts();
-    updateCartCount();
+renderAdmin();
+renderProducts();
+renderFavorites();
+renderCart();
 
-
-    showToast("Товар удалён");
+showToast("Товар удалён");
 
 }
 
+/* MODAL */
 
-/* =====================================================
-   TOAST
-===================================================== */
+function closeModal(id){
 
-let toastTimer;
+document
+.getElementById(id)
+.classList.remove("show");
 
+}
 
 function showToast(text){
 
-    const toast =
-        document.getElementById("toast");
+const el=
+document.getElementById("toast");
 
-    toast.textContent = text;
+el.textContent=text;
 
-    toast.classList.add("show");
+el.classList.add("show");
 
+clearTimeout(window.toastTimer);
 
-    clearTimeout(toastTimer);
-
-
-    toastTimer =
-        setTimeout(() => {
-
-            toast.classList.remove("show");
-
-        },1800);
+window.toastTimer=
+setTimeout(()=>{
+el.classList.remove("show")
+},2500);
 
 }
 
+/* START */
 
-/* =====================================================
-   HTML ESCAPE
-===================================================== */
+function start(){
 
-function escapeHTML(value){
+const theme=
+localStorage.getItem("mogvape_theme");
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+if(theme==="dark")
+document.body.classList.add("dark");
+
+initTelegram();
+initUser();
+
+renderProducts();
+renderFavorites();
+renderCart();
+renderOrders();
+updateCartCount();
 
 }
 
-
-/* =====================================================
-   START
-===================================================== */
-
-(function init(){
-
-    const savedDark =
-        localStorage.getItem("mogvape_dark");
-
-
-    if(savedDark === "1"){
-
-        document.body.classList.add("dark");
-
-    }
-
-
-    setupUser();
-
-    renderCategories();
-
-    renderProducts();
-
-    updateCartCount();
-
-    updateThemeUI();
-
-})();
+start();
 
 </script>
 
