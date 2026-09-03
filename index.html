@@ -48,7 +48,7 @@
         .brand-name { font-size: 18px; font-weight: 700; }
         .location-select {
             background: var(--card-bg); color: var(--text-color);
-            padding: 6px 12px; border-radius: 20px; font-size: 12px;
+            padding: 6px 14px; border-radius: 20px; font-size: 12px;
             display: flex; align-items: center; gap: 6px; cursor: pointer;
             border: 1px solid var(--border-color);
         }
@@ -149,6 +149,50 @@
             cursor: pointer; border: none; z-index: 5;
         }
 
+        /* Location Picker Modal */
+        .pickup-option {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 14px; padding: 14px; margin-bottom: 10px; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .pickup-option.selected { border-color: var(--accent-blue); }
+        .pickup-info { display: flex; align-items: center; gap: 12px; }
+        .radio-circle {
+            width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--text-muted);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .pickup-option.selected .radio-circle { border-color: var(--accent-blue); background: var(--accent-blue); }
+        .radio-circle::after { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; display: none; }
+        .pickup-option.selected .radio-circle::after { display: block; }
+        .pickup-name { font-size: 15px; font-weight: 600; }
+
+        /* Profile Layout */
+        .user-header { display: flex; align-items: center; gap: 14px; margin: 16px 0; }
+        .avatar-wrap { position: relative; cursor: pointer; }
+        .user-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--card-sub-bg); }
+        .avatar-badge {
+            position: absolute; bottom: 0; right: 0; background: var(--accent-blue);
+            color: #fff; width: 20px; height: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 11px;
+            border: 2px solid var(--bg-color);
+        }
+        .user-name { font-size: 16px; font-weight: 700; }
+        .user-id { font-size: 11px; color: var(--text-muted); }
+        .user-phone { font-size: 12px; color: var(--accent-blue); margin-top: 2px; }
+
+        .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; margin-bottom: 16px; }
+        .profile-card-btn {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 14px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; gap: 6px; cursor: pointer;
+            text-decoration: none; color: inherit;
+        }
+        .profile-card-btn.full-width { grid-column: span 2; flex-direction: row; justify-content: flex-start; gap: 10px; }
+        .profile-card-btn .p-icon { font-size: 20px; }
+        .profile-card-btn .p-title { font-size: 13px; font-weight: 600; }
+
+        .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 16px 0 8px; }
+
         /* Product Detail Modal */
         .modal-product-img { width: 100%; height: 200px; object-fit: contain; background: var(--card-sub-bg); border-radius: 14px; margin-bottom: 12px; }
         .modal-cat-badge { display: inline-block; background: var(--card-sub-bg); padding: 2px 8px; border-radius: 8px; font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
@@ -183,25 +227,6 @@
         .stock-status.in { color: var(--accent-green); }
         .stock-status.out { color: #ff3b30; }
 
-        /* Profile Layout */
-        .user-header { display: flex; align-items: center; gap: 12px; margin: 16px 0; }
-        .user-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-        .user-name { font-size: 16px; font-weight: 700; }
-        .user-id { font-size: 11px; color: var(--text-muted); }
-        .user-phone { font-size: 12px; color: var(--text-muted); }
-
-        .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; margin-bottom: 16px; }
-        .profile-card-btn {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 16px; padding: 14px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center; gap: 6px; cursor: pointer;
-        }
-        .profile-card-btn.full-width { grid-column: span 2; flex-direction: row; justify-content: flex-start; gap: 10px; }
-        .profile-card-btn .p-icon { font-size: 20px; }
-        .profile-card-btn .p-title { font-size: 13px; font-weight: 600; }
-
-        .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 16px 0 8px; }
-
         /* Accordion (Help Modal) */
         .acc-item { border-bottom: 1px solid var(--border-color); padding: 10px 0; }
         .acc-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; cursor: pointer; }
@@ -219,8 +244,8 @@
     <!-- Header -->
     <div class="top-bar">
         <div class="brand-name">VapeApp</div>
-        <div class="location-select" onclick="switchPage('cart')">
-            📍 ст. м. Грушевка ∨
+        <div class="location-select" onclick="openLocationModal()">
+            📍 <span id="current-location-text">Точка самовывоза</span> ∨
         </div>
     </div>
 
@@ -264,7 +289,7 @@
         <div style="background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:12px; margin-bottom:16px;">
             <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">САМОВЫВОЗ</div>
             <div style="font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px;">
-                🏠 ст. м. Грушевка
+                🏠 <span id="cart-location-text">Атриум</span>
             </div>
         </div>
 
@@ -293,11 +318,15 @@
     <!-- 5. Profile Page -->
     <div id="page-profile" class="page">
         <div class="user-header">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="user-avatar" alt="Avatar">
+            <div class="avatar-wrap" onclick="document.getElementById('avatar-input').click()">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" id="profile-avatar-img" class="user-avatar" alt="Avatar">
+                <div class="avatar-badge">📷</div>
+            </div>
+            <input type="file" id="avatar-input" accept="image/*" style="display:none;" onchange="handleAvatarChange(event)">
             <div>
                 <div class="user-name">Менеджер 💬</div>
                 <div class="user-id">ID: 5995285721</div>
-                <div class="user-phone">+375298455401</div>
+                <div class="user-phone" id="user-phone-display">Номер не указан</div>
             </div>
         </div>
 
@@ -310,10 +339,10 @@
         </div>
 
         <div class="profile-grid">
-            <div class="profile-card-btn" onclick="alert('Связь с менеджером')">
+            <a href="https://t.me/MOGBARAHA" target="_blank" class="profile-card-btn">
                 <span class="p-icon">💬</span>
                 <span class="p-title">Менеджер</span>
-            </div>
+            </a>
             <div class="profile-card-btn" onclick="openHelpModal()">
                 <span class="p-icon">❓</span>
                 <span class="p-title">Помощь</span>
@@ -330,6 +359,36 @@
 
         <div class="section-title">Недавно просмотренные</div>
         <div class="products-grid" id="recent-container"></div>
+    </div>
+
+    <!-- Modal: Location Picker -->
+    <div class="modal-overlay" id="location-modal">
+        <div class="modal-sheet">
+            <button class="modal-close" onclick="closeLocationModal()">✕</button>
+            <h3 style="font-size:16px; margin-bottom:16px; text-align:center;">Выберите точку самовывоза</h3>
+            
+            <div class="pickup-option selected" id="opt-atrium" onclick="selectPickup('Атриум')">
+                <div class="pickup-info">
+                    <div class="radio-circle"></div>
+                    <div>
+                        <div class="pickup-name">Атриум</div>
+                        <div style="font-size:11px; color:var(--accent-blue);">VapeApp</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pickup-option" id="opt-vosmoy" onclick="selectPickup('Восьмой')">
+                <div class="pickup-info">
+                    <div class="radio-circle"></div>
+                    <div>
+                        <div class="pickup-name">Восьмой</div>
+                        <div style="font-size:11px; color:var(--accent-blue);">VapeApp</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-add-cart" style="margin-top:12px;" onclick="confirmLocation()">Подтвердить</button>
+        </div>
     </div>
 
     <!-- Modal: Product Detail -->
@@ -358,8 +417,8 @@
             <button class="btn-add-cart" onclick="addToCart()">🛒 В корзину</button>
             <div class="section-label">Наличие:</div>
             <div class="stock-list">
-                <div class="stock-item"><span>ст. м. Грушевка</span><span class="stock-status in">✓</span></div>
-                <div class="stock-item"><span>ст. м. Спортивная</span><span class="stock-status out">✕</span></div>
+                <div class="stock-item"><span id="stock-loc-1">Атриум</span><span class="stock-status in">✓</span></div>
+                <div class="stock-item"><span id="stock-loc-2">Восьмой</span><span class="stock-status out">✕</span></div>
             </div>
         </div>
     </div>
@@ -379,32 +438,14 @@
                 <div class="acc-header"><span>🪙 Что такое Vape Coins?</span> <span>∨</span></div>
                 <div class="acc-content">Это бонусы (10 монет = 0.10 Б). Даем 300 монет за первый заказ и кэшбек.</div>
             </div>
-            <div class="acc-item" onclick="toggleAcc(this)">
-                <div class="acc-header"><span>👥 Реферальная система</span> <span>∨</span></div>
-                <div class="acc-content">Приглашайте друзей и получайте процент с их покупок.</div>
-            </div>
 
             <div style="font-size:11px; color:var(--accent-blue); font-weight:700; margin:14px 0 10px;">ГАРАНТИЯ И БРАК</div>
             <div class="acc-item" onclick="toggleAcc(this)">
                 <div class="acc-header"><span>🧪 Жидкость потемнела?</span> <span>∨</span></div>
                 <div class="acc-content">Это нормальный процесс из-за нагрева. На качество вкуса это не влияет.</div>
             </div>
-            <div class="acc-item" onclick="toggleAcc(this)">
-                <div class="acc-header"><span>⏳ Срок годности</span> <span>∨</span></div>
-                <div class="acc-content">Обычно 1-2 года с даты производства.</div>
-            </div>
 
-            <div style="font-size:11px; color:var(--accent-blue); font-weight:700; margin:14px 0 10px;">УХОД И СОВЕТЫ</div>
-            <div class="acc-item" onclick="toggleAcc(this)">
-                <div class="acc-header"><span>⚡ Как сберечь картридж?</span> <span>∨</span></div>
-                <div class="acc-content">• Делайте паузы между затяжками.</div>
-            </div>
-            <div class="acc-item" onclick="toggleAcc(this)">
-                <div class="acc-header"><span>⚠️ Картридж течет?</span> <span>∨</span></div>
-                <div class="acc-content">Протрите контакты и сам картридж салфеткой.</div>
-            </div>
-
-            <button class="btn-add-cart" style="margin-top:16px;" onclick="alert('Написать в поддержку')">Написать в поддержку</button>
+            <button class="btn-add-cart" style="margin-top:16px;" onclick="window.open('https://t.me/MOGBARAHA', '_blank')">Написать в поддержку</button>
         </div>
     </div>
 
@@ -422,7 +463,10 @@
             </div>
 
             <div class="section-label" style="margin-top:16px;">КОНТАКТНЫЕ ДАННЫЕ</div>
-            <input type="text" class="search-input" value="+375298455401" readonly style="margin-top:6px;">
+            <div style="display:flex; gap:8px; margin-top:6px;">
+                <input type="text" id="phone-settings-input" class="search-input" placeholder="+375 (__) ___-__-__">
+                <button onclick="savePhone()" style="background:var(--accent-blue); color:#fff; border:none; padding:0 14px; border-radius:12px; font-weight:600; cursor:pointer;">Сохранить</button>
+            </div>
         </div>
     </div>
 
@@ -468,7 +512,9 @@
 
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand();
+        if (tg) tg.expand();
+
+        let tempSelectedLocation = 'Атриум';
 
         const products = [
             {
@@ -525,6 +571,48 @@
             renderProducts([products[0], products[1]], 'recent-container');
             updateCartUI();
         });
+
+        /* Avatar Upload Logic */
+        function handleAvatarChange(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    document.getElementById('profile-avatar-img').src = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        /* Location Picker */
+        function openLocationModal() {
+            document.getElementById('location-modal').classList.add('active');
+        }
+        function closeLocationModal() {
+            document.getElementById('location-modal').classList.remove('active');
+        }
+        function selectPickup(name) {
+            tempSelectedLocation = name;
+            document.getElementById('opt-atrium').classList.toggle('selected', name === 'Атриум');
+            document.getElementById('opt-vosmoy').classList.toggle('selected', name === 'Восьмой');
+        }
+        function confirmLocation() {
+            document.getElementById('current-location-text').innerText = tempSelectedLocation;
+            document.getElementById('cart-location-text').innerText = tempSelectedLocation;
+            closeLocationModal();
+        }
+
+        /* Phone Logic */
+        function savePhone() {
+            const val = document.getElementById('phone-settings-input').value.trim();
+            if (val) {
+                document.getElementById('user-phone-display').innerText = val;
+                alert('Номер телефона сохранен');
+                closeSettingsModal();
+            } else {
+                alert('Введите номер телефона');
+            }
+        }
 
         function renderProducts(items, containerId) {
             const container = document.getElementById(containerId);
