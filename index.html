@@ -85,6 +85,7 @@
             border-bottom: 1px solid var(--border-color); cursor: pointer;
         }
         .sort-option:last-child { border-bottom: none; }
+        .sort-option.active { color: var(--accent-blue); font-weight: 600; }
 
         /* Categories */
         .categories-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 8px; }
@@ -118,7 +119,7 @@
         /* Bottom Nav */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: var(--nav-bg); display: flex; justify-around: space-around;
+            background: var(--nav-bg); display: flex; justify-content: space-around;
             padding: 8px 0 12px; border-top: 1px solid var(--border-color); z-index: 20;
         }
         .nav-item { color: var(--text-muted); display: flex; flex-direction: column; align-items: center; font-size: 10px; cursor: pointer; position: relative; }
@@ -225,7 +226,7 @@
             text-align: center; position: relative; border: 1px solid transparent; cursor: pointer;
             display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90px;
         }
-        .flavor-card.active { border-color: var(--accent-blue); }
+        .flavor-card.active { border-color: var(--accent-blue); background: rgba(0, 122, 255, 0.1); }
         .flavor-card img { width: 36px; height: 36px; object-fit: contain; margin-bottom: 4px; }
         .flavor-name { font-size: 9px; line-height: 1.1; }
 
@@ -253,6 +254,8 @@
         .theme-selector { display: flex; gap: 10px; margin-top: 10px; }
         .theme-box { flex: 1; background: var(--card-sub-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; text-align: center; cursor: pointer; font-size: 13px; }
         .theme-box.active { border-color: var(--accent-blue); }
+
+        .empty-text { grid-column: span 2; text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -261,7 +264,7 @@
     <div class="top-bar">
         <div class="brand-name">MOGVAPE</div>
         <div class="location-select" onclick="openLocationModal()">
-            📍 <span id="current-location-text">Точка самовывоза</span> ∨
+            📍 <span id="current-location-text">Атриум</span> ∨
         </div>
     </div>
 
@@ -270,15 +273,15 @@
         <div class="search-container">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" id="search-input" placeholder="Поиск товаров..." oninput="filterProducts()">
+                <input type="text" class="search-input" id="search-input" placeholder="Поиск товаров..." oninput="handleSearch()">
             </div>
             <div class="sort-btn" onclick="toggleSortDropdown()">⚙️</div>
             <div class="sort-dropdown" id="sort-dropdown">
-                <div class="sort-option" onclick="setSort('default')">По умолчанию</div>
-                <div class="sort-option" onclick="setSort('cheap')">Сначала дешевле</div>
-                <div class="sort-option" onclick="setSort('expensive')">Сначала дороже</div>
-                <div class="sort-option" onclick="setSort('strong')">Сначала крепкие</div>
-                <div class="sort-option" onclick="setSort('light')">Сначала не крепкие</div>
+                <div class="sort-option active" id="sort-default" onclick="setSort('default')">По умолчанию</div>
+                <div class="sort-option" id="sort-cheap" onclick="setSort('cheap')">Сначала дешевле</div>
+                <div class="sort-option" id="sort-expensive" onclick="setSort('expensive')">Сначала дороже</div>
+                <div class="sort-option" id="sort-strong" onclick="setSort('strong')">Сначала крепкие</div>
+                <div class="sort-option" id="sort-light" onclick="setSort('light')">Сначала не крепкие</div>
             </div>
         </div>
 
@@ -316,7 +319,7 @@
             </div>
         </div>
 
-        <button class="btn-add-cart" style="margin-top:16px;" onclick="alert('Заказ оформлен!')">Оформить заказ</button>
+        <button class="btn-add-cart" style="margin-top:16px;" onclick="checkout()">Оформить заказ</button>
     </div>
 
     <!-- 3. Favorites Page -->
@@ -379,7 +382,7 @@
     <!-- Modal: Location Picker -->
     <div class="modal-overlay" id="location-modal">
         <div class="modal-sheet">
-            <button class="modal-close" onclick="closeLocationModal()">✕</button>
+            <button class="modal-close" onclick="closeModal('location-modal')">✕</button>
             <h3 style="font-size:16px; margin-bottom:16px; text-align:center;">Выберите точку самовывоза</h3>
             
             <div class="pickup-option selected" id="opt-atrium" onclick="selectPickup('Атриум')">
@@ -407,19 +410,18 @@
     <!-- Modal: Product Detail -->
     <div class="modal-overlay" id="product-modal">
         <div class="modal-sheet">
-            <button class="modal-close" onclick="closeProductModal()">✕</button>
+            <button class="modal-close" onclick="closeModal('product-modal')">✕</button>
             <img src="" id="m-img" class="modal-product-img" alt="Product">
             <div class="modal-cat-badge" id="m-cat">Жидкость</div>
             <div class="modal-title-wrap">
-                <div class="modal-product-title" id="m-title">Isterika x Самоубийца V2</div>
-                <div class="fav-icon-btn" onclick="toggleFav(this)">🤍</div>
+                <div class="modal-product-title" id="m-title">----</div>
+                <div class="fav-icon-btn" id="m-fav-btn" onclick="toggleFavCurrent()">🤍</div>
             </div>
-            <div class="modal-product-price" id="m-price">20.00 Б</div>
+            <div class="modal-product-price" id="m-price">0.00 Б</div>
             <div class="section-label">Крепость</div>
             <div class="strength-chips" id="m-strengths"></div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                 <div class="section-label" style="margin-bottom:0;">Вкус</div>
-                <div style="font-size:11px; color:var(--accent-blue); font-weight:600;">Все &gt;</div>
             </div>
             <div class="flavors-grid" id="m-flavors"></div>
             <div class="quantity-control">
@@ -439,7 +441,7 @@
     <!-- Modal: Help / FAQ -->
     <div class="modal-overlay" id="help-modal">
         <div class="modal-sheet">
-            <button class="modal-close" onclick="closeHelpModal()">✕</button>
+            <button class="modal-close" onclick="closeModal('help-modal')">✕</button>
             <h3 style="font-size:18px; font-weight:700; margin-bottom:4px; text-align:center;">Помощь</h3>
             <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; text-align:center;">Ответы на частые вопросы</div>
 
@@ -465,7 +467,7 @@
     <!-- Modal: Settings -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal-sheet">
-            <button class="modal-close" onclick="closeSettingsModal()">✕</button>
+            <button class="modal-close" onclick="closeModal('settings-modal')">✕</button>
             <h3 style="font-size:16px; margin-bottom:4px;">Настройки</h3>
             <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Управление настройками приложения</div>
 
@@ -480,14 +482,14 @@
     <!-- Modal: Add To Home Screen -->
     <div class="modal-overlay" id="add-home-modal">
         <div class="modal-sheet" style="text-align:center;">
-            <button class="modal-close" onclick="closeAddHomeScreenModal()">✕</button>
+            <button class="modal-close" onclick="closeModal('add-home-modal')">✕</button>
             <h3 style="font-size:16px; margin-bottom:8px;">Добавить на главный экран?</h3>
             <p style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">
                 Для добавления на главный экран коснитесь значка и удерживайте его или воспользуйтесь кнопкой "Добавить".
             </p>
             <div style="display:flex; gap:10px;">
-                <button class="btn-add-cart" style="background:var(--card-sub-bg); color:var(--text-color);" onclick="closeAddHomeScreenModal()">Отмена</button>
-                <button class="btn-add-cart" onclick="closeAddHomeScreenModal()">Добавить</button>
+                <button class="btn-add-cart" style="background:var(--card-sub-bg); color:var(--text-color);" onclick="closeModal('add-home-modal')">Отмена</button>
+                <button class="btn-add-cart" onclick="closeModal('add-home-modal')">Добавить</button>
             </div>
         </div>
     </div>
@@ -500,7 +502,7 @@
         </div>
         <div class="nav-item" onclick="switchPage('cart')" id="nav-cart">
             <div class="icon">🛒</div>
-            <div class="badge" id="cart-badge">1</div>
+            <div class="badge" id="cart-badge">0</div>
             <span>Корзина</span>
         </div>
         <div class="nav-item" onclick="switchPage('favorites')" id="nav-favorites">
@@ -515,7 +517,6 @@
 
     <script>
         const tg = window.Telegram ? window.Telegram.WebApp : null;
-        if (tg) tg.expand();
 
         let tempSelectedLocation = 'Атриум';
 
@@ -524,8 +525,10 @@
                 id: 1,
                 title: 'Isterika x Самоубийца V2',
                 category: 'liquids',
+                categoryName: 'Жидкость',
                 price: 20.00,
                 strength: '80 мг',
+                strengthVal: 80,
                 img: 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=400',
                 flavors: [
                     { id: 'f1', name: 'Адреналин раш с лесными ягодами' },
@@ -537,27 +540,52 @@
                 id: 2,
                 title: 'Catswill x Rick and Morty NEW',
                 category: 'liquids',
+                categoryName: 'Жидкость',
                 price: 15.00,
                 strength: '50 мг',
+                strengthVal: 50,
                 img: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=400',
-                flavors: []
+                flavors: [
+                    { id: 'f4', name: 'Зеленое яблоко' },
+                    { id: 'f5', name: 'Клубника Банан' }
+                ]
             },
             {
                 id: 3,
                 title: 'OGGO Cherry',
                 category: 'liquids',
-                price: 20.00,
+                categoryName: 'Жидкость',
+                price: 22.00,
                 strength: '20 мг',
+                strengthVal: 20,
                 img: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400',
-                flavors: []
+                flavors: [
+                    { id: 'f6', name: 'Спелая Вишня' }
+                ]
             },
             {
                 id: 4,
                 title: 'Chillax Vista 12000',
                 category: 'disposables',
+                categoryName: 'Одноразка',
                 price: 45.00,
                 strength: '20 мг',
+                strengthVal: 20,
                 img: 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=400',
+                flavors: [
+                    { id: 'f7', name: 'Черника Лёд' },
+                    { id: 'f8', name: 'Арбузная Мята' }
+                ]
+            },
+            {
+                id: 5,
+                title: 'Испаритель Vaporesso XROS',
+                category: 'consumables',
+                categoryName: 'Расходник',
+                price: 10.00,
+                strength: '0.6 Ом',
+                strengthVal: 0,
+                img: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=400',
                 flavors: []
             }
         ];
@@ -566,13 +594,24 @@
             { id: 1, title: 'Isterika x Самоубийца V2', flavor: 'Адреналин раш с лесными ягодами', strength: '80 мг', price: 20.00, qty: 1 }
         ];
 
+        let favorites = [];
+        let recentlyViewed = [1, 2];
         let selectedProduct = null;
+        let selectedFlavor = null;
         let currentQty = 1;
+        let currentCategory = 'all';
+        let currentSort = 'default';
+        let searchQuery = '';
 
         window.addEventListener('DOMContentLoaded', () => {
+            if (tg) {
+                tg.ready();
+                tg.expand();
+                tg.setHeaderColor(tg.colorScheme === 'dark' ? '#050505' : '#f2f2f7');
+            }
             initTelegramUserData();
-            renderProducts(products, 'products-container');
-            renderProducts([products[0], products[1]], 'recent-container');
+            applyFiltersAndRender();
+            renderRecentlyViewed();
             updateCartUI();
         });
 
@@ -613,9 +652,6 @@
         function openLocationModal() {
             document.getElementById('location-modal').classList.add('active');
         }
-        function closeLocationModal() {
-            document.getElementById('location-modal').classList.remove('active');
-        }
         function selectPickup(name) {
             tempSelectedLocation = name;
             document.getElementById('opt-atrium').classList.toggle('selected', name === 'Атриум');
@@ -624,13 +660,64 @@
         function confirmLocation() {
             document.getElementById('current-location-text').innerText = tempSelectedLocation;
             document.getElementById('cart-location-text').innerText = tempSelectedLocation;
-            closeLocationModal();
+            closeModal('location-modal');
+        }
+
+        /* Searching, Filtering & Sorting Logic */
+        function handleSearch() {
+            searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            applyFiltersAndRender();
+        }
+
+        function filterCategory(cat, el) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            currentCategory = cat;
+            applyFiltersAndRender();
+        }
+
+        function toggleSortDropdown() {
+            document.getElementById('sort-dropdown').classList.toggle('active');
+        }
+
+        function setSort(type) {
+            currentSort = type;
+            document.querySelectorAll('.sort-option').forEach(opt => opt.classList.remove('active'));
+            document.getElementById(`sort-${type}`).classList.add('active');
+            document.getElementById('sort-dropdown').classList.remove('active');
+            applyFiltersAndRender();
+        }
+
+        function applyFiltersAndRender() {
+            let result = products.filter(p => {
+                const matchesCat = (currentCategory === 'all') || (p.category === currentCategory);
+                const matchesSearch = p.title.toLowerCase().includes(searchQuery) ||
+                                      (p.flavors && p.flavors.some(f => f.name.toLowerCase().includes(searchQuery)));
+                return matchesCat && matchesSearch;
+            });
+
+            if (currentSort === 'cheap') {
+                result.sort((a, b) => a.price - b.price);
+            } else if (currentSort === 'expensive') {
+                result.sort((a, b) => b.price - a.price);
+            } else if (currentSort === 'strong') {
+                result.sort((a, b) => b.strengthVal - a.strengthVal);
+            } else if (currentSort === 'light') {
+                result.sort((a, b) => a.strengthVal - b.strengthVal);
+            }
+
+            renderProducts(result, 'products-container');
         }
 
         function renderProducts(items, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
+
+            if (items.length === 0) {
+                container.innerHTML = `<div class="empty-text">Товары не найдены</div>`;
+                return;
+            }
 
             items.forEach(prod => {
                 const card = document.createElement('div');
@@ -648,17 +735,39 @@
             });
         }
 
-        /* Modal Logic */
+        function renderRecentlyViewed() {
+            const recentItems = products.filter(p => recentlyViewed.includes(p.id));
+            renderProducts(recentItems, 'recent-container');
+        }
+
+        function renderFavorites() {
+            const favItems = products.filter(p => favorites.includes(p.id));
+            renderProducts(favItems, 'favorites-container');
+        }
+
+        /* Modal Product Logic */
         function openProductModal(prod) {
             selectedProduct = prod;
             currentQty = 1;
+            selectedFlavor = (prod.flavors && prod.flavors.length > 0) ? prod.flavors[0].name : 'Стандартный';
+
+            // Add to recently viewed
+            if (!recentlyViewed.includes(prod.id)) {
+                recentlyViewed.unshift(prod.id);
+                if (recentlyViewed.length > 4) recentlyViewed.pop();
+                renderRecentlyViewed();
+            }
+
             document.getElementById('qty-num').innerText = currentQty;
             document.getElementById('m-img').src = prod.img;
             document.getElementById('m-title').innerText = prod.title;
+            document.getElementById('m-cat').innerText = prod.categoryName || 'Товар';
             document.getElementById('m-price').innerText = `${prod.price.toFixed(2)} Б`;
+            
+            updateFavIcon();
 
             const sBox = document.getElementById('m-strengths');
-            sBox.innerHTML = prod.strength ? `<button class="s-chip active">${prod.strength}</button>` : '';
+            sBox.innerHTML = prod.strength ? `<button class="s-chip active">${prod.strength}</button>` : '<span style="font-size:12px; color:var(--text-muted);">-</span>';
 
             const fBox = document.getElementById('m-flavors');
             fBox.innerHTML = '';
@@ -666,24 +775,32 @@
                 prod.flavors.forEach((f, idx) => {
                     const fCard = document.createElement('div');
                     fCard.className = `flavor-card ${idx === 0 ? 'active' : ''}`;
+                    fCard.onclick = (e) => {
+                        e.stopPropagation();
+                        document.querySelectorAll('.flavor-card').forEach(fc => fc.classList.remove('active'));
+                        fCard.classList.add('active');
+                        selectedFlavor = f.name;
+                    };
                     fCard.innerHTML = `
                         <img src="${prod.img}" alt="flavor">
                         <div class="flavor-name">${f.name}</div>
                     `;
                     fBox.appendChild(fCard);
                 });
+            } else {
+                fBox.innerHTML = '<div style="font-size:12px; color:var(--text-muted); grid-column:span 3;">Базовый вкус</div>';
             }
 
             document.getElementById('product-modal').classList.add('active');
         }
 
-        function closeProductModal() { document.getElementById('product-modal').classList.remove('active'); }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
         function openHelpModal() { document.getElementById('help-modal').classList.add('active'); }
-        function closeHelpModal() { document.getElementById('help-modal').classList.remove('active'); }
         function openSettingsModal() { document.getElementById('settings-modal').classList.add('active'); }
-        function closeSettingsModal() { document.getElementById('settings-modal').classList.remove('active'); }
         function openAddHomeScreenModal() { document.getElementById('add-home-modal').classList.add('active'); }
-        function closeAddHomeScreenModal() { document.getElementById('add-home-modal').classList.remove('active'); }
 
         function toggleAcc(el) { el.classList.toggle('active'); }
 
@@ -698,13 +815,14 @@
                 cart.push({
                     id: selectedProduct.id,
                     title: selectedProduct.title,
-                    flavor: selectedProduct.flavors[0]?.name || 'Стандартный',
-                    strength: selectedProduct.strength,
+                    flavor: selectedFlavor,
+                    strength: selectedProduct.strength || 'Обычная',
                     price: selectedProduct.price,
                     qty: currentQty
                 });
                 updateCartUI();
-                closeProductModal();
+                closeModal('product-modal');
+                if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
                 switchPage('cart');
             }
         }
@@ -715,27 +833,31 @@
             let total = 0;
             let count = 0;
 
-            cart.forEach((item, index) => {
-                total += item.price * item.qty;
-                count += item.qty;
+            if (cart.length === 0) {
+                list.innerHTML = '<div class="empty-text">Ваша корзина пуста</div>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price * item.qty;
+                    count += item.qty;
 
-                const cItem = document.createElement('div');
-                cItem.style.cssText = 'background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:12px; margin-bottom:8px;';
-                cItem.innerHTML = `
-                    <div style="font-size:14px; font-weight:600; margin-bottom:4px;">${item.title}</div>
-                    <div style="font-size:11px; color:var(--text-muted);">Вкус: ${item.flavor}</div>
-                    <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">Крепость: ${item.strength}</div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:14px; font-weight:700; color:var(--accent-blue);">${(item.price * item.qty).toFixed(2)} Б</span>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <button onclick="cart[${index}].qty--; if(cart[${index}].qty<=0) cart.splice(${index},1); updateCartUI();" style="background:none; border:none; color:var(--text-color); font-size:16px; cursor:pointer;">−</button>
-                            <span style="font-size:13px;">${item.qty}</span>
-                            <button onclick="cart[${index}].qty++; updateCartUI();" style="background:none; border:none; color:var(--text-color); font-size:16px; cursor:pointer;">+</button>
+                    const cItem = document.createElement('div');
+                    cItem.style.cssText = 'background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:12px; margin-bottom:8px;';
+                    cItem.innerHTML = `
+                        <div style="font-size:14px; font-weight:600; margin-bottom:4px;">${item.title}</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Вкус: ${item.flavor}</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">Крепость: ${item.strength}</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:14px; font-weight:700; color:var(--accent-blue);">${(item.price * item.qty).toFixed(2)} Б</span>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <button onclick="changeCartQty(${index}, -1)" style="background:none; border:none; color:var(--text-color); font-size:16px; cursor:pointer;">−</button>
+                                <span style="font-size:13px;">${item.qty}</span>
+                                <button onclick="changeCartQty(${index}, 1)" style="background:none; border:none; color:var(--text-color); font-size:16px; cursor:pointer;">+</button>
+                            </div>
                         </div>
-                    </div>
-                `;
-                list.appendChild(cItem);
-            });
+                    `;
+                    list.appendChild(cItem);
+                });
+            }
 
             document.getElementById('cart-badge').innerText = count;
             document.getElementById('cart-total-count').innerText = count;
@@ -743,19 +865,45 @@
             document.getElementById('cart-final-price').innerText = `${total.toFixed(2)} Б`;
         }
 
+        function changeCartQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                if (tg && tg.showAlert) tg.showAlert('Ваша корзина пуста!');
+                else alert('Ваша корзина пуста!');
+                return;
+            }
+
+            const msg = `Заказ оформлен! Точка самовывоза: ${tempSelectedLocation}`;
+            if (tg && tg.showAlert) {
+                tg.showAlert(msg);
+            } else {
+                alert(msg);
+            }
+        }
+
         function setTheme(mode) {
             if (mode === 'light') {
                 document.body.classList.add('light-theme');
                 document.getElementById('theme-light-btn').classList.add('active');
                 document.getElementById('theme-dark-btn').classList.remove('active');
+                if (tg) tg.setHeaderColor('#f2f2f7');
             } else {
                 document.body.classList.remove('light-theme');
                 document.getElementById('theme-dark-btn').classList.add('active');
                 document.getElementById('theme-light-btn').classList.remove('active');
+                if (tg) tg.setHeaderColor('#050505');
             }
         }
 
         function switchPage(pageName) {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
@@ -764,23 +912,30 @@
 
             const nav = document.getElementById(`nav-${pageName}`);
             if (nav) nav.classList.add('active');
+
+            if (pageName === 'favorites') {
+                renderFavorites();
+            }
         }
 
-        function toggleSortDropdown() {
-            document.getElementById('sort-dropdown').classList.toggle('active');
+        function toggleFavCurrent() {
+            if (!selectedProduct) return;
+            const idx = favorites.indexOf(selectedProduct.id);
+            if (idx > -1) {
+                favorites.splice(idx, 1);
+            } else {
+                favorites.push(selectedProduct.id);
+            }
+            updateFavIcon();
         }
 
-        function setSort(type) {
-            document.getElementById('sort-dropdown').classList.remove('active');
-        }
-
-        function filterCategory(cat, el) {
-            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        function toggleFav(btn) {
-            btn.innerText = (btn.innerText === '🤍') ? '❤️' : '🤍';
+        function updateFavIcon() {
+            const btn = document.getElementById('m-fav-btn');
+            if (selectedProduct && favorites.includes(selectedProduct.id)) {
+                btn.innerText = '❤️';
+            } else {
+                btn.innerText = '🤍';
+            }
         }
     </script>
 </body>
