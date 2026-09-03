@@ -61,15 +61,17 @@ min-height:100vh;
 padding-bottom:82px
 }
 
+/* TOP */
+
 .top{
 position:sticky;
 top:0;
 z-index:50;
-height:60px;
+height:64px;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 14px;
+padding:0 12px;
 background:var(--bg)
 }
 
@@ -79,13 +81,28 @@ font-weight:900;
 letter-spacing:1px
 }
 
-.top button{
-width:38px;
-height:38px;
-border-radius:50%;
-background:var(--card);
-color:var(--text)
+.location-btn{
+height:46px;
+padding:0 14px;
+border-radius:24px;
+background:#e5e5e5;
+color:#17181c;
+display:flex;
+align-items:center;
+gap:8px;
+font-size:16px;
+font-weight:500;
+white-space:nowrap;
+box-shadow:none
 }
+
+.location-icon{
+width:27px;
+height:27px;
+flex:0 0 27px
+}
+
+/* PAGES */
 
 .page{
 display:none;
@@ -168,7 +185,7 @@ font-size:12px
 
 .category.active{
 background:var(--blue);
-color:white;
+color:#fff;
 border-color:var(--blue)
 }
 
@@ -227,7 +244,7 @@ height:100%;
 object-fit:contain
 }
 
-.productimg .heart{
+.heart{
 position:absolute;
 right:7px;
 top:7px;
@@ -280,6 +297,22 @@ color:#fff;
 font-size:22px
 }
 
+/* BOX */
+
+.box,.profile{
+background:var(--card);
+border-radius:16px;
+padding:14px;
+box-shadow:var(--shadow);
+margin-bottom:11px
+}
+
+.empty{
+text-align:center;
+padding:45px 15px;
+color:var(--muted)
+}
+
 /* NAV */
 
 .nav{
@@ -329,22 +362,6 @@ border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center
-}
-
-/* BOXES */
-
-.box,.profile{
-background:var(--card);
-border-radius:16px;
-padding:14px;
-box-shadow:var(--shadow);
-margin-bottom:11px
-}
-
-.empty{
-text-align:center;
-padding:45px 15px;
-color:var(--muted)
 }
 
 /* PROFILE */
@@ -536,7 +553,7 @@ font-weight:700;
 margin-top:8px
 }
 
-/* FORM */
+/* FORMS */
 
 .form label{
 display:block;
@@ -562,6 +579,112 @@ min-height:75px;
 resize:vertical
 }
 
+/* PROMO */
+
+.promo-box{
+margin-top:12px;
+padding:11px;
+border:1px solid var(--line);
+border-radius:13px;
+background:var(--bg)
+}
+
+.promo-row{
+display:flex;
+gap:7px
+}
+
+.promo-row input{
+flex:1;
+min-width:0
+}
+
+.promo-apply{
+width:105px;
+border-radius:11px;
+background:var(--blue);
+color:#fff;
+font-weight:800
+}
+
+.promo-applied{
+margin-top:8px;
+font-size:11px;
+color:var(--green);
+font-weight:700
+}
+
+.promo-admin-item{
+display:flex;
+align-items:center;
+gap:9px;
+padding:11px 0;
+border-bottom:1px solid var(--line)
+}
+
+.promo-admin-item:last-child{
+border-bottom:0
+}
+
+.promo-admin-icon{
+width:44px;
+height:44px;
+border-radius:11px;
+background:rgba(21,151,255,.1);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:21px
+}
+
+.promo-admin-mid{
+flex:1;
+min-width:0
+}
+
+.promo-admin-code{
+font-size:13px;
+font-weight:900;
+letter-spacing:.5px
+}
+
+.promo-admin-meta{
+color:var(--muted);
+font-size:10px;
+margin-top:3px
+}
+
+.promo-admin-status{
+font-size:10px;
+margin-top:4px;
+font-weight:800
+}
+
+.promo-admin-actions{
+display:flex;
+flex-direction:column;
+gap:5px
+}
+
+.mini-btn{
+min-width:34px;
+height:32px;
+padding:0 8px;
+border-radius:9px;
+background:var(--bg);
+color:var(--text);
+font-size:11px;
+font-weight:700
+}
+
+.mini-btn.danger{
+color:var(--red)
+}
+
+.mini-btn.blue{
+color:var(--blue)
+}
+
 /* ADMIN */
 
 .adminproduct{
@@ -570,10 +693,6 @@ align-items:center;
 gap:8px;
 padding:9px 0;
 border-bottom:1px solid var(--line)
-}
-
-.adminproduct:last-child{
-border:0
 }
 
 .adminimg{
@@ -611,40 +730,106 @@ border-radius:9px;
 background:var(--bg)
 }
 
-.danger{
-color:var(--red)
+/* LOCATION MODAL */
+
+.location-sheet{
+padding:18px 14px 22px;
 }
 
+.location-head{
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+margin-bottom:22px;
+}
 
-/* CONFIRM MODAL */
-.confirm-sheet{text-align:center;padding:20px 16px 16px}
-.confirm-icon{width:58px;height:58px;border-radius:50%;background:rgba(255,59,48,.1);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px}
-.confirm-title{font-size:18px;font-weight:900;margin-bottom:8px}
-.confirm-text{color:var(--muted);font-size:12px;line-height:1.45;margin-bottom:18px}
-.confirm-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.confirm-buttons button{height:46px;border-radius:12px;font-weight:800}
-.confirm-cancel{background:var(--bg);color:var(--text)}
-.confirm-delete{background:var(--red);color:#fff}
+.location-title{
+font-size:22px;
+font-weight:900;
+text-align:center
+}
 
-/* PROMOCODES */
-.promo-box{margin-top:12px;padding:11px;border:1px solid var(--line);border-radius:13px;background:var(--bg)}
-.promo-row{display:flex;gap:7px}
-.promo-row input{flex:1;min-width:0}
-.promo-apply{width:105px;border-radius:11px;background:var(--blue);color:#fff;font-weight:800}
-.promo-applied{margin-top:8px;font-size:11px;color:var(--green);font-weight:700}
-.promo-admin-item{display:flex;align-items:center;gap:9px;padding:11px 0;border-bottom:1px solid var(--line)}
-.promo-admin-item:last-child{border-bottom:0}
-.promo-admin-icon{width:44px;height:44px;border-radius:11px;background:rgba(21,151,255,.1);display:flex;align-items:center;justify-content:center;font-size:21px}
-.promo-admin-mid{flex:1;min-width:0}
-.promo-admin-code{font-size:13px;font-weight:900;letter-spacing:.5px}
-.promo-admin-meta{color:var(--muted);font-size:10px;margin-top:3px}
-.promo-admin-status{font-size:10px;margin-top:4px;font-weight:800}
-.promo-admin-actions{display:flex;flex-direction:column;gap:5px}
-.mini-btn{min-width:34px;height:32px;padding:0 8px;border-radius:9px;background:var(--bg);color:var(--text);font-size:11px;font-weight:700}
-.mini-btn.danger{color:var(--red)}
-.mini-btn.blue{color:var(--blue)}
+.location-close{
+position:absolute;
+right:0;
+top:-5px;
+width:42px;
+height:42px;
+background:none;
+color:#555;
+font-size:36px;
+font-weight:300;
+line-height:1
+}
 
-/* MODAL */
+.location-list{
+display:flex;
+flex-direction:column;
+gap:12px
+}
+
+.location-card{
+width:100%;
+min-height:88px;
+padding:17px 18px;
+border:1px solid var(--line);
+border-radius:22px;
+background:var(--card);
+display:flex;
+align-items:center;
+gap:14px;
+text-align:left;
+color:var(--text)
+}
+
+.location-card.selected{
+border:2px solid var(--blue)
+}
+
+.location-radio{
+width:27px;
+height:27px;
+border-radius:50%;
+border:2px solid #54a8d5;
+display:flex;
+align-items:center;
+justify-content:center;
+flex:0 0 27px
+}
+
+.location-card.selected .location-radio{
+border-color:var(--blue)
+}
+
+.location-radio-inner{
+width:13px;
+height:13px;
+border-radius:50%;
+background:var(--blue);
+display:none
+}
+
+.location-card.selected .location-radio-inner{
+display:block
+}
+
+.location-name{
+font-size:19px;
+font-weight:800
+}
+
+.location-confirm{
+margin-top:20px;
+height:54px;
+border-radius:28px;
+background:var(--blue);
+color:#fff;
+font-size:18px;
+font-weight:800
+}
+
+/* MODALS */
 
 .modal{
 position:fixed;
@@ -685,12 +870,83 @@ color:var(--text);
 font-size:20px
 }
 
-.notice{
-font-size:11px;
-padding:10px;
-border-radius:10px;
-background:rgba(21,151,255,.1);
-color:var(--blue)
+/* CONFIRM */
+
+.confirm-sheet{
+text-align:center;
+padding:20px 16px 16px
+}
+
+.confirm-icon{
+width:58px;
+height:58px;
+border-radius:50%;
+background:rgba(255,59,48,.1);
+color:var(--red);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+margin:0 auto 12px
+}
+
+.confirm-title{
+font-size:18px;
+font-weight:900;
+margin-bottom:8px
+}
+
+.confirm-text{
+color:var(--muted);
+font-size:12px;
+line-height:1.45;
+margin-bottom:18px
+}
+
+.confirm-buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px
+}
+
+.confirm-buttons button{
+height:46px;
+border-radius:12px;
+font-weight:800
+}
+
+.confirm-cancel{
+background:var(--bg);
+color:var(--text)
+}
+
+.confirm-delete{
+background:var(--red);
+color:#fff
+}
+
+.order{
+padding:11px 0;
+border-bottom:1px solid var(--line)
+}
+
+.ordertop{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+font-weight:800
+}
+
+.orderitems{
+font-size:10px;
+color:var(--muted);
+margin-top:4px
+}
+
+.status{
+font-size:10px;
+color:var(--green);
+margin-top:5px
 }
 
 .hidden{
@@ -717,34 +973,6 @@ transition:.2s
 opacity:1
 }
 
-.order{
-padding:11px 0;
-border-bottom:1px solid var(--line)
-}
-
-.order:last-child{
-border:0
-}
-
-.ordertop{
-display:flex;
-justify-content:space-between;
-font-size:12px;
-font-weight:800
-}
-
-.orderitems{
-font-size:10px;
-color:var(--muted);
-margin-top:4px
-}
-
-.status{
-font-size:10px;
-color:var(--green);
-margin-top:5px
-}
-
 @media(min-width:600px){
 .products{
 grid-template-columns:repeat(3,1fr)
@@ -758,67 +986,158 @@ grid-template-columns:repeat(3,1fr)
 <div class="app">
 
 <header class="top">
-<div class="logo">MOGVAPE</div>
-<button onclick="openSettings()">⚙️</button>
+
+<div class="logo">
+MOGVAPE
+</div>
+
+<button
+class="location-btn"
+onclick="openLocationPicker()">
+
+<svg
+class="location-icon"
+viewBox="0 0 24 24">
+
+<path
+d="M12 21s7-6.1 7-12A7 7 0 0 0 5 9c0 5.9 7 12 7 12Z"
+fill="none"
+stroke="currentColor"
+stroke-width="2"
+stroke-linejoin="round"/>
+
+<circle
+cx="12"
+cy="9"
+r="2.4"
+fill="none"
+stroke="currentColor"
+stroke-width="2"/>
+
+</svg>
+
+<span id="locationButtonText">
+Выбери точку
+</span>
+
+</button>
+
 </header>
 
 <!-- КАТАЛОГ -->
 
-<section id="home" class="page active">
+<section
+id="home"
+class="page active">
 
 <div class="searchrow">
+
 <div class="search">
+
 <span>⌕</span>
-<input id="search" placeholder="Поиск товара..." oninput="renderProducts()">
+
+<input
+id="search"
+placeholder="Поиск товара..."
+oninput="renderProducts()">
+
 </div>
-<button class="filter" onclick="openFilter()">☷</button>
+
+<button
+class="filter"
+onclick="openFilter()">
+
+☷
+
+</button>
+
 </div>
 
-<div id="categories" class="categories"></div>
+<div
+id="categories"
+class="categories">
+</div>
 
-<div id="sorts" class="sorts"></div>
+<div
+id="sorts"
+class="sorts">
+</div>
 
-<div id="products" class="products"></div>
+<div
+id="products"
+class="products">
+</div>
 
 </section>
 
-<!-- БОНУСЫ УБРАНЫ -->
-
 <!-- ИЗБРАННОЕ -->
 
-<section id="favorites" class="page">
+<section
+id="favorites"
+class="page">
 
-<h2>Избранное</h2>
+<h2>
+Избранное
+</h2>
 
-<div id="favoriteProducts" class="products"></div>
+<div
+id="favoriteProducts"
+class="products">
+</div>
 
 </section>
 
 <!-- КОРЗИНА -->
 
-<section id="cart" class="page">
+<section
+id="cart"
+class="page">
 
-<h2>Корзина</h2>
+<h2>
+Корзина
+</h2>
 
-<div class="box" id="cartBox"></div>
+<div
+class="box"
+id="cartBox">
+</div>
 
 </section>
 
 <!-- ПРОФИЛЬ -->
 
-<section id="profile" class="page">
+<section
+id="profile"
+class="page">
 
-<h2>Профиль</h2>
+<h2>
+Профиль
+</h2>
 
 <div class="profile">
 
 <div class="profiletop">
 
-<div class="avatar" id="avatar">M</div>
+<div
+class="avatar"
+id="avatar">
+M
+</div>
 
 <div>
-<div class="username" id="username">Пользователь</div>
-<div class="phone" id="profilePhone">Номер не указан</div>
+
+<div
+class="username"
+id="username">
+Пользователь
+</div>
+
+<div
+class="phone"
+id="profilePhone">
+Номер не указан
+</div>
+
 </div>
 
 </div>
@@ -827,62 +1146,116 @@ grid-template-columns:repeat(3,1fr)
 
 <div class="profilebuttons">
 
-<button class="profilebutton" onclick="openManager()">
+<button
+class="profilebutton"
+onclick="openManager()">
+
 <b>👨‍💼</b>
 <span>Менеджер</span>
+
 </button>
 
-<button class="profilebutton" onclick="showPage('cart')">
+<button
+class="profilebutton"
+onclick="showPage('cart')">
+
 <b>🛒</b>
 <span>Корзина</span>
+
 </button>
 
-<button class="profilebutton" onclick="showOrders()">
+<button
+class="profilebutton"
+onclick="showOrders()">
+
 <b>📦</b>
 <span>Мои заказы</span>
+
 </button>
 
-<button class="profilebutton" onclick="showPage('favorites')">
+<button
+class="profilebutton"
+onclick="showPage('favorites')">
+
 <b>❤️</b>
 <span>Избранное</span>
+
 </button>
 
 </div>
 
-<div style="font-size:13px;font-weight:800;margin:17px 3px 8px">
+<div
+style="font-size:13px;font-weight:800;margin:17px 3px 8px">
+
 Настройки
+
 </div>
 
 <div class="list">
 
-<button class="row" onclick="openSettings()">
-<div class="rowicon">⚙️</div>
+<button
+class="row"
+onclick="openSettings()">
+
+<div class="rowicon">
+⚙️
+</div>
+
 <div class="rowtext">
+
 Настройки
-<div class="sub">Номер телефона и тема</div>
+
+<div class="sub">
+Номер телефона и тема
 </div>
+
+</div>
+
 <div>›</div>
+
 </button>
 
-<button class="row" onclick="openHelp()">
-<div class="rowicon">❓</div>
+<button
+class="row"
+onclick="openHelp()">
+
+<div class="rowicon">
+❓
+</div>
+
 <div class="rowtext">
+
 Помощь
-<div class="sub">Ответы на вопросы</div>
+
+<div class="sub">
+Ответы на вопросы
 </div>
+
+</div>
+
 <div>›</div>
+
 </button>
 
 </div>
 
-<div id="adminButton" class="hidden">
+<div
+id="adminButton"
+class="hidden">
 
-<div style="font-size:13px;font-weight:800;margin:17px 3px 8px">
+<div
+style="font-size:13px;font-weight:800;margin:17px 3px 8px">
+
 Администрирование
+
 </div>
 
-<button class="primary" onclick="showAdmin()">
+<button
+class="primary"
+onclick="showAdmin()">
+
 🛠 Панель администратора
+
 </button>
 
 </div>
@@ -891,27 +1264,46 @@ grid-template-columns:repeat(3,1fr)
 
 <!-- ЗАКАЗЫ -->
 
-<section id="orders" class="page">
+<section
+id="orders"
+class="page">
 
-<button class="secondary" onclick="showPage('profile')">‹ Назад</button>
+<button
+class="secondary"
+onclick="showPage('profile')">
 
-<h2>Мои заказы</h2>
+‹ Назад
 
-<div class="box" id="ordersBox"></div>
+</button>
+
+<h2>
+Мои заказы
+</h2>
+
+<div
+class="box"
+id="ordersBox">
+</div>
 
 </section>
 
 <!-- АДМИНКА -->
 
-<section id="admin" class="page">
+<section
+id="admin"
+class="page">
 
-<button class="secondary" onclick="showPage('profile')">‹ Назад</button>
+<button
+class="secondary"
+onclick="showPage('profile')">
 
-<h2>🛠 MOGVAPE ADMIN</h2>
+‹ Назад
 
-<div class="notice">
-Админка доступна только Telegram ID: 5995285721
-</div>
+</button>
+
+<h2>
+🛠 MOGVAPE ADMIN
+</h2>
 
 <div class="box">
 
@@ -922,32 +1314,68 @@ grid-template-columns:repeat(3,1fr)
 <div class="form">
 
 <label>Название</label>
-<input id="aName" placeholder="Название товара">
+
+<input
+id="aName"
+placeholder="Название товара">
 
 <label>Категория</label>
-<input id="aCategory" placeholder="Жидкости">
+
+<input
+id="aCategory"
+placeholder="Жидкости">
 
 <label>Цена</label>
-<input id="aPrice" type="number" inputmode="numeric">
+
+<input
+id="aPrice"
+type="number"
+inputmode="numeric">
 
 <label>Количество</label>
-<input id="aStock" type="number" min="0" inputmode="numeric">
+
+<input
+id="aStock"
+type="number"
+min="0"
+inputmode="numeric">
 
 <label>Описание</label>
-<textarea id="aDescription"></textarea>
 
-<label>Вкусы / варианты через запятую</label>
-<input id="aOptions" placeholder="Вишня, Лайм, Яблоко">
+<textarea
+id="aDescription"></textarea>
+
+<label>
+Вкусы / варианты через запятую
+</label>
+
+<input
+id="aOptions"
+placeholder="Вишня, Лайм, Яблоко">
 
 <label>Фото</label>
-<input id="aImage" type="file" accept="image/*">
 
-<button id="saveProductButton" class="primary" onclick="saveProduct()">
+<input
+id="aImage"
+type="file"
+accept="image/*">
+
+<button
+id="saveProductButton"
+class="primary"
+onclick="saveProduct()">
+
 ➕ Добавить товар
+
 </button>
 
-<button id="cancelEditButton" class="secondary hidden" onclick="cancelEdit()">
+<button
+id="cancelEditButton"
+class="secondary hidden"
+onclick="cancelEdit()">
+
 Отмена редактирования
+
 </button>
 
 </div>
@@ -956,41 +1384,79 @@ grid-template-columns:repeat(3,1fr)
 
 <div class="box">
 
-<div style="font-weight:800;margin-bottom:5px">
+<div
+style="font-weight:800;margin-bottom:5px">
+
 Товары
+
 </div>
 
-<div id="adminProducts"></div>
+<div
+id="adminProducts">
+</div>
 
 </div>
 
 <div class="box">
 
 <div style="font-weight:800">
+
 🎟 Управление промокодами
+
 </div>
 
-<div class="sub" style="margin-top:4px">
-Создай код из букв и цифр, задай скидку и лимит использований.
+<div
+class="sub"
+style="margin-top:4px">
+
+Создай код из букв и цифр,
+задай скидку и лимит использований.
+
 </div>
 
 <div class="form">
 
 <label>Промокод</label>
-<input id="promoAdminCode" maxlength="20" placeholder="MOG2026"
+
+<input
+id="promoAdminCode"
+maxlength="20"
+placeholder="MOG2026"
 oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
 
 <label>Скидка, %</label>
-<input id="promoAdminDiscount" type="number" min="1" max="100" inputmode="numeric" placeholder="10">
+
+<input
+id="promoAdminDiscount"
+type="number"
+min="1"
+max="100"
+inputmode="numeric"
+placeholder="10">
 
 <label>Количество использований</label>
-<input id="promoAdminLimit" type="number" min="1" inputmode="numeric" placeholder="50">
 
-<button class="primary" onclick="createPromo()">➕ Создать промокод</button>
+<input
+id="promoAdminLimit"
+type="number"
+min="1"
+inputmode="numeric"
+placeholder="50">
+
+<button
+class="primary"
+onclick="createPromo()">
+
+➕ Создать промокод
+
+</button>
 
 </div>
 
-<div id="adminPromos" style="margin-top:12px"></div>
+<div
+id="adminPromos"
+style="margin-top:12px">
+</div>
 
 </div>
 
@@ -1000,57 +1466,192 @@ oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
 
 <nav class="nav">
 
-<button data-page="home" class="active" onclick="showPage('home')">
+<button
+data-page="home"
+class="active"
+onclick="showPage('home')">
+
 <span class="ico">⌂</span>
 Каталог
+
 </button>
 
-<button data-page="favorites" onclick="showPage('favorites')">
+<button
+data-page="favorites"
+onclick="showPage('favorites')">
+
 <span class="ico">♡</span>
 Избранное
+
 </button>
 
-<button data-page="cart" onclick="showPage('cart')" style="position:relative">
+<button
+data-page="cart"
+onclick="showPage('cart')"
+style="position:relative">
+
 <span class="ico">🛒</span>
 Корзина
-<span id="cartCount" class="count hidden">0</span>
+
+<span
+id="cartCount"
+class="count hidden">
+0
+</span>
+
 </button>
 
-<button data-page="orders" onclick="showOrders()">
+<button
+data-page="orders"
+onclick="showOrders()">
+
 <span class="ico">📦</span>
 Заказы
+
 </button>
 
-<button data-page="profile" onclick="showPage('profile')">
+<button
+data-page="profile"
+onclick="showPage('profile')">
+
 <span class="ico">●</span>
 Профиль
+
 </button>
 
 </nav>
 
 </div>
 
+<!-- ВЫБОР ТОЧКИ -->
+
+<div
+id="locationModal"
+class="modal">
+
+<div class="sheet location-sheet">
+
+<div class="location-head">
+
+<div class="location-title">
+Выберите точку самовывоза
+</div>
+
+<button
+class="location-close"
+onclick="closeModal('locationModal')">
+
+×
+
+</button>
+
+</div>
+
+<div class="location-list">
+
+<button
+id="location-atrium"
+class="location-card"
+onclick="selectLocation('Атриум')">
+
+<div class="location-radio">
+<div class="location-radio-inner"></div>
+</div>
+
+<div class="location-name">
+Атриум
+</div>
+
+</button>
+
+<button
+id="location-grivchin"
+class="location-card"
+onclick="selectLocation('Гривчин')">
+
+<div class="location-radio">
+<div class="location-radio-inner"></div>
+</div>
+
+<div class="location-name">
+Гривчин
+</div>
+
+</button>
+
+<button
+id="location-vosmoi"
+class="location-card"
+onclick="selectLocation('Восьмой')">
+
+<div class="location-radio">
+<div class="location-radio-inner"></div>
+</div>
+
+<div class="location-name">
+Восьмой
+</div>
+
+</button>
+
+</div>
+
+<button
+class="primary location-confirm"
+onclick="confirmLocation()">
+
+Подтвердить
+
+</button>
+
+</div>
+
+</div>
+
 <!-- ФИЛЬТР -->
 
-<div id="filterModal" class="modal">
+<div
+id="filterModal"
+class="modal">
 
 <div class="sheet">
 
 <div class="sheethead">
+
 <b>Фильтр</b>
-<button class="close" onclick="closeModal('filterModal')">×</button>
+
+<button
+class="close"
+onclick="closeModal('filterModal')">
+
+×
+
+</button>
+
 </div>
 
 <div class="form">
 
 <label>Цена от</label>
-<input id="minPrice" type="number" inputmode="numeric">
+
+<input
+id="minPrice"
+type="number"
+inputmode="numeric">
 
 <label>Цена до</label>
-<input id="maxPrice" type="number" inputmode="numeric">
 
-<button class="primary" onclick="applyFilter()">
+<input
+id="maxPrice"
+type="number"
+inputmode="numeric">
+
+<button
+class="primary"
+onclick="applyFilter()">
+
 Показать товары
+
 </button>
 
 </div>
@@ -1061,26 +1662,44 @@ oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
 
 <!-- ТОВАР -->
 
-<div id="productModal" class="modal">
+<div
+id="productModal"
+class="modal">
 
-<div class="sheet" id="productSheet"></div>
+<div
+class="sheet"
+id="productSheet">
+</div>
 
 </div>
 
 <!-- НАСТРОЙКИ -->
 
-<div id="settingsModal" class="modal">
+<div
+id="settingsModal"
+class="modal">
 
 <div class="sheet">
 
 <div class="sheethead">
+
 <b>Настройки</b>
-<button class="close" onclick="closeModal('settingsModal')">×</button>
+
+<button
+class="close"
+onclick="closeModal('settingsModal')">
+
+×
+
+</button>
+
 </div>
 
 <div class="form">
 
-<label>Номер телефона — ровно 11 цифр</label>
+<label>
+Номер телефона — ровно 11 цифр
+</label>
 
 <input
 id="phoneInput"
@@ -1088,19 +1707,22 @@ type="tel"
 inputmode="numeric"
 maxlength="11"
 placeholder="79991234567"
-oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)"
->
+oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)">
 
-<div class="sub">
-Только цифры. Максимум и минимум — 11 цифр.
-</div>
+<button
+class="primary"
+onclick="savePhone()">
 
-<button class="primary" onclick="savePhone()">
 Сохранить номер
+
 </button>
 
-<button class="secondary" onclick="toggleTheme()">
+<button
+class="secondary"
+onclick="toggleTheme()">
+
 🌙 Переключить тему
+
 </button>
 
 </div>
@@ -1111,60 +1733,134 @@ oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)"
 
 <!-- ПОМОЩЬ -->
 
-<div id="helpModal" class="modal">
+<div
+id="helpModal"
+class="modal">
 
 <div class="sheet">
 
 <div class="sheethead">
+
 <b>Помощь</b>
-<button class="close" onclick="closeModal('helpModal')">×</button>
+
+<button
+class="close"
+onclick="closeModal('helpModal')">
+
+×
+
+</button>
+
 </div>
 
 <div class="list">
 
 <div class="row">
-<div class="rowicon">🛒</div>
+
+<div class="rowicon">
+🛒
+</div>
+
 <div class="rowtext">
+
 Как заказать?
+
 <div class="sub">
 Добавьте товар в корзину и нажмите «Оформить заказ».
 </div>
+
 </div>
+
 </div>
 
 <div class="row">
-<div class="rowicon">👨‍💼</div>
+
+<div class="rowicon">
+👨‍💼
+</div>
+
 <div class="rowtext">
+
 Менеджер
+
 <div class="sub">
 @MOGBARAHA
 </div>
+
 </div>
+
 </div>
 
 </div>
 
-<button class="primary" onclick="openManager()">
+<button
+class="primary"
+onclick="openManager()">
+
 Написать менеджеру
+
 </button>
 
 </div>
 
 </div>
 
-<div id="confirmModal" class="modal">
+<!-- ПОДТВЕРЖДЕНИЕ -->
+
+<div
+id="confirmModal"
+class="modal">
+
 <div class="sheet confirm-sheet">
-<div class="confirm-icon">⚠️</div>
-<div class="confirm-title" id="confirmTitle">Удалить?</div>
-<div class="confirm-text" id="confirmText">Вы действительно хотите удалить этот объект?</div>
-<div class="confirm-buttons">
-<button class="confirm-cancel" onclick="closeConfirm()">Отмена</button>
-<button class="confirm-delete" onclick="confirmDeleteAction()">Удалить</button>
-</div>
-</div>
+
+<div class="confirm-icon">
+⚠️
 </div>
 
-<div id="toast" class="toast"></div>
+<div
+class="confirm-title"
+id="confirmTitle">
+
+Удалить?
+
+</div>
+
+<div
+class="confirm-text"
+id="confirmText">
+
+Вы действительно хотите удалить этот объект?
+
+</div>
+
+<div class="confirm-buttons">
+
+<button
+class="confirm-cancel"
+onclick="closeConfirm()">
+
+Отмена
+
+</button>
+
+<button
+class="confirm-delete"
+onclick="confirmDeleteAction()">
+
+Удалить
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="toast"
+class="toast">
+</div>
 
 <script>
 
@@ -1174,47 +1870,31 @@ const ADMIN_ID="5995285721";
 
 const MANAGER="https://t.me/MOGBARAHA";
 
-let products=JSON.parse(localStorage.getItem("mogvape_products")||"null")||[
-{
-id:"1",
-name:"BJORN СОН ПРИЗРАКА",
-category:"Жидкости",
-price:900,
-stock:10,
-description:"Жидкость для электронных систем.",
-options:["80 мг"],
-image:"",
-created:Date.now()
-},
-{
-id:"2",
-name:"RICK & MORTY BAD ACID",
-category:"Жидкости",
-price:850,
-stock:10,
-description:"Яркая линейка вкусов.",
-options:["50 мг"],
-image:"",
-created:Date.now()
-},
-{
-id:"3",
-name:"ELFBAR DUKE 30000",
-category:"Одноразки",
-price:1800,
-stock:10,
-description:"Одноразовое устройство.",
-options:["Вишня"],
-image:"",
-created:Date.now()
-}
-];
+let products=
+JSON.parse(
+localStorage.getItem("mogvape_products")||"null"
+)||[];
 
-let cart=JSON.parse(localStorage.getItem("mogvape_cart")||"[]");
-let favorites=JSON.parse(localStorage.getItem("mogvape_favorites")||"[]");
-let orders=JSON.parse(localStorage.getItem("mogvape_orders")||"[]");
+let cart=
+JSON.parse(
+localStorage.getItem("mogvape_cart")||"[]"
+);
 
-let promoCodes=JSON.parse(localStorage.getItem("mogvape_promocodes")||"[]");
+let favorites=
+JSON.parse(
+localStorage.getItem("mogvape_favorites")||"[]"
+);
+
+let orders=
+JSON.parse(
+localStorage.getItem("mogvape_orders")||"[]"
+);
+
+let promoCodes=
+JSON.parse(
+localStorage.getItem("mogvape_promocodes")||"[]"
+);
+
 let activePromo=null;
 
 let category="Все";
@@ -1225,6 +1905,14 @@ let editId=null;
 let currentProduct=null;
 let currentOption="";
 let currentQty=1;
+
+let selectedLocation=
+localStorage.getItem("mogvape_location")||"";
+
+let pendingLocation=
+selectedLocation;
+
+/* DATA */
 
 function saveData(){
 
@@ -1255,6 +1943,8 @@ JSON.stringify(promoCodes)
 
 }
 
+/* TELEGRAM */
+
 function user(){
 
 return tg?.initDataUnsafe?.user||{};
@@ -1263,7 +1953,9 @@ return tg?.initDataUnsafe?.user||{};
 
 function isAdmin(){
 
-return String(user().id||"")===ADMIN_ID;
+return String(
+user().id||""
+)===ADMIN_ID;
 
 }
 
@@ -1274,14 +1966,6 @@ if(!tg)return;
 tg.ready();
 tg.expand();
 
-try{
-tg.setHeaderColor(
-getComputedStyle(document.body)
-.getPropertyValue("--bg")
-.trim()
-);
-}catch(e){}
-
 }
 
 function initUser(){
@@ -1291,18 +1975,26 @@ const u=user();
 const name=[
 u.first_name,
 u.last_name
-].filter(Boolean).join(" ")||"Пользователь";
+]
+.filter(Boolean)
+.join(" ")||"Пользователь";
 
-document.getElementById("username").textContent=name;
+document
+.getElementById("username")
+.textContent=name;
 
 if(u.photo_url){
 
-document.getElementById("avatar").innerHTML=
+document
+.getElementById("avatar")
+.innerHTML=
 `<img src="${u.photo_url}">`;
 
 }else{
 
-document.getElementById("avatar").textContent=
+document
+.getElementById("avatar")
+.textContent=
 name[0]||"M";
 
 }
@@ -1311,23 +2003,117 @@ if(isAdmin()){
 
 document
 .getElementById("adminButton")
-.classList.remove("hidden");
+.classList
+.remove("hidden");
 
 }
 
 const phone=
 localStorage.getItem("mogvape_phone");
 
-document.getElementById("profilePhone")
-.textContent=phone||"Номер не указан";
+document
+.getElementById("profilePhone")
+.textContent=
+phone||"Номер не указан";
 
 }
+
+/* LOCATION */
+
+function openLocationPicker(){
+
+pendingLocation=
+localStorage.getItem(
+"mogvape_location"
+)||"";
+
+updateLocationCards();
+
+document
+.getElementById("locationModal")
+.classList
+.add("show");
+
+}
+
+function selectLocation(name){
+
+pendingLocation=name;
+
+updateLocationCards();
+
+}
+
+function updateLocationCards(){
+
+document
+.querySelectorAll(".location-card")
+.forEach(
+x=>x.classList.remove("selected")
+);
+
+const map={
+"Атриум":"location-atrium",
+"Гривчин":"location-grivchin",
+"Восьмой":"location-vosmoi"
+};
+
+if(map[pendingLocation]){
+
+document
+.getElementById(map[pendingLocation])
+.classList
+.add("selected");
+
+}
+
+}
+
+function confirmLocation(){
+
+if(!pendingLocation){
+
+showToast(
+"Выберите точку самовывоза"
+);
+
+return;
+
+}
+
+selectedLocation=
+pendingLocation;
+
+localStorage.setItem(
+"mogvape_location",
+selectedLocation
+);
+
+document
+.getElementById("locationButtonText")
+.textContent=
+selectedLocation;
+
+closeModal(
+"locationModal"
+);
+
+showToast(
+"Точка выбрана: "+
+selectedLocation
+);
+
+}
+
+/* PAGES */
 
 function showPage(page){
 
 document
 .querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+.forEach(
+x=>x.classList.remove("active")
+);
 
 document
 .getElementById(page)
@@ -1335,40 +2121,57 @@ document
 
 document
 .querySelectorAll(".nav button")
-.forEach(x=>{
+.forEach(
+x=>{
 x.classList.toggle(
 "active",
 x.dataset.page===page
 );
-});
+}
+);
 
-if(page==="home")renderProducts();
-if(page==="favorites")renderFavorites();
-if(page==="cart")renderCart();
-if(page==="orders")renderOrders();
-if(page==="admin" && isAdmin())renderAdmin();
+if(page==="home")
+renderProducts();
+
+if(page==="favorites")
+renderFavorites();
+
+if(page==="cart")
+renderCart();
+
+if(page==="orders")
+renderOrders();
+
+if(page==="admin"&&isAdmin())
+renderAdmin();
 
 window.scrollTo(0,0);
 
 }
+
+/* CATEGORIES */
 
 function renderCategories(){
 
 const cats=[
 "Все",
 ...new Set(
-products.map(x=>x.category).filter(Boolean)
+products
+.map(x=>x.category)
+.filter(Boolean)
 )
 ];
 
-document.getElementById("categories")
-.innerHTML=cats.map(c=>`
+document
+.getElementById("categories")
+.innerHTML=
+cats.map(c=>`
 
 <button
 class="category ${category===c?"active":""}"
-onclick="setCategory('${c.replace(/'/g,"")}')">
+onclick="setCategory('${escapeHTML(c)}')">
 
-${c}
+${escapeHTML(c)}
 
 </button>
 
@@ -1384,6 +2187,8 @@ renderProducts();
 
 }
 
+/* SORT */
+
 function renderSorts(){
 
 const data={
@@ -1394,8 +2199,12 @@ name:"А–Я",
 new:"Новинки"
 };
 
-document.getElementById("sorts")
-.innerHTML=Object.entries(data).map(
+document
+.getElementById("sorts")
+.innerHTML=
+Object
+.entries(data)
+.map(
 ([key,name])=>`
 
 <button
@@ -1407,7 +2216,8 @@ ${name}
 </button>
 
 `
-).join("");
+)
+.join("");
 
 }
 
@@ -1419,6 +2229,8 @@ renderProducts();
 
 }
 
+/* PRODUCTS */
+
 function getProducts(){
 
 const search=
@@ -1428,7 +2240,8 @@ document
 .trim()
 .toLowerCase();
 
-let arr=products.filter(p=>{
+let arr=
+products.filter(p=>{
 
 const cat=
 category==="Все"||
@@ -1438,7 +2251,8 @@ const text=
 `${p.name} ${p.category} ${p.description}`
 .toLowerCase();
 
-const q=!search||text.includes(search);
+const q=
+!search||text.includes(search);
 
 const min=
 minPrice===""||
@@ -1459,10 +2273,14 @@ if(sort==="priceDesc")
 arr.sort((a,b)=>b.price-a.price);
 
 if(sort==="name")
-arr.sort((a,b)=>a.name.localeCompare(b.name));
+arr.sort((a,b)=>
+a.name.localeCompare(b.name)
+);
 
 if(sort==="new")
-arr.sort((a,b)=>b.created-a.created);
+arr.sort((a,b)=>
+b.created-a.created
+);
 
 return arr;
 
@@ -1473,7 +2291,8 @@ function renderProducts(){
 renderCategories();
 renderSorts();
 
-const arr=getProducts();
+const arr=
+getProducts();
 
 const box=
 document.getElementById("products");
@@ -1481,21 +2300,28 @@ document.getElementById("products");
 if(!arr.length){
 
 box.innerHTML=
-`<div class="empty" style="grid-column:1/-1">
-🔎<br>Ничего не найдено
+`<div
+class="empty"
+style="grid-column:1/-1">
+
+🔎<br>
+Ничего не найдено
+
 </div>`;
 
 return;
 
 }
 
-box.innerHTML=arr.map(card).join("");
+box.innerHTML=
+arr.map(card).join("");
 
 }
 
 function card(p){
 
-const fav=favorites.includes(p.id);
+const fav=
+favorites.includes(p.id);
 
 return`
 
@@ -1530,7 +2356,9 @@ ${fav?"❤️":"♡"}
 <div class="productinfo">
 
 <div class="productname">
+
 ${escapeHTML(p.name)}
+
 </div>
 
 <div class="productbottom">
@@ -1538,15 +2366,20 @@ ${escapeHTML(p.name)}
 <div>
 
 <div class="price">
-${Number(p.price).toLocaleString("ru-RU")} ₽
+
+${Number(p.price)
+.toLocaleString("ru-RU")} ₽
+
 </div>
 
 <div class="sub">
+
 ${
 p.stock>0
 ?`В наличии: ${p.stock}`
 :`Нет в наличии`
 }
+
 </div>
 
 </div>
@@ -1573,19 +2406,25 @@ onclick="event.stopPropagation();quickAdd('${p.id}')">
 function escapeHTML(s){
 
 return String(s||"")
-.replace(/[&<>"']/g,m=>({
+.replace(
+/[&<>"']/g,
+m=>({
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
-}[m]));
+}[m])
+);
 
 }
 
+/* FAVORITES */
+
 function toggleFavorite(id){
 
-favorites=favorites.includes(id)
+favorites=
+favorites.includes(id)
 ?favorites.filter(x=>x!==id)
 :[...favorites,id];
 
@@ -1605,46 +2444,67 @@ favorites.includes(id)
 function renderFavorites(){
 
 const arr=
-products.filter(x=>favorites.includes(x.id));
+products.filter(
+x=>favorites.includes(x.id)
+);
 
-document.getElementById("favoriteProducts")
+document
+.getElementById("favoriteProducts")
 .innerHTML=
 arr.length
 ?arr.map(card).join("")
-:`<div class="empty" style="grid-column:1/-1">
-❤️<br>Избранное пусто
+:`<div
+class="empty"
+style="grid-column:1/-1">
+
+❤️<br>
+Избранное пусто
+
 </div>`;
 
 }
 
+/* CART */
+
 function quickAdd(id){
 
-const p=products.find(x=>x.id===id);
+const p=
+products.find(
+x=>x.id===id
+);
 
 if(!p)return;
 
 if(p.stock<=0){
 
-showToast("Товара нет в наличии");
+showToast(
+"Товара нет в наличии"
+);
 
 return;
 
 }
 
-addCart(p,1,p.options?.[0]||"");
+addCart(
+p,
+1,
+p.options?.[0]||""
+);
 
 }
 
 function addCart(p,qty,option){
 
-const key=p.id+"|"+option;
+const key=
+p.id+"|"+option;
 
 const found=
 cart.find(x=>x.key===key);
 
 if(found){
 
-found.qty=Math.min(
+found.qty=
+Math.min(
 found.qty+qty,
 p.stock
 );
@@ -1666,20 +2526,26 @@ qty
 saveData();
 
 updateCartCount();
-
 renderCart();
 
-showToast("Товар добавлен в корзину");
+showToast(
+"Товар добавлен в корзину"
+);
 
 }
 
 function updateCartCount(){
 
 const count=
-cart.reduce((s,x)=>s+x.qty,0);
+cart.reduce(
+(s,x)=>s+x.qty,
+0
+);
 
 const el=
-document.getElementById("cartCount");
+document.getElementById(
+"cartCount"
+);
 
 el.textContent=count;
 
@@ -1690,10 +2556,168 @@ count===0
 
 }
 
+function cartTotal(){
+
+return cart.reduce(
+(s,x)=>s+x.price*x.qty,
+0
+);
+
+}
+
+/* PROMO */
+
+function getActivePromo(){
+
+if(!activePromo)
+return null;
+
+const promo=
+promoCodes.find(
+p=>p.code===activePromo
+);
+
+if(
+!promo||
+promo.active===false
+)
+return null;
+
+if(
+Number(promo.used||0)>=
+Number(promo.limit||0)
+)
+return null;
+
+return promo;
+
+}
+
+function getPromoDiscountAmount(){
+
+const promo=
+getActivePromo();
+
+if(!promo)
+return 0;
+
+return Math.round(
+cartTotal()*
+Number(promo.discount||0)/
+100
+);
+
+}
+
+function getFinalCartTotal(){
+
+return Math.max(
+0,
+cartTotal()-
+getPromoDiscountAmount()
+);
+
+}
+
+function applyPromo(){
+
+const input=
+document.getElementById(
+"promoCodeInput"
+);
+
+if(!input){
+
+showToast(
+"Введите промокод"
+);
+
+return;
+
+}
+
+const code=
+input.value
+.trim()
+.toUpperCase();
+
+if(!code){
+
+showToast(
+"Введите промокод"
+);
+
+return;
+
+}
+
+const promo=
+promoCodes.find(
+p=>p.code===code
+);
+
+if(!promo){
+
+activePromo=null;
+
+renderCart();
+
+showToast(
+"Промокод не найден"
+);
+
+return;
+
+}
+
+if(promo.active===false){
+
+activePromo=null;
+
+renderCart();
+
+showToast(
+"Промокод отключён"
+);
+
+return;
+
+}
+
+if(
+Number(promo.used||0)>=
+Number(promo.limit||0)
+){
+
+activePromo=null;
+
+renderCart();
+
+showToast(
+"Лимит использований исчерпан"
+);
+
+return;
+
+}
+
+activePromo=
+promo.code;
+
+renderCart();
+
+showToast(
+`Промокод применён: −${promo.discount}%`
+);
+
+}
+
 function renderCart(){
 
 const box=
-document.getElementById("cartBox");
+document.getElementById(
+"cartBox"
+);
 
 if(!cart.length){
 
@@ -1707,34 +2731,59 @@ return;
 }
 
 box.innerHTML=
-cart.map((x,i)=>`
+cart.map(
+(x,i)=>`
 
 <div class="cartitem">
 
 ${
 x.image
-?`<img class="cartimg" src="${x.image}">`
-:`<div class="cartimg" style="display:flex;align-items:center;justify-content:center;font-size:27px">📦</div>`
+?`<img
+class="cartimg"
+src="${x.image}">`
+:`<div
+class="cartimg"
+style="display:flex;align-items:center;justify-content:center;font-size:27px">
+
+📦
+
+</div>`
 }
 
 <div class="cartmid">
 
 <div class="cartname">
+
 ${escapeHTML(x.name)}
+
 </div>
 
 <div class="cartprice">
+
 ${x.price.toLocaleString("ru-RU")} ₽
-${x.option?" · "+escapeHTML(x.option):""}
+${x.option
+?" · "+escapeHTML(x.option)
+:""}
+
 </div>
 
 <div class="qty">
 
-<button onclick="cartQty(${i},-1)">−</button>
+<button
+onclick="cartQty(${i},-1)">
+
+−
+
+</button>
 
 <b>${x.qty}</b>
 
-<button onclick="cartQty(${i},1)">+</button>
+<button
+onclick="cartQty(${i},1)">
+
++
+
+</button>
 
 <button
 onclick="removeCart(${i})"
@@ -1749,24 +2798,57 @@ style="color:var(--red)">
 </div>
 
 <b>
-${(x.price*x.qty).toLocaleString("ru-RU")} ₽
+
+${(
+x.price*x.qty
+).toLocaleString("ru-RU")} ₽
+
 </b>
 
 </div>
 
-`).join("")+
-
 `
+)
+.join("")
+
++`
 
 <div class="promo-box">
-  <div style="font-size:12px;font-weight:800;margin-bottom:7px">🎟 Промокод</div>
-  <div class="promo-row">
-    <input id="promoCodeInput" placeholder="Введите промокод" maxlength="20"
-      value="${activePromo||""}"
-      oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
-    <button class="promo-apply" onclick="applyPromo()">Применить</button>
-  </div>
-  ${activePromo?`<div class="promo-applied">✓ Применён: ${escapeHTML(activePromo)}</div>`:""}
+
+<div
+style="font-size:12px;font-weight:800;margin-bottom:7px">
+
+🎟 Промокод
+
+</div>
+
+<div class="promo-row">
+
+<input
+id="promoCodeInput"
+placeholder="Введите промокод"
+maxlength="20"
+value="${activePromo||""}"
+oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
+
+<button
+class="promo-apply"
+onclick="applyPromo()">
+
+Применить
+
+</button>
+
+</div>
+
+${
+activePromo
+?`<div class="promo-applied">
+✓ Применён: ${escapeHTML(activePromo)}
+</div>`
+:""
+}
+
 </div>
 
 <div class="total">
@@ -1774,12 +2856,27 @@ ${(x.price*x.qty).toLocaleString("ru-RU")} ₽
 <span>Итого</span>
 
 <span>
-${getFinalCartTotal().toLocaleString("ru-RU")} ₽
+
+${getFinalCartTotal()
+.toLocaleString("ru-RU")} ₽
+
 </span>
 
 </div>
 
-${getPromoDiscountAmount()>0?`<div class="sub" style="text-align:right;margin-top:4px;color:var(--green)">Скидка: −${getPromoDiscountAmount().toLocaleString("ru-RU")} ₽</div>`:""}
+${
+getPromoDiscountAmount()>0
+?`<div
+class="sub"
+style="text-align:right;margin-top:4px;color:var(--green)">
+
+Скидка:
+−${getPromoDiscountAmount()
+.toLocaleString("ru-RU")} ₽
+
+</div>`
+:""
+}
 
 <button
 class="primary"
@@ -1809,6 +2906,7 @@ if(cart[i].qty<=0)
 cart.splice(i,1);
 
 saveData();
+
 updateCartCount();
 renderCart();
 
@@ -1819,6 +2917,7 @@ function removeCart(i){
 cart.splice(i,1);
 
 saveData();
+
 updateCartCount();
 renderCart();
 
@@ -1830,115 +2929,30 @@ cart=[];
 activePromo=null;
 
 saveData();
+
 updateCartCount();
 renderCart();
 
 }
 
-function cartTotal(){
-
-return cart.reduce(
-(s,x)=>s+x.price*x.qty,
-0
-);
-
-}
-
-function getActivePromo(){
-
-if(!activePromo)return null;
-
-const promo=promoCodes.find(p=>p.code===activePromo);
-
-if(!promo || promo.active===false)return null;
-
-if(Number(promo.used||0)>=Number(promo.limit||0))return null;
-
-return promo;
-
-}
-
-function getPromoDiscountAmount(){
-
-const promo=getActivePromo();
-
-if(!promo)return 0;
-
-return Math.round(cartTotal()*Number(promo.discount||0)/100);
-
-}
-
-function getFinalCartTotal(){
-
-return Math.max(0,cartTotal()-getPromoDiscountAmount());
-
-}
-
-function applyPromo(){
-
-const input=document.getElementById("promoCodeInput");
-
-if(!input){
-showToast("Введите промокод");
-return;
-}
-
-const code=input.value.trim().toUpperCase();
-
-if(!code){
-showToast("Введите промокод");
-return;
-}
-
-const promo=promoCodes.find(p=>p.code===code);
-
-if(!promo){
-activePromo=null;
-renderCart();
-showToast("Промокод не найден");
-return;
-}
-
-if(promo.active===false){
-activePromo=null;
-renderCart();
-showToast("Промокод отключён");
-return;
-}
-
-if(Number(promo.used||0)>=Number(promo.limit||0)){
-activePromo=null;
-renderCart();
-showToast("Лимит использований исчерпан");
-return;
-}
-
-activePromo=promo.code;
-renderCart();
-showToast(`Промокод применён: −${promo.discount}%`);
-
-}
-
-/*
-ОФОРМЛЕНИЕ ЗАКАЗА
-
-Здесь Mini App отправляет данные боту.
-Бот затем отправляет заказ тебе
-на Telegram ID 5995285721.
-*/
+/* CHECKOUT */
 
 function checkout(){
 
 if(!cart.length){
 
-showToast("Корзина пуста");
+showToast(
+"Корзина пуста"
+);
 
 return;
 
 }
 
 const phone=
-localStorage.getItem("mogvape_phone");
+localStorage.getItem(
+"mogvape_phone"
+);
 
 if(!phone){
 
@@ -1963,13 +2977,17 @@ id:Date.now().toString(),
 customer:[
 u.first_name,
 u.last_name
-].filter(Boolean).join(" ")||"Пользователь",
+]
+.filter(Boolean)
+.join(" ")||"Пользователь",
 
 username:u.username||"",
 
 userId:u.id||"",
 
-phone:phone,
+phone,
+
+location:selectedLocation||"Не выбрана",
 
 total:getFinalCartTotal(),
 
@@ -1979,19 +2997,18 @@ discount:getPromoDiscountAmount(),
 
 promo:activePromo||"",
 
-items:cart.map(x=>({
+items:cart.map(
+x=>({
 
 name:x.name,
-
 option:x.option,
-
 qty:x.qty,
-
 price:x.price
 
-})),
+})
+),
 
-delivery:"Уточнить у менеджера",
+delivery:"Самовывоз",
 
 address:"",
 
@@ -1999,30 +3016,44 @@ comment:""
 
 };
 
-const usedPromo=getActivePromo();
+const usedPromo=
+getActivePromo();
 
 if(usedPromo){
-usedPromo.used=Number(usedPromo.used||0)+1;
-if(usedPromo.used>=Number(usedPromo.limit||0)){
+
+usedPromo.used=
+Number(usedPromo.used||0)+1;
+
+if(
+usedPromo.used>=
+Number(usedPromo.limit||0)
+){
+
 usedPromo.active=false;
+
 }
+
 }
 
 orders.unshift({
 
 id:order.id,
 
-date:new Date().toLocaleString("ru-RU"),
+date:
+new Date()
+.toLocaleString("ru-RU"),
 
 items:order.items,
 
 total:order.total,
 
-subtotal:order.subtotal||order.total,
+subtotal:order.subtotal,
 
-discount:order.discount||0,
+discount:order.discount,
 
-promo:order.promo||"",
+promo:order.promo,
+
+location:order.location,
 
 status:"Новый"
 
@@ -2035,7 +3066,7 @@ try{
 tg.sendData(
 JSON.stringify({
 type:"mogvape_order",
-order:order
+order
 })
 );
 
@@ -2051,10 +3082,11 @@ activePromo=null;
 saveData();
 
 updateCartCount();
-
 renderCart();
 
-showToast("Заказ отправлен!");
+showToast(
+"Заказ отправлен!"
+);
 
 }else{
 
@@ -2064,16 +3096,105 @@ openManager();
 
 }
 
-/* ПОВТОРИТЬ ЗАКАЗ */
+/* ORDERS */
+
+function showOrders(){
+
+showPage("orders");
+
+}
+
+function renderOrders(){
+
+const box=
+document.getElementById(
+"ordersBox"
+);
+
+if(!orders.length){
+
+box.innerHTML=
+`<div class="empty">
+
+📦<br>
+Заказов пока нет
+
+</div>`;
+
+return;
+
+}
+
+box.innerHTML=
+orders.map(
+o=>`
+
+<div class="order">
+
+<div class="ordertop">
+
+<span>
+Заказ #${o.id.slice(-6)}
+</span>
+
+<span>
+${Number(o.total)
+.toLocaleString("ru-RU")} ₽
+</span>
+
+</div>
+
+<div class="orderitems">
+
+${o.items.map(
+x=>
+`${escapeHTML(x.name)} × ${x.qty}`
+)
+.join("<br>")}
+
+</div>
+
+${
+o.location
+?`<div class="orderitems">
+📍 ${escapeHTML(o.location)}
+</div>`
+:""
+}
+
+<div class="status">
+
+${o.status} · ${o.date}
+
+</div>
+
+<button
+class="secondary"
+onclick="repeatOrder('${o.id}')">
+
+🔄 Повторить заказ
+
+</button>
+
+</div>
+
+`
+)
+.join("");
+
+}
 
 function repeatOrder(id){
 
 const order=
-orders.find(x=>x.id===id);
+orders.find(
+x=>x.id===id
+);
 
 if(!order)return;
 
-order.items.forEach(item=>{
+order.items.forEach(
+item=>{
 
 const p=
 products.find(
@@ -2098,70 +3219,14 @@ item.option||""
 
 }
 
-});
+}
+);
 
 showPage("cart");
 
-showToast("Товары добавлены в корзину");
-
-}
-
-function renderOrders(){
-
-const box=
-document.getElementById("ordersBox");
-
-if(!orders.length){
-
-box.innerHTML=
-`<div class="empty">
-📦<br>Заказов пока нет
-</div>`;
-
-return;
-
-}
-
-box.innerHTML=
-orders.map(o=>`
-
-<div class="order">
-
-<div class="ordertop">
-
-<span>
-Заказ #${o.id.slice(-6)}
-</span>
-
-<span>
-${Number(o.total).toLocaleString("ru-RU")} ₽
-</span>
-
-</div>
-
-<div class="orderitems">
-
-${o.items.map(x=>
-`${escapeHTML(x.name)} × ${x.qty}`
-).join("<br>")}
-
-</div>
-
-<div class="status">
-${o.status} · ${o.date}
-</div>
-
-<button
-class="secondary"
-onclick="repeatOrder('${o.id}')">
-
-🔄 Повторить заказ
-
-</button>
-
-</div>
-
-`).join("");
+showToast(
+"Товары добавлены в корзину"
+);
 
 }
 
@@ -2170,9 +3235,12 @@ onclick="repeatOrder('${o.id}')">
 function openProduct(id){
 
 currentProduct=
-products.find(x=>x.id===id);
+products.find(
+x=>x.id===id
+);
 
-if(!currentProduct)return;
+if(!currentProduct)
+return;
 
 currentOption=
 currentProduct.options?.[0]||"";
@@ -2181,23 +3249,29 @@ currentQty=1;
 
 const p=currentProduct;
 
-document.getElementById("productSheet")
+document
+.getElementById("productSheet")
 .innerHTML=`
 
 <div class="sheethead">
 
-<b>${escapeHTML(p.name)}</b>
+<b>
+${escapeHTML(p.name)}
+</b>
 
 <button
 class="close"
 onclick="closeModal('productModal')">
 
 ×
+
 </button>
 
 </div>
 
-<div class="productimg" style="height:280px">
+<div
+class="productimg"
+style="height:280px">
 
 ${
 p.image
@@ -2212,24 +3286,32 @@ ${escapeHTML(p.name)}
 </h2>
 
 <div class="price">
+
 ${p.price.toLocaleString("ru-RU")} ₽
+
 </div>
 
 <div class="sub">
+
 ${escapeHTML(p.description)}
+
 </div>
 
 ${
 p.options?.length
 ?`
 
-<div style="margin-top:15px;font-size:12px;font-weight:800">
+<div
+style="margin-top:15px;font-size:12px;font-weight:800">
+
 Вариант
+
 </div>
 
 <div class="categories">
 
-${p.options.map((x,i)=>`
+${p.options.map(
+(x,i)=>`
 
 <button
 class="category ${i===0?"active":""}"
@@ -2239,7 +3321,8 @@ ${escapeHTML(x)}
 
 </button>
 
-`).join("")}
+`
+).join("")}
 
 </div>
 
@@ -2247,17 +3330,34 @@ ${escapeHTML(x)}
 :""
 }
 
-<div style="margin-top:10px;font-size:12px;font-weight:800">
+<div
+style="margin-top:10px;font-size:12px;font-weight:800">
+
 Количество
+
 </div>
 
-<div class="qty" style="margin-top:7px">
+<div
+class="qty"
+style="margin-top:7px">
 
-<button onclick="changeDetailQty(-1)">−</button>
+<button
+onclick="changeDetailQty(-1)">
 
-<b id="detailQty">1</b>
+−
 
-<button onclick="changeDetailQty(1)">+</button>
+</button>
+
+<b id="detailQty">
+1
+</b>
+
+<button
+onclick="changeDetailQty(1)">
+
++
+
+</button>
 
 </div>
 
@@ -2273,7 +3373,8 @@ onclick="addCurrentProduct()">
 
 document
 .getElementById("productModal")
-.classList.add("show");
+.classList
+.add("show");
 
 }
 
@@ -2282,8 +3383,12 @@ function selectOption(o,el){
 currentOption=o;
 
 document
-.querySelectorAll("#productSheet .category")
-.forEach(x=>x.classList.remove("active"));
+.querySelectorAll(
+"#productSheet .category"
+)
+.forEach(
+x=>x.classList.remove("active")
+);
 
 el.classList.add("active");
 
@@ -2291,7 +3396,8 @@ el.classList.add("active");
 
 function changeDetailQty(d){
 
-currentQty=Math.max(
+currentQty=
+Math.max(
 1,
 Math.min(
 currentProduct.stock,
@@ -2299,8 +3405,10 @@ currentQty+d
 )
 );
 
-document.getElementById("detailQty")
-.textContent=currentQty;
+document
+.getElementById("detailQty")
+.textContent=
+currentQty;
 
 }
 
@@ -2312,7 +3420,9 @@ currentQty,
 currentOption
 );
 
-closeModal("productModal");
+closeModal(
+"productModal"
+);
 
 }
 
@@ -2320,12 +3430,17 @@ closeModal("productModal");
 
 function openSettings(){
 
-document.getElementById("phoneInput").value=
-localStorage.getItem("mogvape_phone")||"";
+document
+.getElementById("phoneInput")
+.value=
+localStorage.getItem(
+"mogvape_phone"
+)||"";
 
 document
 .getElementById("settingsModal")
-.classList.add("show");
+.classList
+.add("show");
 
 }
 
@@ -2352,33 +3467,46 @@ localStorage.setItem(
 phone
 );
 
-document.getElementById("profilePhone")
-.textContent=phone;
+document
+.getElementById("profilePhone")
+.textContent=
+phone;
 
-closeModal("settingsModal");
+closeModal(
+"settingsModal"
+);
 
-showToast("Номер сохранён");
+showToast(
+"Номер сохранён"
+);
 
 }
 
 function toggleTheme(){
 
-document.body.classList.toggle("dark");
+document.body
+.classList.toggle("dark");
 
 localStorage.setItem(
 "mogvape_theme",
-document.body.classList.contains("dark")
+
+document.body
+.classList.contains("dark")
 ?"dark"
 :"light"
+
 );
 
 }
+
+/* HELP */
 
 function openHelp(){
 
 document
 .getElementById("helpModal")
-.classList.add("show");
+.classList
+.add("show");
 
 }
 
@@ -2386,7 +3514,9 @@ function openManager(){
 
 if(tg?.openTelegramLink){
 
-tg.openTelegramLink(MANAGER);
+tg.openTelegramLink(
+MANAGER
+);
 
 }else{
 
@@ -2403,24 +3533,36 @@ MANAGER,
 
 function openFilter(){
 
-document.getElementById("minPrice").value=minPrice;
-document.getElementById("maxPrice").value=maxPrice;
+document
+.getElementById("minPrice")
+.value=minPrice;
+
+document
+.getElementById("maxPrice")
+.value=maxPrice;
 
 document
 .getElementById("filterModal")
-.classList.add("show");
+.classList
+.add("show");
 
 }
 
 function applyFilter(){
 
 minPrice=
-document.getElementById("minPrice").value;
+document
+.getElementById("minPrice")
+.value;
 
 maxPrice=
-document.getElementById("maxPrice").value;
+document
+.getElementById("maxPrice")
+.value;
 
-closeModal("filterModal");
+closeModal(
+"filterModal"
+);
 
 renderProducts();
 
@@ -2432,7 +3574,9 @@ function showAdmin(){
 
 if(!isAdmin()){
 
-showToast("Доступ запрещён");
+showToast(
+"Доступ запрещён"
+);
 
 return;
 
@@ -2444,45 +3588,58 @@ showPage("admin");
 
 function renderAdmin(){
 
-if(!isAdmin())return;
+if(!isAdmin())
+return;
 
-const box=
-document.getElementById("adminProducts");
-
-box.innerHTML=
-products.map(p=>`
+document
+.getElementById("adminProducts")
+.innerHTML=
+products.map(
+p=>`
 
 <div class="adminproduct">
 
 ${
 p.image
-?`<img class="adminimg" src="${p.image}">`
-:`<div class="adminimg"></div>`
+?`<img
+class="adminimg"
+src="${p.image}">`
+:`<div
+class="adminimg"></div>`
 }
 
 <div class="adminmid">
 
 <div class="adminname">
+
 ${escapeHTML(p.name)}
+
 </div>
 
 <div class="adminmeta">
+
 ${escapeHTML(p.category)}
- · ${p.price.toLocaleString("ru-RU")} ₽
- · Остаток: ${p.stock}
+ ·
+${p.price.toLocaleString("ru-RU")} ₽
+ · Остаток:
+${p.stock}
+
 </div>
 
 </div>
 
 <div class="adminbuttons">
 
-<button onclick="editProduct('${p.id}')">
+<button
+onclick="editProduct('${p.id}')">
+
 ✏️
+
 </button>
 
 <button
-class="danger"
-onclick="deleteProduct('${p.id}')">
+onclick="deleteProduct('${p.id}')"
+style="color:var(--red)">
 
 🗑
 
@@ -2492,7 +3649,9 @@ onclick="deleteProduct('${p.id}')">
 
 </div>
 
-`).join("");
+`
+)
+.join("");
 
 renderAdminPromos();
 
@@ -2500,29 +3659,41 @@ renderAdminPromos();
 
 function saveProduct(){
 
-if(!isAdmin())return;
+if(!isAdmin())
+return;
 
 const name=
-document.getElementById("aName").value.trim();
+document
+.getElementById("aName")
+.value
+.trim();
 
-const category=
-document.getElementById("aCategory").value.trim()
-||"Другое";
+const cat=
+document
+.getElementById("aCategory")
+.value
+.trim()||
+"Другое";
 
 const price=
 Number(
-document.getElementById("aPrice").value
+document
+.getElementById("aPrice")
+.value
 );
 
 const stock=
 Number(
-document.getElementById("aStock").value
+document
+.getElementById("aStock")
+.value
 );
 
 const description=
 document
 .getElementById("aDescription")
-.value.trim();
+.value
+.trim();
 
 const options=
 document
@@ -2533,12 +3704,15 @@ document
 .filter(Boolean);
 
 const file=
-document.getElementById("aImage")
+document
+.getElementById("aImage")
 .files[0];
 
 if(!name||!price){
 
-showToast("Заполните название и цену");
+showToast(
+"Заполните название и цену"
+);
 
 return;
 
@@ -2549,12 +3723,14 @@ function finish(image){
 if(editId){
 
 const p=
-products.find(x=>x.id===editId);
+products.find(
+x=>x.id===editId
+);
 
 if(p){
 
 p.name=name;
-p.category=category;
+p.category=cat;
 p.price=price;
 p.stock=Math.max(0,stock);
 p.description=description;
@@ -2565,25 +3741,40 @@ p.image=image;
 
 }
 
-showToast("Товар изменён");
+showToast(
+"Товар изменён"
+);
 
 }else{
 
 products.unshift({
 
 id:Date.now().toString(),
+
 name,
-category,
+
+category:cat,
+
 price,
-stock:Math.max(0,stock),
+
+stock:Math.max(
+0,
+stock
+),
+
 description,
+
 options,
+
 image:image||"",
+
 created:Date.now()
 
 });
 
-showToast("Товар добавлен");
+showToast(
+"Товар добавлен"
+);
 
 }
 
@@ -2592,16 +3783,20 @@ saveData();
 clearAdminForm();
 
 renderAdmin();
-
 renderProducts();
 
 }
 
 if(file){
 
-if(file.size>3*1024*1024){
+if(
+file.size>
+3*1024*1024
+){
 
-showToast("Фото больше 3 МБ");
+showToast(
+"Фото больше 3 МБ"
+);
 
 return;
 
@@ -2610,9 +3805,10 @@ return;
 const reader=
 new FileReader();
 
-reader.onload=()=>{
-finish(reader.result)
-};
+reader.onload=()=>
+finish(
+reader.result
+);
 
 reader.readAsDataURL(file);
 
@@ -2626,29 +3822,55 @@ finish("");
 
 function editProduct(id){
 
-if(!isAdmin())return;
-
 const p=
-products.find(x=>x.id===id);
+products.find(
+x=>x.id===id
+);
 
-if(!p)return;
+if(!p)
+return;
 
 editId=id;
 
-document.getElementById("aName").value=p.name;
-document.getElementById("aCategory").value=p.category;
-document.getElementById("aPrice").value=p.price;
-document.getElementById("aStock").value=p.stock;
-document.getElementById("aDescription").value=p.description||"";
-document.getElementById("aOptions").value=(p.options||[]).join(", ");
+document
+.getElementById("aName")
+.value=p.name;
 
-document.getElementById("saveProductButton")
-.textContent="💾 Сохранить изменения";
+document
+.getElementById("aCategory")
+.value=p.category;
 
-document.getElementById("cancelEditButton")
-.classList.remove("hidden");
+document
+.getElementById("aPrice")
+.value=p.price;
 
-window.scrollTo(0,0);
+document
+.getElementById("aStock")
+.value=p.stock;
+
+document
+.getElementById("aDescription")
+.value=p.description||"";
+
+document
+.getElementById("aOptions")
+.value=
+(p.options||[])
+.join(", ");
+
+document
+.getElementById(
+"saveProductButton"
+)
+.textContent=
+"💾 Сохранить изменения";
+
+document
+.getElementById(
+"cancelEditButton"
+)
+.classList
+.remove("hidden");
 
 }
 
@@ -2669,36 +3891,69 @@ editId=null;
 "aStock",
 "aDescription",
 "aOptions"
-].forEach(id=>{
-document.getElementById(id).value="";
-});
+]
+.forEach(
+id=>{
+document
+.getElementById(id)
+.value="";
+}
+);
 
-document.getElementById("aImage").value="";
+document
+.getElementById("aImage")
+.value="";
 
-document.getElementById("saveProductButton")
-.textContent="➕ Добавить товар";
+document
+.getElementById(
+"saveProductButton"
+)
+.textContent=
+"➕ Добавить товар";
 
-document.getElementById("cancelEditButton")
-.classList.add("hidden");
+document
+.getElementById(
+"cancelEditButton"
+)
+.classList
+.add("hidden");
 
 }
 
+/* DELETE */
+
 function deleteProduct(id){
 
-if(!isAdmin())return;
+const p=
+products.find(
+x=>x.id===id
+);
 
-const p=products.find(x=>x.id===id);
-
-if(!p)return;
+if(!p)
+return;
 
 openConfirm(
+
 "⚠️ Удалить товар?",
+
 `Вы действительно хотите удалить ${escapeHTML(p.name)}?`,
+
 ()=>{
 
-products=products.filter(x=>x.id!==id);
-favorites=favorites.filter(x=>x!==id);
-cart=cart.filter(x=>x.id!==id);
+products=
+products.filter(
+x=>x.id!==id
+);
+
+favorites=
+favorites.filter(
+x=>x!==id
+);
+
+cart=
+cart.filter(
+x=>x.id!==id
+);
 
 saveData();
 
@@ -2707,207 +3962,417 @@ renderProducts();
 renderFavorites();
 renderCart();
 
-showToast("Товар удалён");
-
-}
+showToast(
+"Товар удалён"
 );
 
 }
 
-/* PROMOCODES ADMIN */
+);
+
+}
+
+/* PROMOCODES */
 
 function createPromo(){
 
-if(!isAdmin())return;
+if(!isAdmin())
+return;
 
-const code=document.getElementById("promoAdminCode").value.trim().toUpperCase();
-const discount=Number(document.getElementById("promoAdminDiscount").value);
-const limit=Number(document.getElementById("promoAdminLimit").value);
+const code=
+document
+.getElementById(
+"promoAdminCode"
+)
+.value
+.trim()
+.toUpperCase();
+
+const discount=
+Number(
+document
+.getElementById(
+"promoAdminDiscount"
+)
+.value
+);
+
+const limit=
+Number(
+document
+.getElementById(
+"promoAdminLimit"
+)
+.value
+);
 
 if(!code){
-showToast("Введите промокод");
+
+showToast(
+"Введите промокод"
+);
+
 return;
+
 }
 
 if(!/^[A-Z0-9]+$/.test(code)){
-showToast("Только буквы и цифры");
+
+showToast(
+"Только буквы и цифры"
+);
+
 return;
+
 }
 
-if(discount<1||discount>100){
-showToast("Скидка должна быть от 1 до 100%");
+if(
+discount<1||
+discount>100
+){
+
+showToast(
+"Скидка должна быть от 1 до 100%"
+);
+
 return;
+
 }
 
 if(limit<1){
-showToast("Лимит должен быть минимум 1");
+
+showToast(
+"Лимит должен быть минимум 1"
+);
+
 return;
+
 }
 
-if(promoCodes.some(p=>p.code===code)){
-showToast("Такой промокод уже существует");
+if(
+promoCodes.some(
+p=>p.code===code
+)
+){
+
+showToast(
+"Такой промокод уже существует"
+);
+
 return;
+
 }
 
 promoCodes.unshift({
+
 id:Date.now().toString(),
+
 code,
+
 discount,
+
 limit,
+
 used:0,
+
 active:true,
+
 created:Date.now()
+
 });
 
 saveData();
 
-document.getElementById("promoAdminCode").value="";
-document.getElementById("promoAdminDiscount").value="";
-document.getElementById("promoAdminLimit").value="";
+document
+.getElementById(
+"promoAdminCode"
+)
+.value="";
+
+document
+.getElementById(
+"promoAdminDiscount"
+)
+.value="";
+
+document
+.getElementById(
+"promoAdminLimit"
+)
+.value="";
 
 renderAdminPromos();
-showToast("Промокод создан");
+
+showToast(
+"Промокод создан"
+);
 
 }
 
 function renderAdminPromos(){
 
-const box=document.getElementById("adminPromos");
+const box=
+document
+.getElementById(
+"adminPromos"
+);
 
-if(!box)return;
+if(!box)
+return;
 
 if(!promoCodes.length){
-box.innerHTML=`<div class="empty" style="padding:30px 10px">🎟<br>Промокодов пока нет</div>`;
+
+box.innerHTML=
+`<div
+class="empty"
+style="padding:30px 10px">
+
+🎟<br>
+Промокодов пока нет
+
+</div>`;
+
 return;
+
 }
 
-box.innerHTML=promoCodes.map(p=>{
+box.innerHTML=
+promoCodes.map(
+p=>{
 
-const used=Number(p.used||0);
-const limit=Number(p.limit||0);
-const exhausted=used>=limit;
-const status=exhausted?"Лимит исчерпан":p.active===false?"Отключён":"Активен";
+const used=
+Number(p.used||0);
+
+const limit=
+Number(p.limit||0);
+
+const exhausted=
+used>=limit;
+
+const status=
+exhausted
+?"Лимит исчерпан"
+:p.active===false
+?"Отключён"
+:"Активен";
 
 return`
+
 <div class="promo-admin-item">
 
-<div class="promo-admin-icon">🎟</div>
+<div class="promo-admin-icon">
+🎟
+</div>
 
 <div class="promo-admin-mid">
 
-<div class="promo-admin-code">${escapeHTML(p.code)}</div>
+<div class="promo-admin-code">
 
-<div class="promo-admin-meta">
-Скидка: <b>${Number(p.discount)}%</b>
- · Использований: <b>${used} / ${limit}</b>
+${escapeHTML(p.code)}
+
 </div>
 
-<div class="promo-admin-status" style="color:${exhausted||p.active===false?"var(--red)":"var(--green)"}">
+<div class="promo-admin-meta">
+
+Скидка:
+<b>${p.discount}%</b>
+
+ · Использований:
+
+<b>
+${used} / ${limit}
+</b>
+
+</div>
+
+<div
+class="promo-admin-status"
+style="color:${
+exhausted||
+p.active===false
+?"var(--red)"
+:"var(--green)"
+}">
+
 ${status}
+
 </div>
 
 </div>
 
 <div class="promo-admin-actions">
 
-<button class="mini-btn blue" onclick="togglePromo('${p.id}')">
+<button
+class="mini-btn blue"
+onclick="togglePromo('${p.id}')">
+
 ${p.active===false?"Вкл":"Выкл"}
+
 </button>
 
-<button class="mini-btn danger" onclick="deletePromo('${p.id}')">🗑</button>
+<button
+class="mini-btn danger"
+onclick="deletePromo('${p.id}')">
+
+🗑
+
+</button>
 
 </div>
 
 </div>
+
 `;
 
-}).join("");
+}
+)
+.join("");
 
 }
 
 function togglePromo(id){
 
-if(!isAdmin())return;
+const p=
+promoCodes.find(
+x=>x.id===id
+);
 
-const p=promoCodes.find(x=>x.id===id);
-
-if(!p)return;
-
-if(Number(p.used||0)>=Number(p.limit||0)){
-showToast("Лимит промокода уже исчерпан");
+if(!p)
 return;
+
+if(
+Number(p.used||0)>=
+Number(p.limit||0)
+){
+
+showToast(
+"Лимит промокода уже исчерпан"
+);
+
+return;
+
 }
 
-p.active=p.active===false;
+p.active=
+p.active===false;
 
-if(activePromo===p.code&&!p.active){
+if(
+activePromo===p.code&&
+!p.active
+){
+
 activePromo=null;
+
 }
 
 saveData();
+
 renderAdminPromos();
 renderCart();
 
-showToast(p.active?"Промокод включён":"Промокод отключён");
+showToast(
+p.active
+?"Промокод включён"
+:"Промокод отключён"
+);
 
 }
 
 function deletePromo(id){
 
-if(!isAdmin())return;
+const p=
+promoCodes.find(
+x=>x.id===id
+);
 
-const p=promoCodes.find(x=>x.id===id);
-
-if(!p)return;
+if(!p)
+return;
 
 openConfirm(
+
 "⚠️ Удалить промокод?",
+
 `Вы действительно хотите удалить ${escapeHTML(p.code)}?`,
+
 ()=>{
 
-promoCodes=promoCodes.filter(x=>x.id!==id);
+promoCodes=
+promoCodes.filter(
+x=>x.id!==id
+);
 
-if(activePromo===p.code){
+if(
+activePromo===p.code
+)
 activePromo=null;
-}
 
 saveData();
+
 renderAdminPromos();
 renderCart();
 
-showToast("Промокод удалён");
-
-}
+showToast(
+"Промокод удалён"
 );
 
 }
 
-function openConfirm(title,text,action){
+);
 
-window.confirmAction=action;
+}
 
-document.getElementById("confirmTitle").textContent=title;
-document.getElementById("confirmText").innerHTML=text;
+/* CONFIRM */
 
-document.getElementById("confirmModal").classList.add("show");
+function openConfirm(
+title,
+text,
+action
+){
+
+window.confirmAction=
+action;
+
+document
+.getElementById("confirmTitle")
+.textContent=
+title;
+
+document
+.getElementById("confirmText")
+.innerHTML=
+text;
+
+document
+.getElementById("confirmModal")
+.classList
+.add("show");
 
 }
 
 function closeConfirm(){
 
 window.confirmAction=null;
-document.getElementById("confirmModal").classList.remove("show");
+
+document
+.getElementById("confirmModal")
+.classList
+.remove("show");
 
 }
 
 function confirmDeleteAction(){
 
-const action=window.confirmAction;
+const action=
+window.confirmAction;
 
 closeConfirm();
 
-if(typeof action==="function"){
+if(
+typeof action==="function"
+){
+
 action();
+
 }
 
 }
@@ -2918,25 +4383,34 @@ function closeModal(id){
 
 document
 .getElementById(id)
-.classList.remove("show");
+.classList
+.remove("show");
 
 }
+
+/* TOAST */
 
 function showToast(text){
 
 const el=
-document.getElementById("toast");
+document
+.getElementById("toast");
 
 el.textContent=text;
 
 el.classList.add("show");
 
-clearTimeout(window.toastTimer);
+clearTimeout(
+window.toastTimer
+);
 
 window.toastTimer=
-setTimeout(()=>{
+setTimeout(
+()=>{
 el.classList.remove("show")
-},2500);
+},
+2500
+);
 
 }
 
@@ -2945,13 +4419,39 @@ el.classList.remove("show")
 function start(){
 
 const theme=
-localStorage.getItem("mogvape_theme");
+localStorage.getItem(
+"mogvape_theme"
+);
 
 if(theme==="dark")
-document.body.classList.add("dark");
+document.body
+.classList
+.add("dark");
 
 initTelegram();
 initUser();
+
+const savedLocation=
+localStorage.getItem(
+"mogvape_location"
+);
+
+if(savedLocation){
+
+selectedLocation=
+savedLocation;
+
+pendingLocation=
+savedLocation;
+
+document
+.getElementById(
+"locationButtonText"
+)
+.textContent=
+savedLocation;
+
+}
 
 renderProducts();
 renderFavorites();
