@@ -124,12 +124,6 @@
         .user-name { font-size: 16px; font-weight: 700; }
         .user-id { font-size: 11px; color: var(--text-muted); }
 
-        .promo-banner {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 16px; padding: 12px 14px; margin-bottom: 12px;
-            display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;
-        }
-
         .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; margin-bottom: 16px; }
         .profile-card-btn {
             background: var(--card-bg); border: 1px solid var(--border-color);
@@ -206,7 +200,7 @@
         <div class="products-grid" id="favorites-container"></div>
     </div>
 
-    <!-- Profile Page (ПОЛНЫЙ ИНТЕРФЕЙС УЧАСТНИКА + КНОПКА АДМИНА) -->
+    <!-- Profile Page -->
     <div id="page-profile" class="page">
         <div class="user-header">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" id="user-avatar-img" class="user-avatar" alt="Avatar">
@@ -216,7 +210,7 @@
             </div>
         </div>
 
-        <!-- Кнопка админки видна только вам, но НЕ заменяет собой профиль -->
+        <!-- Кнопка админки (для владельца) -->
         <div id="admin-panel-btn-wrap" style="display:none; margin-bottom: 12px;">
             <div class="profile-card-btn full-width" style="border-color: var(--accent-blue); background: rgba(0,122,255,0.1);" onclick="openAdminModal()">
                 <span style="font-size: 20px;">🛠</span>
@@ -227,17 +221,28 @@
             </div>
         </div>
 
-        <!-- Стандартный блок участника -->
-        <div class="promo-banner">
-            <span>🏷</span>
-            <span>8 наклеек = жижа, карик, снюс</span>
-        </div>
-
+        <!-- Сетка кнопок для обычного пользователя -->
         <div class="profile-grid">
+            <div class="profile-card-btn" onclick="alert('У вас пока нет активных заказов')">
+                <span style="font-size:20px;">📦</span>
+                <span style="font-size:13px; font-weight:600;">Мои заказы</span>
+            </div>
+            <div class="profile-card-btn" onclick="alert('Наши точки:\n1. ТЦ Атриум\n2. ТЦ Восьмой')">
+                <span style="font-size:20px;">📍</span>
+                <span style="font-size:13px; font-weight:600;">Магазины</span>
+            </div>
             <a href="https://t.me/MOGBARAHA" target="_blank" class="profile-card-btn">
                 <span style="font-size:20px;">💬</span>
                 <span style="font-size:13px; font-weight:600;">Менеджер</span>
             </a>
+            <a href="https://t.me/MOGBARAHA" target="_blank" class="profile-card-btn">
+                <span style="font-size:20px;">👥</span>
+                <span style="font-size:13px; font-weight:600;">Наш чат</span>
+            </a>
+            <div class="profile-card-btn" onclick="alert('Самовывоз осуществляется из наших магазинов. При возникновении вопросов свяжитесь с менеджером.')">
+                <span style="font-size:20px;">❓</span>
+                <span style="font-size:13px; font-weight:600;">FAQ / Помощь</span>
+            </div>
             <div class="profile-card-btn" onclick="alert('Раздел в разработке')">
                 <span style="font-size:20px;">⚙️</span>
                 <span style="font-size:13px; font-weight:600;">Настройки</span>
@@ -350,7 +355,6 @@
                 if (tgUser.photo_url) document.getElementById('user-avatar-img').src = tgUser.photo_url;
             }
 
-            // Если зашел админ — просто ПОКАЗЫВАЕМ дополнительную кнопку админки, не закрывая сам профиль
             if (currentUserId === ADMIN_ID) {
                 document.getElementById('admin-panel-btn-wrap').style.display = 'block';
             }
