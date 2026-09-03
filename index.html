@@ -221,7 +221,7 @@
             </div>
         </div>
 
-        <!-- Сетка кнопок для обычного пользователя -->
+        <!-- Сетка кнопок профиля -->
         <div class="profile-grid">
             <div class="profile-card-btn" onclick="alert('У вас пока нет активных заказов')">
                 <span style="font-size:20px;">📦</span>
@@ -231,15 +231,18 @@
                 <span style="font-size:20px;">📍</span>
                 <span style="font-size:13px; font-weight:600;">Магазины</span>
             </div>
-            <a href="https://t.me/MOGBARAHA" target="_blank" class="profile-card-btn">
+            
+            <!-- Кнопка Менеджера с перенаправлением в Telegram -->
+            <div class="profile-card-btn" onclick="openTelegramLink('https://t.me/MOGBARAHA')">
                 <span style="font-size:20px;">💬</span>
                 <span style="font-size:13px; font-weight:600;">Менеджер</span>
-            </a>
-            <a href="https://t.me/MOGBARAHA" target="_blank" class="profile-card-btn">
+            </div>
+            
+            <div class="profile-card-btn" onclick="openTelegramLink('https://t.me/MOGBARAHA')">
                 <span style="font-size:20px;">👥</span>
                 <span style="font-size:13px; font-weight:600;">Наш чат</span>
-            </a>
-            <div class="profile-card-btn" onclick="alert('Самовывоз осуществляется из наших магазинов. При возникновении вопросов свяжитесь с менеджером.')">
+            </div>
+            <div class="profile-card-btn" onclick="alert('Самовывоз осуществляется из наших точек. При возникновении вопросов свяжитесь с менеджером.')">
                 <span style="font-size:20px;">❓</span>
                 <span style="font-size:13px; font-weight:600;">FAQ / Помощь</span>
             </div>
@@ -344,6 +347,14 @@
             applyFilters();
             updateCartUI();
         });
+
+        function openTelegramLink(url) {
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
 
         function initUserData() {
             let tgUser = tg?.initDataUnsafe?.user;
@@ -533,6 +544,14 @@
                 el.innerText = `${item.title} (${item.flavor}) - ${item.price} Б`;
                 list.appendChild(el);
             });
+        }
+
+        function checkoutOrder() {
+            if (cart.length === 0) {
+                alert('Корзина пуста');
+                return;
+            }
+            openTelegramLink('https://t.me/MOGBARAHA');
         }
 
         function switchPage(pageName) {
