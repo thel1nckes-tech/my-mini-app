@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>VapeApp</title>
+    <title>MOGVAPE</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -228,10 +228,13 @@
         .stock-status.out { color: #ff3b30; }
 
         /* Accordion (Help Modal) */
-        .acc-item { border-bottom: 1px solid var(--border-color); padding: 10px 0; }
-        .acc-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; cursor: pointer; }
-        .acc-content { display: none; font-size: 12px; color: var(--text-muted); padding-top: 8px; line-height: 1.4; }
+        .acc-item { border-bottom: 1px solid var(--border-color); padding: 12px 0; }
+        .acc-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .acc-title-box { display: flex; align-items: center; gap: 10px; }
+        .acc-content { display: none; font-size: 13px; color: var(--text-muted); padding-top: 10px; line-height: 1.4; }
         .acc-item.active .acc-content { display: block; }
+        .acc-item.active .acc-arrow { transform: rotate(180deg); }
+        .acc-arrow { transition: transform 0.2s ease; font-size: 12px; }
 
         /* Settings Modal Toggle */
         .theme-selector { display: flex; gap: 10px; margin-top: 10px; }
@@ -243,7 +246,7 @@
 
     <!-- Header -->
     <div class="top-bar">
-        <div class="brand-name">VapeApp</div>
+        <div class="brand-name">MOGVAPE</div>
         <div class="location-select" onclick="openLocationModal()">
             📍 <span id="current-location-text">Точка самовывоза</span> ∨
         </div>
@@ -276,13 +279,7 @@
         <div class="products-grid" id="products-container"></div>
     </div>
 
-    <!-- 2. Bonuses Page -->
-    <div id="page-bonuses" class="page">
-        <h3 style="margin-top:16px;">Бонусы</h3>
-        <p style="color:var(--text-muted); font-size:13px; margin-top:8px;">Информация о бонусной программе.</p>
-    </div>
-
-    <!-- 3. Cart / Checkout Page -->
+    <!-- 2. Cart / Checkout Page -->
     <div id="page-cart" class="page">
         <h3 style="margin-top:16px; margin-bottom:12px;">Корзина</h3>
         
@@ -309,13 +306,13 @@
         <button class="btn-add-cart" style="margin-top:16px;" onclick="alert('Заказ оформлен!')">Оформить заказ</button>
     </div>
 
-    <!-- 4. Favorites Page -->
+    <!-- 3. Favorites Page -->
     <div id="page-favorites" class="page">
         <h3 style="margin-top:16px; margin-bottom:12px;">Избранное</h3>
         <div class="products-grid" id="favorites-container"></div>
     </div>
 
-    <!-- 5. Profile Page -->
+    <!-- 4. Profile Page -->
     <div id="page-profile" class="page">
         <div class="user-header">
             <div class="avatar-wrap" onclick="document.getElementById('avatar-input').click()">
@@ -372,7 +369,6 @@
                     <div class="radio-circle"></div>
                     <div>
                         <div class="pickup-name">Атриум</div>
-                        <div style="font-size:11px; color:var(--accent-blue);">VapeApp</div>
                     </div>
                 </div>
             </div>
@@ -382,7 +378,6 @@
                     <div class="radio-circle"></div>
                     <div>
                         <div class="pickup-name">Восьмой</div>
-                        <div style="font-size:11px; color:var(--accent-blue);">VapeApp</div>
                     </div>
                 </div>
             </div>
@@ -423,29 +418,116 @@
         </div>
     </div>
 
-    <!-- Modal: Help / FAQ -->
+    <!-- Modal: Help / FAQ (Exact match from video) -->
     <div class="modal-overlay" id="help-modal">
         <div class="modal-sheet">
             <button class="modal-close" onclick="closeHelpModal()">✕</button>
-            <h3 style="font-size:16px; margin-bottom:12px;">Помощь</h3>
-            <div style="font-size:11px; color:var(--accent-blue); font-weight:700; margin-bottom:10px;">ПРИЛОЖЕНИЕ</div>
+            <h3 style="font-size:18px; font-weight:700; margin-bottom:4px; text-align:center;">Помощь</h3>
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; text-align:center;">Ответы на частые вопросы</div>
+
+            <!-- Category: ПРИЛОЖЕНИЕ -->
+            <div style="font-size:12px; color:var(--accent-blue); font-weight:700; letter-spacing:0.5px; margin-bottom:12px;">ПРИЛОЖЕНИЕ</div>
 
             <div class="acc-item" onclick="toggleAcc(this)">
-                <div class="acc-header"><span>❌ Как отменить заказ?</span> <span>∨</span></div>
-                <div class="acc-content">В профиле через раздел "Заказы". Можно отменить минимум за 1 час до получения.</div>
-            </div>
-            <div class="acc-item" onclick="toggleAcc(this)">
-                <div class="acc-header"><span>🪙 Что такое Vape Coins?</span> <span>∨</span></div>
-                <div class="acc-content">Это бонусы (10 монет = 0.10 Б). Даем 300 монет за первый заказ и кэшбек.</div>
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>❌</span> <span>Как отменить заказ?</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">В профиле через раздел "Заказы". Можно отменить минимум за 1 час до получения. Монеты вернутся, но репутация снизится на 1 балл.</div>
             </div>
 
-            <div style="font-size:11px; color:var(--accent-blue); font-weight:700; margin:14px 0 10px;">ГАРАНТИЯ И БРАК</div>
             <div class="acc-item" onclick="toggleAcc(this)">
-                <div class="acc-header"><span>🧪 Жидкость потемнела?</span> <span>∨</span></div>
+                <div class="acc-header"><span>🔗</span> <div class="acc-title-box"><span>Что такое Vape Coins?</span></div> <span class="acc-arrow">∨</span></div>
+                <div class="acc-content">Это бонусы (10 монет = 0.10 Б). Даем 300 монет за первый заказ друга и 2-5% кешбэка с его покупок.</div>
+            </div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>👥</span> <span>Реферальная система</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">Приглашайте друзей и получайте процент с их заказов в виде монет. Чем больше активных друзей, тем выше ваш процент (от 2% до 5%).</div>
+            </div>
+
+            <!-- Category: ГАРАНТИЯ И БРАК -->
+            <div style="font-size:12px; color:var(--accent-blue); font-weight:700; letter-spacing:0.5px; margin:24px 0 12px;">ГАРАНТИЯ И БРАК</div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>🔮</span> <span>Жидкость потемнела?</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
                 <div class="acc-content">Это нормальный процесс из-за нагрева. На качество вкуса это не влияет.</div>
             </div>
 
-            <button class="btn-add-cart" style="margin-top:16px;" onclick="window.open('https://t.me/MOGBARAHA', '_blank')">Написать в поддержку</button>
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>📅</span> <span>Срок годности</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">Обычно 1-2 года. Жидкости с датой 2016 — это особенность маркировки для соблюдения норм, они свежие.</div>
+            </div>
+
+            <!-- Category: УХОД И СОВЕТЫ -->
+            <div style="font-size:12px; color:var(--accent-blue); font-weight:700; letter-spacing:0.5px; margin:24px 0 12px;">УХОД И СОВЕТЫ</div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>⚡</span> <span>Как сберечь картридж?</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">
+                    • Делайте паузы между затяжками.<br>
+                    • Не парьте на пустом баке.<br>
+                    • Используйте жидкость 50/50 или 60/40.<br>
+                    Средний срок службы: 2-3 недели.
+                </div>
+            </div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>⚠️</span> <span>Картридж течет?</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">Протирайте контакты и сам картридж салфеткой. Это случается из-за износа фитиля.</div>
+            </div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>📄</span> <span>Короткая памятка</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">
+                    • Новый картридж: ждите 10 мин после заправки.<br>
+                    • Зима: на холоде парить меньше, протирать чаще.
+                </div>
+            </div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>❄️</span> <span>Парение зимой</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">На морозе жидкость густеет. Делайте длинные паузы и чаще протирайте устройство от конденсата.</div>
+            </div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>ℹ️</span> <span>Что такое PG/VG?</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">PG — вкус, VG — пар. Для POD-систем идеален 50/50.</div>
+            </div>
+
+            <div class="acc-item" onclick="toggleAcc(this)">
+                <div class="acc-header">
+                    <div class="acc-title-box"><span>⚡</span> <span>Сопротивление (Ом)</span></div>
+                    <span class="acc-arrow">∨</span>
+                </div>
+                <div class="acc-content">Чем меньше Ом, тем больше пара и насыщеннее вкус, но быстрее садится заряд.</div>
+            </div>
+
+            <button class="btn-add-cart" style="margin-top:24px;" onclick="window.open('https://t.me/MOGBARAHA', '_blank')">Написать в поддержку</button>
         </div>
     </div>
 
@@ -490,10 +572,6 @@
         <div class="nav-item active" onclick="switchPage('catalog')" id="nav-catalog">
             <div class="icon">📦</div>
             <span>Ассортимент</span>
-        </div>
-        <div class="nav-item" onclick="switchPage('bonuses')" id="nav-bonuses">
-            <div class="icon">🎁</div>
-            <span>Бонусы</span>
         </div>
         <div class="nav-item" onclick="switchPage('cart')" id="nav-cart">
             <div class="icon">🛒</div>
