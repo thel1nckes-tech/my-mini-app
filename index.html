@@ -124,13 +124,20 @@
         .user-name { font-size: 16px; font-weight: 700; }
         .user-id { font-size: 11px; color: var(--text-muted); }
 
+        .promo-banner {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 12px 14px; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;
+        }
+
+        .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; margin-bottom: 16px; }
         .profile-card-btn {
             background: var(--card-bg); border: 1px solid var(--border-color);
             border-radius: 16px; padding: 14px; display: flex; flex-direction: column;
             align-items: center; justify-content: center; text-align: center; gap: 6px; cursor: pointer;
-            text-decoration: none; color: inherit; margin-bottom: 8px;
+            text-decoration: none; color: inherit;
         }
-        .profile-card-btn.full-width { flex-direction: row; justify-content: flex-start; gap: 10px; }
+        .profile-card-btn.full-width { grid-column: span 2; flex-direction: row; justify-content: flex-start; gap: 10px; }
 
         .modal-product-img { width: 100%; height: 200px; object-fit: contain; background: var(--card-sub-bg); border-radius: 14px; margin-bottom: 12px; }
         .modal-product-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
@@ -146,7 +153,6 @@
         .flavor-name { font-size: 10px; }
 
         .btn-add-cart { width: 100%; background: var(--accent-blue); color: #fff; border: none; padding: 12px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 10px; }
-        .btn-add-cart:disabled { background: var(--border-color); color: var(--text-muted); cursor: not-allowed; }
         .btn-notify { width: 100%; background: var(--card-sub-bg); border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 10px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
 
         .admin-form-input { width: 100%; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 12px; color: var(--text-color); margin-bottom: 8px; font-size: 12px; outline: none; }
@@ -194,23 +200,47 @@
         <button class="btn-add-cart" style="margin-top:16px;" onclick="checkoutOrder()">Оформить заказ</button>
     </div>
 
-    <!-- Profile Page -->
+    <!-- Favorites Page -->
+    <div id="page-favorites" class="page">
+        <h3 style="margin-top:16px; margin-bottom:12px;">Избранное</h3>
+        <div class="products-grid" id="favorites-container"></div>
+    </div>
+
+    <!-- Profile Page (ПОЛНЫЙ ИНТЕРФЕЙС УЧАСТНИКА + КНОПКА АДМИНА) -->
     <div id="page-profile" class="page">
         <div class="user-header">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="user-avatar" alt="Avatar">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" id="user-avatar-img" class="user-avatar" alt="Avatar">
             <div>
-                <div class="user-name">Менеджер</div>
+                <div class="user-name" id="user-display-name">Пользователь</div>
                 <div class="user-id" id="user-display-id">ID: 5995285721</div>
             </div>
         </div>
 
-        <div id="admin-panel-btn-wrap" style="display:none;">
+        <!-- Кнопка админки видна только вам, но НЕ заменяет собой профиль -->
+        <div id="admin-panel-btn-wrap" style="display:none; margin-bottom: 12px;">
             <div class="profile-card-btn full-width" style="border-color: var(--accent-blue); background: rgba(0,122,255,0.1);" onclick="openAdminModal()">
                 <span style="font-size: 20px;">🛠</span>
                 <div style="text-align: left;">
                     <div style="font-size:13px; font-weight:600; color:var(--accent-blue);">Админ-панель</div>
-                    <div style="font-size:11px; color:var(--text-muted);">Добавление товаров и остатки</div>
+                    <div style="font-size:11px; color:var(--text-muted);">Управление каталогом и наличием</div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Стандартный блок участника -->
+        <div class="promo-banner">
+            <span>🏷</span>
+            <span>8 наклеек = жижа, карик, снюс</span>
+        </div>
+
+        <div class="profile-grid">
+            <a href="https://t.me/MOGBARAHA" target="_blank" class="profile-card-btn">
+                <span style="font-size:20px;">💬</span>
+                <span style="font-size:13px; font-weight:600;">Менеджер</span>
+            </a>
+            <div class="profile-card-btn" onclick="alert('Раздел в разработке')">
+                <span style="font-size:20px;">⚙️</span>
+                <span style="font-size:13px; font-weight:600;">Настройки</span>
             </div>
         </div>
     </div>
@@ -262,6 +292,9 @@
         <div class="nav-item" onclick="switchPage('cart')" id="nav-cart">
             <div class="icon">🛒</div><div class="badge" id="cart-badge">0</div><span>Корзина</span>
         </div>
+        <div class="nav-item" onclick="switchPage('favorites')" id="nav-favorites">
+            <div class="icon">🤍</div><span>Избранное</span>
+        </div>
         <div class="nav-item" onclick="switchPage('profile')" id="nav-profile">
             <div class="icon">👤</div><span>Профиль</span>
         </div>
@@ -311,6 +344,13 @@
             let tgUser = tg?.initDataUnsafe?.user;
             let currentUserId = tgUser ? tgUser.id : ADMIN_ID;
             document.getElementById('user-display-id').innerText = `ID: ${currentUserId}`;
+            
+            if (tgUser) {
+                document.getElementById('user-display-name').innerText = tgUser.first_name + (tgUser.last_name ? " " + tgUser.last_name : "");
+                if (tgUser.photo_url) document.getElementById('user-avatar-img').src = tgUser.photo_url;
+            }
+
+            // Если зашел админ — просто ПОКАЗЫВАЕМ дополнительную кнопку админки, не закрывая сам профиль
             if (currentUserId === ADMIN_ID) {
                 document.getElementById('admin-panel-btn-wrap').style.display = 'block';
             }
@@ -434,7 +474,7 @@
         }
 
         function subscribeStockNotification() {
-            alert(`Заявка принята! Сообщим вам, когда "${selectedProduct.title}" появиться в наличии.`);
+            alert(`Заявка принята! Сообщим вам, когда "${selectedProduct.title}" появится в наличии.`);
             closeProductModal();
         }
 
